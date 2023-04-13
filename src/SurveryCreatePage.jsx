@@ -1,3 +1,20 @@
+import {
+  Box,
+  Button,
+  ButtonBase,
+  InputBase,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from '@mui/material'
 import * as React from 'react'
 import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd'
 import DraggableFormControl from './DraggableFormControl'
@@ -6,36 +23,77 @@ import { EditableInput } from './EditableInput'
 export const formInputTypeMap = {
   textField: (props) => (
     <div>
-      <input placeholder="Type here..." {...props} />
+      <TextField placeholder="Type here..." {...props} label={undefined} />
     </div>
   ),
   checkBox: (props) => (
-    <div style={{ display: 'flex', alignItem: 'center', gap: '.5rem' }}>
+    <Box
+      style={{
+        display: 'flex',
+        width: 'fit-content',
+        alignItem: 'center',
+        gap: '.5rem',
+        backgroundColor: '#ddd',
+        padding: '0 0.5rem',
+      }}
+    >
       <input {...props} onChange={undefined} readOnly type="checkbox" />
 
-      <EditableInput value={props.label} onChange={props.onChange} />
-    </div>
+      <InputBase value={props.label} onChange={props.onChange} />
+
+      <ButtonBase
+        onClick={() => props.handleDelete(props.id)}
+        sx={(theme) => ({ color: theme.palette.warning })}
+      >
+        &times;
+      </ButtonBase>
+    </Box>
   ),
   radioButton: (props) => (
-    <div style={{ display: 'flex' }}>
+    <Box
+      style={{
+        display: 'flex',
+        width: 'fit-content',
+        alignItem: 'center',
+        gap: '.5rem',
+        backgroundColor: '#ddd',
+        padding: '0 0.5rem',
+      }}
+    >
       <input {...props} onChange={undefined} type="radio" readOnly />
 
-      <EditableInput value={props.label} onChange={props.onChange} />
-    </div>
+      <InputBase value={props.label} onChange={props.onChange} />
+
+      <ButtonBase
+        onClick={() => props.handleDelete(props.id)}
+        sx={(theme) => ({ color: theme.palette.warning })}
+      >
+        &times;
+      </ButtonBase>
+    </Box>
   ),
   select: (props) => (
     <div>
-      <select {...props} onChange={undefined} readOnly>
-        {props.label.split('\n').map((optionValue) => (
-          <option key={optionValue}>{optionValue}</option>
-        ))}
-      </select>
+      <Select {...props} onChange={undefined} readOnly native>
+        {props.label
+          .split('\n')
+          .filter(Boolean)
+          .map((optionValue) => (
+            <option value={optionValue} key={optionValue}>
+              {optionValue}
+            </option>
+          ))}
+      </Select>
 
-      <textarea
-        style={{ display: 'block', resize:"vertical", height:"200px" }}
-        value={props.label}
-        onChange={props.onChange}
-      ></textarea>
+      <Box>
+        <TextareaAutosize
+          minRows={3}
+          maxRows={10}
+          style={{ width: 200, resize: 'horizontal' }}
+          value={props.label}
+          onChange={props.onChange}
+        ></TextareaAutosize>
+      </Box>
     </div>
   ),
 }
@@ -65,6 +123,7 @@ function SurveryCreatePage() {
           id: Math.random().toString(),
           question: 'Question Edit here',
           image: null,
+          formInputName,
           children: [{ type: formInputName, props: { label: formInputName } }],
         },
       ])
@@ -73,50 +132,69 @@ function SurveryCreatePage() {
 
   return (
     <main>
-      <h1>Create new survey</h1>
-
       <div style={S.wrapper}>
-        <ul style={S.sideBar}>
-          <li>
-            <p>Form Control Toolbars</p>
-          </li>
+        <Box sx={{ position: 'sticky', top: 0, height: '90vh', paddingTop: 2 }}>
+          <Paper elevation={1} sx={{ backgroundColor: 'white', height: '100%' }}>
+            <List>
+              <ListItem sx={{ borderBottom: '1px solid', borderColor: 'gray' }}>
+                <Typography variant="h6">Form Controls Toolbar</Typography>
+              </ListItem>
 
-          {formInputs.map((formInputName) => (
-            <li style={S.sideBarItem} key={formInputName}>
-              <button
-                style={S.sideBarItemBtn}
-                type="button"
-                onClick={addFormControl(formInputName)}
-              >
-                {formInputName}
-              </button>
-            </li>
-          ))}
-        </ul>
+              {formInputs.map((formInputName) => (
+                <ListItem style={S.sideBarItem} key={formInputName}>
+                  <ListItemButton
+                    style={S.sideBarItemBtn}
+                    type="button"
+                    onClick={addFormControl(formInputName)}
+                  >
+                    {formInputName}
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        </Box>
 
         {/* Form Builder */}
         <div style={S.formBuilder}>
-          <DragDropContext onDragEnd={reorder}>
-            <Droppable droppableId="form-builder-1">
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {form.map(({ question, children, id, ...rest }, i) => (
-                    <DraggableFormControl
-                      setForm={setForm}
-                      key={id}
-                      questionValue={question}
-                      inputElements={children}
-                      id={id}
-                      index={i}
-                      {...rest}
-                    />
-                  ))}
+          <Stack direction="row" alignItems="center">
+            <Typography variant="h3">Create new survey</Typography>
 
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+            <Button size="small" sx={{ marginLeft: 'auto' }}>
+              Save
+            </Button>
+            <Button variant="contained" size="small">
+              Publish
+            </Button>
+          </Stack>
+
+          {form.length === 0 ? (
+            <Box sx={{ paddingTop: 15, textAlign: 'center', color: 'gray' }}>
+              <Typography>Drag or Click on any control from left sidebar</Typography>
+            </Box>
+          ) : (
+            <DragDropContext onDragEnd={reorder}>
+              <Droppable droppableId="form-builder-1">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
+                    {form.map(({ question, children, id, ...rest }, i) => (
+                      <DraggableFormControl
+                        setForm={setForm}
+                        key={id}
+                        questionValue={question}
+                        inputElements={children}
+                        id={id}
+                        index={i}
+                        {...rest}
+                      />
+                    ))}
+
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </div>
       </div>
     </main>
@@ -134,7 +212,6 @@ const S = {
   sideBar: {
     listStyle: 'none',
     width: '100%',
-    boxShadow: '.4rem 0 1rem rgba(0 0 0 / 0.3)',
   },
   sideBarItem: {
     padding: '.5rem',
@@ -144,11 +221,11 @@ const S = {
   },
 
   formBuilder: {
-    backgroundColor: '#eee',
     borderRadius: '10px',
     textAlign: 'left',
     minHeight: '100px',
     width: '100%',
+    padding: '0 .5rem',
   },
 }
 

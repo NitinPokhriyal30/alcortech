@@ -1,62 +1,97 @@
+import Button from '@mui/material/Button'
 import * as React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { EditableInput } from './EditableInput'
 import { formInputTypeMap } from './SurveryCreatePage'
+import TextField from '@mui/material/TextField'
+import { Box, Stack, Typography } from '@mui/material'
 
-function DraggableFormControl({ setForm, questionValue, inputElements, index, id, ...props }) {
+function DraggableFormControl({
+  setForm,
+  questionValue,
+  inputElements: optionElements,
+  index,
+  id,
+  ...props
+}) {
+  function handleDeleteFormControl(targetControlId) {
+    setForm((prev) => prev.filter((formControl) => formControl.id !== targetControlId))
+  }
+
   return (
     <Draggable index={index} draggableId={id}>
       {(provided) => (
         <div {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-          <div style={{ padding: '0.5rem 1rem' }}>
-            <div style={S.formControl}>
-              <EditableInput
-                onChange={(ev) =>
-                  setForm((prev) => {
-                    prev[index].question = ev.target.value
-                    return [...prev]
-                  })
-                }
-                value={questionValue}
-              />
+          <Box
+            sx={{
+              backgroundColor: '#efefef',
+              borderRadius: 2,
+              padding: 2,
+              marginBottom: 2,
+            }}
+          >
+            <TextField
+              variant="outlined"
+              onChange={(ev) =>
+                setForm((prev) => {
+                  prev[index].question = ev.target.value
+                  return [...prev]
+                })
+              }
+              value={questionValue}
+              fullWidth
+            />
 
-              {props.image && <img src={URL.createObjectURL(props.image)} width="200px" />}
+            {props.image && <img src={URL.createObjectURL(props.image)} width="200px" />}
 
-              <div style={{ marginTop: '1rem' }}>
-                {inputElements.map((child, child_i) => {
-                  const InputControl = formInputTypeMap[child.type]
+            <Typography mt="1rem">Answer:</Typography>
+            <div>
+              {optionElements.map((child, child_i) => {
+                const InputControl = formInputTypeMap[child.type]
 
-                  return (
-                    <InputControl
-                      key={child_i}
-                      {...child.props}
-                      onChange={(ev) => {
-                        setForm((prev) => {
-                          prev[index].children[child_i].props.label = ev.target.value
-                          return [...prev]
-                        })
-                      }}
-                    />
-                  )
-                })}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForm((prev) => {
-                      prev[index].children.push({
-                        type: inputElements[0].type,
-                        props: { label: inputElements[0].type },
+                return (
+                  <InputControl
+                    key={child_i}
+                    name={id}
+                    {...child.props}
+                    handleDelete={() =>
+                      setForm((prev) => {
+                        prev[index].children.splice(child_i, 1)
+                        return [...prev]
                       })
+                    }
+                    onChange={(ev) => {
+                      setForm((prev) => {
+                        prev[index].children[child_i].props.label = ev.target.value
+                        return [...prev]
+                      })
+                    }}
+                  />
+                )
+              })}
 
-                      return [...prev]
-                    })
-                  }}
-                >
-                  add {inputElements[0].type}
-                </button>
+              <Stack direction="row" spacing={1} paddingTop="1rem">
+                {/radioButton|checkBox/.test(props.formInputName) && (
+                  <Button
+                    type="button"
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      setForm((prev) => {
+                        prev[index].children.push({
+                          type: optionElements[0].type,
+                          props: { label: optionElements[0].type },
+                        })
 
-                <label>
+                        return [...prev]
+                      })
+                    }}
+                  >
+                    add {optionElements[0].type}
+                  </Button>
+                )}
+
+                <Button component="label">
                   <input
                     type="file"
                     onChange={(ev) => {
@@ -68,18 +103,15 @@ function DraggableFormControl({ setForm, questionValue, inputElements, index, id
                     accept="image/*"
                     hidden
                   />
+                  add image
+                </Button>
 
-                  <span
-                    style={{
-                      appearance: 'button',
-                    }}
-                  >
-                    add image
-                  </span>
-                </label>
-              </div>
+                <Button color="warning" onClick={() => handleDeleteFormControl(id)}>
+                  Delete
+                </Button>
+              </Stack>
             </div>
-          </div>
+          </Box>
         </div>
       )}
     </Draggable>
@@ -88,9 +120,11 @@ function DraggableFormControl({ setForm, questionValue, inputElements, index, id
 
 const S = {
   formControl: {
-    padding: '.5rem',
-    border: '1px solid #666',
-    borderRadius: '6px',
+    paddingBlock: '.5rem',
+    borderBottom: '1px solid #666',
+  },
+  btnGroup: {
+    paddingTop: '1rem',
   },
 }
 
