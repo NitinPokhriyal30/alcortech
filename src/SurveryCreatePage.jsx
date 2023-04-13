@@ -23,6 +23,21 @@ export const formInputTypeMap = {
       <EditableInput value={props.label} onChange={props.onChange} />
     </div>
   ),
+  select: (props) => (
+    <div>
+      <select {...props} onChange={undefined} readOnly>
+        {props.label.split('\n').map((optionValue) => (
+          <option key={optionValue}>{optionValue}</option>
+        ))}
+      </select>
+
+      <textarea
+        style={{ display: 'block', resize:"vertical", height:"200px" }}
+        value={props.label}
+        onChange={props.onChange}
+      ></textarea>
+    </div>
+  ),
 }
 
 const formInputs = Object.keys(formInputTypeMap)
