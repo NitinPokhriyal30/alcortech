@@ -44,8 +44,7 @@ function DraggableFormControl({
 
             {props.image && <img src={URL.createObjectURL(props.image)} width="200px" />}
 
-            <Typography mt="1rem">Answer:</Typography>
-            <div>
+            <Box sx={{marginTop: 2}}>
               {optionElements.map((child, child_i) => {
                 const InputControl = formInputTypeMap[child.type]
 
@@ -110,7 +109,7 @@ function DraggableFormControl({
                   Delete
                 </Button>
               </Stack>
-            </div>
+            </Box>
           </Box>
         </div>
       )}

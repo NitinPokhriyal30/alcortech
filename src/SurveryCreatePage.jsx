@@ -8,6 +8,7 @@ import {
   ListItemButton,
   ListItemText,
   MenuItem,
+  Modal,
   Paper,
   Select,
   Stack,
@@ -19,6 +20,7 @@ import * as React from 'react'
 import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd'
 import DraggableFormControl from './DraggableFormControl'
 import { EditableInput } from './EditableInput'
+import SurveyPreview from './SurveyPreview'
 
 export const formInputTypeMap = {
   textField: (props) => (
@@ -74,9 +76,9 @@ export const formInputTypeMap = {
   ),
   select: (props) => (
     <div>
-      <Select {...props} onChange={undefined} readOnly native>
+      <Select {...props} onChange={undefined} label={undefined} readOnly native>
         {props.label
-          .split('\n')
+          .split(',')
           .filter(Boolean)
           .map((optionValue) => (
             <option value={optionValue} key={optionValue}>
@@ -85,6 +87,7 @@ export const formInputTypeMap = {
           ))}
       </Select>
 
+      <Typography sx={{marginTop: 2}} color="gray" variant="body2">Note: Enter the options comma separated</Typography>
       <Box>
         <TextareaAutosize
           minRows={3}
@@ -102,6 +105,7 @@ const formInputs = Object.keys(formInputTypeMap)
 
 function SurveryCreatePage() {
   const [form, setForm] = React.useState([])
+  const [modal, setModal] = React.useState('')
 
   function reorder({ destination, source }) {
     const startIndex = source.index
@@ -157,12 +161,18 @@ function SurveryCreatePage() {
 
         {/* Form Builder */}
         <div style={S.formBuilder}>
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="h3">Create new survey</Typography>
 
-            <Button size="small" sx={{ marginLeft: 'auto' }}>
-              Save
+            <Button
+              size="small"
+              style={{ marginLeft: 'auto' }}
+              onClick={() => setModal('SURVEY_PREVIEW')}
+            >
+              Preview
             </Button>
+
+            <Button size="small">Save</Button>
             <Button variant="contained" size="small">
               Publish
             </Button>
@@ -197,6 +207,15 @@ function SurveryCreatePage() {
           )}
         </div>
       </div>
+
+      <Modal
+        open={modal === 'SURVEY_PREVIEW'}
+        onClose={() => setModal('')}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <SurveyPreview form={form} />
+      </Modal>
     </main>
   )
 }
