@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import { EditableInput } from './EditableInput'
 import { formInputTypeMap } from './SurveryCreatePage'
 import TextField from '@mui/material/TextField'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material'
 
 function DraggableFormControl({
   setForm,
@@ -42,9 +42,20 @@ function DraggableFormControl({
               fullWidth
             />
 
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Mark as required"
+              onChange={(e) =>
+                setForm((prev) => {
+                  prev[index].required = e.target.checked
+                  return [...prev]
+                })
+              }
+            />
+
             {props.image && <img src={URL.createObjectURL(props.image)} width="200px" />}
 
-            <Box sx={{marginTop: 2}}>
+            <Box sx={{ marginTop: 2 }}>
               {optionElements.map((child, child_i) => {
                 const InputControl = formInputTypeMap[child.type]
 

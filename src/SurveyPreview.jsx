@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Modal,
   Radio,
-  Select,
+  NativeSelect as Select,
   Stack,
   TextField,
   Typography,
@@ -18,10 +18,9 @@ export default function SurveyPreview({ style, form, ...props }) {
       question: input.question,
       id: input.id,
       value: input.formInputName === 'checkBox' ? [] : '',
+      required: input.required,
     }))
   )
-
-  console.log(formSubmission)
 
   const formInputTypeMap = {
     textField: (props) => (
@@ -47,18 +46,34 @@ export default function SurveyPreview({ style, form, ...props }) {
         {...props}
       />
     ),
-    select: ({ label, ...props }) => (
-      <Select {...props} label={undefined} native>
-        {label
-          .split(',')
-          .filter(Boolean)
-          .map((optionValue) => (
+    select: ({ label, ...props }) => {
+      let options = label
+        .split(',')
+        .filter(Boolean)
+        .map((x) => x.trim())
+
+      return (
+        <TextField
+          select
+          required
+          {...props}
+          label={undefined}
+          SelectProps={{
+            native: true,
+            defaultValue: 'heyo',
+          }}
+        >
+          <option hidden value="">
+            Choose one below:
+          </option>
+          {options.map((optionValue) => (
             <option value={optionValue} key={optionValue}>
               {optionValue}
             </option>
           ))}
-      </Select>
-    ),
+        </TextField>
+      )
+    },
   }
 
   function handleChange(ev) {}
@@ -75,40 +90,59 @@ export default function SurveyPreview({ style, form, ...props }) {
         borderRadius: 1,
         maxWidth: '700px',
         backgroundColor: 'whitesmoke',
+        overflowY: "auto"
       }}
       onSubmit={(ev) => {
         ev.preventDefault()
-        console.log(JSON.stringify(formSubmission, null, 4))
+        try {
+          formSubmission.forEach((inputControl) => {
+            if (inputControl.required === true && inputControl.value.toString() === '')
+              throw Error('User: Validation Failed: some input marked as required are empty.')
+          })
+          console.log(JSON.stringify(formSubmission, null, 4))
+        } catch (error) {
+          console.log(error)
+        }
       }}
     >
       {form.map((formInput, i) => (
         <Box sx={{ marginBottom: 5 }}>
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             {i + 1}. {formInput.question}
+            {formInput.required && " *"}
           </Typography>
 
           {formInput.children.map((child, child_i) => {
             const InputControl = formInputTypeMap[child.type]
 
             return (
-              <InputControl
-                name={formInput.id}
-                key={child_i}
-                {...child.props}
-                onChange={(ev) => {
-                  setFormSubmission((prev) => {
-                    const input = ev.target
-                    if (input.type === 'checkbox') {
-                      if (input.checked) prev[i].value.push(input.value)
-                      else prev[i].value = prev[i].value.filter((value) => value !== input.value)
-                    } else {
-                      prev[i].value = input.value
-                    }
+              <>
+                <InputControl
+                  name={formInput.id}
+                  key={child_i}
+                  {...child.props}
+                  required={formInput.required}
+                  value={formSubmission[i].value}
+                  checked={
+                    child.type === 'checkBox'
+                      ? formSubmission[i].value.includes(child.props.label)
+                      : formSubmission[i].value === child.props.label
+                  }
+                  onChange={(ev) => {
+                    setFormSubmission((prev) => {
+                      const input = ev.target
+                      if (input.type === 'checkbox') {
+                        if (input.checked) prev[i].value.push(input.value)
+                        else prev[i].value = prev[i].value.filter((value) => value !== input.value)
+                      } else {
+                        prev[i].value = input.value
+                      }
 
-                    return prev
-                  })
-                }}
-              />
+                      return [...prev]
+                    })
+                  }}
+                />
+              </>
             )
           })}
         </Box>
