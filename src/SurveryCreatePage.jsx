@@ -214,7 +214,7 @@ function SurveryCreatePage() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SurveyPreview form={form} />
+        <SurveyPreview onClose={() => setModal('')} form={form} />
       </Modal>
     </main>
   )

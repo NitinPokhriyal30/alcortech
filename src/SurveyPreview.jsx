@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import * as React from 'react'
 
-export default function SurveyPreview({ style, form, ...props }) {
+export default function SurveyPreview({ style, form, onClose, ...props }) {
   const [formSubmission, setFormSubmission] = React.useState(() =>
     Array.from(form).map((input) => ({
       question: input.question,
@@ -76,8 +76,6 @@ export default function SurveyPreview({ style, form, ...props }) {
     },
   }
 
-  function handleChange(ev) {}
-
   return (
     <Box
       component="form"
@@ -90,27 +88,23 @@ export default function SurveyPreview({ style, form, ...props }) {
         borderRadius: 1,
         maxWidth: '700px',
         backgroundColor: 'whitesmoke',
-        overflowY: "auto"
+        overflowY: 'auto',
       }}
-      onSubmit={(ev) => {
-        ev.preventDefault()
-        try {
-          formSubmission.forEach((inputControl) => {
-            if (inputControl.required === true && inputControl.value.toString() === '')
-              throw Error('User: Validation Failed: some input marked as required are empty.')
-          })
-          console.log(JSON.stringify(formSubmission, null, 4))
-        } catch (error) {
-          console.log(error)
-        }
-      }}
+      onSubmit={handleSubmit()}
     >
+      <Box textAlign={'right'}>
+        <Button sx={{ fontSize: 30 }} onClick={onClose}>
+          &times;
+        </Button>
+      </Box>
       {form.map((formInput, i) => (
         <Box sx={{ marginBottom: 5 }}>
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             {i + 1}. {formInput.question}
-            {formInput.required && " *"}
+            {formInput.required && ' *'}
           </Typography>
+
+          {console.log(formSubmission)}
 
           {formInput.children.map((child, child_i) => {
             const InputControl = formInputTypeMap[child.type]
@@ -121,7 +115,7 @@ export default function SurveyPreview({ style, form, ...props }) {
                   name={formInput.id}
                   key={child_i}
                   {...child.props}
-                  required={formInput.required}
+                  // required={formInput.required}
                   value={formSubmission[i].value}
                   checked={
                     child.type === 'checkBox'
@@ -145,6 +139,12 @@ export default function SurveyPreview({ style, form, ...props }) {
               </>
             )
           })}
+
+          {formSubmission[i].error && (
+            <Typography variant="body2" color="red">
+              {formSubmission[i].error}
+            </Typography>
+          )}
         </Box>
       ))}
 
@@ -152,8 +152,41 @@ export default function SurveyPreview({ style, form, ...props }) {
         <Button type="submit" variant="contained">
           Submit
         </Button>
-        <Button>Clear</Button>
       </Stack>
     </Box>
   )
+
+  function validateFormSubmission() {
+    let isValid = true
+    formSubmission.forEach((inputControl, i) => {
+      if (inputControl.required === true && inputControl.value.toString() === '') isValid = false
+      setFormSubmission((prev) => {
+        prev[i].error = 'Field is required'
+        return [...prev]
+      })
+    })
+
+    return isValid
+  }
+
+  function handleSubmit() {
+    return (ev) => {
+      ev.preventDefault()
+      setFormSubmission((prev) => {
+        return prev.map(({ error, ...rest }) => rest)
+      })
+      try {
+        formSubmission.forEach((inputControl, i) => {
+          if (inputControl.required === true && inputControl.value.toString() === '')
+            setFormSubmission((prev) => {
+              prev[i].error = 'Field is required'
+              return [...prev]
+            })
+        })
+        console.log(JSON.stringify(formSubmission, null, 4))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 }

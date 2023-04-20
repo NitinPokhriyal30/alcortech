@@ -32,6 +32,11 @@ function DraggableFormControl({
           >
             <TextField
               variant="outlined"
+              inputProps={{
+                style: {
+                  color: 'gray',
+                },
+              }}
               onChange={(ev) =>
                 setForm((prev) => {
                   prev[index].question = ev.target.value
