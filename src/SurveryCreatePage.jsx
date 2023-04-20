@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonBase,
+  IconButton,
   InputBase,
   List,
   ListItem,
@@ -15,12 +16,16 @@ import {
   TextareaAutosize,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 import * as React from 'react'
 import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd'
 import DraggableFormControl from './DraggableFormControl'
 import { EditableInput } from './EditableInput'
 import SurveyPreview from './SurveyPreview'
+import { useEffect } from 'react'
 
 export const formInputTypeMap = {
   textField: (props) => (
@@ -87,7 +92,9 @@ export const formInputTypeMap = {
           ))}
       </Select>
 
-      <Typography sx={{marginTop: 2}} color="gray" variant="body2">Note: Enter the options comma separated</Typography>
+      <Typography sx={{ marginTop: 2 }} color="gray" variant="body2">
+        Note: Enter the options comma separated
+      </Typography>
       <Box>
         <TextareaAutosize
           minRows={3}
@@ -106,6 +113,9 @@ const formInputs = Object.keys(formInputTypeMap)
 function SurveryCreatePage() {
   const [form, setForm] = React.useState([])
   const [modal, setModal] = React.useState('')
+  const [showSidebar, setShowSidebar] = React.useState(false)
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
 
   function reorder({ destination, source }) {
     const startIndex = source.index
@@ -134,13 +144,45 @@ function SurveryCreatePage() {
     }
   }
 
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      const sidebar = document.querySelector('#sidebar')
+      const sidebarBtn = document.querySelector('#sidebar-btn')
+      const target = e.target
+
+      if (sidebar.contains(target) || sidebarBtn.contains(target)) return
+      setShowSidebar(false)
+    })
+  }, [])
+
   return (
     <main>
-      <div style={S.wrapper}>
-        <Box sx={{ position: 'sticky', top: 0, height: '90vh', paddingTop: 2 }}>
+      <Box
+        sx={isDesktop ? { gridTemplateColumns: '300px 1fr' } : { gridTemplateColumns: '1fr' }}
+        style={S.wrapper}
+      >
+        <Box
+          id="sidebar"
+          sx={
+            isDesktop
+              ? { position: 'sticky', top: 0, height: '90vh', paddingTop: 2 }
+              : {
+                  position: 'fixed',
+                  left: showSidebar ? 0 : '-100%',
+                  top: 0,
+                  bottom: 0,
+                  zIndex: 100,
+                }
+          }
+        >
           <Paper elevation={1} sx={{ backgroundColor: 'white', height: '100%' }}>
             <List>
               <ListItem sx={{ borderBottom: '1px solid', borderColor: 'gray' }}>
+                {!isDesktop && (
+                  <IconButton onClick={() => setShowSidebar((p) => !p)}>
+                    <MenuIcon />
+                  </IconButton>
+                )}
                 <Typography variant="h6">Form Controls Toolbar</Typography>
               </ListItem>
 
@@ -162,6 +204,11 @@ function SurveryCreatePage() {
         {/* Form Builder */}
         <div style={S.formBuilder}>
           <Stack direction="row" alignItems="center" spacing={1}>
+            {!isDesktop && (
+              <IconButton id="sidebar-btn" onClick={() => setShowSidebar((p) => !p)}>
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography variant="h3">Create new survey</Typography>
 
             <Button
@@ -206,7 +253,7 @@ function SurveryCreatePage() {
             </DragDropContext>
           )}
         </div>
-      </div>
+      </Box>
 
       <Modal
         open={modal === 'SURVEY_PREVIEW'}
@@ -223,7 +270,6 @@ function SurveryCreatePage() {
 const S = {
   wrapper: {
     display: 'grid',
-    gridTemplateColumns: '300px 1fr',
     gap: '1rem',
     padding: '1rem',
     justifyContent: 'start',
