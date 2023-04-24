@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 import { Box, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material'
 
 function DraggableFormControl({
-  setForm,
+  dispatch,
   questionValue,
   inputElements: optionElements,
   index,
@@ -15,7 +15,7 @@ function DraggableFormControl({
   ...props
 }) {
   function handleDeleteFormControl(targetControlId) {
-    setForm((prev) => prev.filter((formControl) => formControl.id !== targetControlId))
+    dispatch((prev) => prev.filter((formControl) => formControl.id !== targetControlId))
   }
 
   return (
@@ -38,9 +38,10 @@ function DraggableFormControl({
                 },
               }}
               onChange={(ev) =>
-                setForm((prev) => {
-                  prev[index].question = ev.target.value
-                  return [...prev]
+                dispatch({
+                  action: 'editQuestion',
+                  index,
+                  value: ev.target.value,
                 })
               }
               value={questionValue}
@@ -50,10 +51,11 @@ function DraggableFormControl({
             <FormControlLabel
               control={<Checkbox />}
               label="Mark as required"
-              onChange={(e) =>
-                setForm((prev) => {
-                  prev[index].required = e.target.checked
-                  return [...prev]
+              onChange={(ev) =>
+                dispatch({
+                  action: 'toggleRequiredInputControl',
+                  index,
+                  checked: ev.target.checked,
                 })
               }
             />
@@ -69,18 +71,21 @@ function DraggableFormControl({
                     key={child_i}
                     name={id}
                     {...child.props}
-                    handleDelete={() =>
-                      setForm((prev) => {
-                        prev[index].children.splice(child_i, 1)
-                        return [...prev]
+                    onDelete={() =>
+                      dispatch({
+                        action: 'removeChildInput',
+                        index,
+                        targetChild: child,
                       })
                     }
-                    onChange={(ev) => {
-                      setForm((prev) => {
-                        prev[index].children[child_i].props.label = ev.target.value
-                        return [...prev]
+                    onChange={(ev) =>
+                      dispatch({
+                        action: 'editChildInput',
+                        index,
+                        targetChild: child,
+                        value: ev.target.value,
                       })
-                    }}
+                    }
                   />
                 )
               })}
@@ -92,13 +97,10 @@ function DraggableFormControl({
                     variant="contained"
                     size="small"
                     onClick={() => {
-                      setForm((prev) => {
-                        prev[index].children.push({
-                          type: optionElements[0].type,
-                          props: { label: optionElements[0].type },
-                        })
-
-                        return [...prev]
+                      dispatch({
+                        action: 'addChildInput',
+                        index,
+                        type: props.formInputName,
                       })
                     }}
                   >
@@ -106,22 +108,10 @@ function DraggableFormControl({
                   </Button>
                 )}
 
-                <Button component="label">
-                  <input
-                    type="file"
-                    onChange={(ev) => {
-                      setForm((prev) => {
-                        prev[index].image = ev.target.files.item(0)
-                        return [...prev]
-                      })
-                    }}
-                    accept="image/*"
-                    hidden
-                  />
-                  add image
-                </Button>
-
-                <Button color="warning" onClick={() => handleDeleteFormControl(id)}>
+                <Button
+                  color="warning"
+                  onClick={() => dispatch({ action: 'deleteInputControl', inputControlId: id })}
+                >
                   Delete
                 </Button>
               </Stack>

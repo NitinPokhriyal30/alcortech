@@ -1,147 +1,170 @@
+import MenuIcon from '@mui/icons-material/Menu'
 import {
   Box,
   Button,
   ButtonBase,
   IconButton,
   InputBase,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  MenuItem,
   Modal,
-  Paper,
   Select,
   Stack,
-  TextareaAutosize,
   TextField,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import * as React from 'react'
-import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd'
-import DraggableFormControl from './DraggableFormControl'
-import { EditableInput } from './EditableInput'
-import SurveyPreview from './SurveyPreview'
+import { useLayoutEffect } from 'react'
 import { useEffect } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { useSearchParams } from 'react-router-dom'
+import DraggableFormControl from './DraggableFormControl'
+import SurveyPreview from './SurveyPreview'
+import SurveySidebar from './SurveySidebar'
+import { wait } from './utils'
 
-export const formInputTypeMap = {
-  textField: (props) => (
-    <div>
-      <TextField placeholder="Type here..." {...props} label={undefined} />
-    </div>
-  ),
-  checkBox: (props) => (
-    <Box
-      style={{
-        display: 'flex',
-        width: 'fit-content',
-        alignItem: 'center',
-        gap: '.5rem',
-        backgroundColor: '#ddd',
-        padding: '0 0.5rem',
-      }}
-    >
-      <input {...props} onChange={undefined} readOnly type="checkbox" />
+function reducer(state, payload) {
+  switch (payload.action) {
+    case 'addInputControl': {
+      const { formInputName } = payload
 
-      <InputBase value={props.label} onChange={props.onChange} />
+      return state.concat({
+        id: Math.random().toString(),
+        question: 'Question Edit here',
+        image: null,
+        formInputName,
+        children: [{ type: formInputName, props: { label: formInputName } }],
+      })
+    }
 
-      <ButtonBase
-        onClick={() => props.handleDelete(props.id)}
-        sx={(theme) => ({ color: theme.palette.warning })}
-      >
-        &times;
-      </ButtonBase>
-    </Box>
-  ),
-  radioButton: (props) => (
-    <Box
-      style={{
-        display: 'flex',
-        width: 'fit-content',
-        alignItem: 'center',
-        gap: '.5rem',
-        backgroundColor: '#ddd',
-        padding: '0 0.5rem',
-      }}
-    >
-      <input {...props} onChange={undefined} type="radio" readOnly />
+    case 'deleteInputControl': {
+      const targetControlId = payload.inputControlId
 
-      <InputBase value={props.label} onChange={props.onChange} />
+      return state.filter((inputControl) => inputControl.id !== targetControlId)
+    }
 
-      <ButtonBase
-        onClick={() => props.handleDelete(props.id)}
-        sx={(theme) => ({ color: theme.palette.warning })}
-      >
-        &times;
-      </ButtonBase>
-    </Box>
-  ),
-  select: (props) => (
-    <div>
-      <Select {...props} onChange={undefined} label={undefined} readOnly native>
-        {props.label
-          .split(',')
-          .filter(Boolean)
-          .map((optionValue) => (
-            <option value={optionValue} key={optionValue}>
-              {optionValue}
-            </option>
-          ))}
-      </Select>
+    case 'editQuestion': {
+      const { index, value } = payload
+      state[index].question = value
 
-      <Typography sx={{ marginTop: 2 }} color="gray" variant="body2">
-        Note: Enter the options comma separated
-      </Typography>
-      <Box>
-        <TextareaAutosize
-          minRows={3}
-          maxRows={10}
-          style={{ width: 200, resize: 'horizontal' }}
-          value={props.label}
-          onChange={props.onChange}
-        ></TextareaAutosize>
-      </Box>
-    </div>
-  ),
+      return [...state]
+    }
+
+    case 'toggleRequiredInputControl': {
+      const { index, checked } = payload
+      state[index].required = checked
+
+      return [...state]
+    }
+
+    case 'removeChildInput': {
+      const { index, targetChild } = payload
+      const child_i = state[index].children.indexOf(targetChild)
+
+      if (state[index].children.length <= 1) return state
+
+      state[index].children.splice(child_i, 1)
+
+      return [...state]
+    }
+
+    case 'addChildInput': {
+      const { index, type } = payload
+
+      state[index].children.push({
+        type: type,
+        props: { label: type },
+      })
+
+      return [...state]
+    }
+
+    case 'editChildInput': {
+      const { index, value, targetChild } = payload
+      const child_i = state[index].children.indexOf(targetChild)
+
+      state[index].children[child_i].props.label = value
+
+      return [...state]
+    }
+
+    case 'reorder': {
+      const { startIndex, endIndex } = payload
+
+      const [removed] = state.splice(startIndex, 1)
+      state.splice(endIndex, 0, removed)
+
+      return [...state]
+    }
+
+    case 'populate': {
+      return payload.form
+    }
+
+    default: {
+      console.error('Survey Create Page Reducer: unknown action was passed', payload)
+      throw Error('Survey Create Page Reducer: unknown action was passed')
+    }
+  }
 }
 
-const formInputs = Object.keys(formInputTypeMap)
+async function publishSurvey(dispatch, survey) {
+  const params = new URLSearchParams(window.location.search)
+  let _surveyId = params.get('id')
+  const isNewSurvey = _surveyId == null
+  if (isNewSurvey) {
+    const id = Math.random().toString()
+    _surveyId = id
+  }
+
+  const json = JSON.stringify(survey)
+  await wait(2000)
+  localStorage.setItem('SURVEY_ID_' + _surveyId, json)
+  const allSurvey = localStorage.getItem('SURVEY_ID_LIST')
+  const surveyIdList = JSON.parse(allSurvey) || []
+  surveyIdList.push(_surveyId)
+  localStorage.setItem('SURVEY_ID_LIST', JSON.stringify(surveyIdList))
+
+  survey.id = _surveyId
+  return survey
+}
 
 function SurveryCreatePage() {
-  const [form, setForm] = React.useState([])
+  const [form, dispatch] = React.useReducer(reducer, [])
+  const [surveyInfo, setSurveyInfo] = React.useState({})
+  const [loading, setLoading] = React.useState('')
   const [modal, setModal] = React.useState('')
   const [showSidebar, setShowSidebar] = React.useState(false)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+  const [params, setParams] = useSearchParams()
+
+  const surveyId = params.get('id')
+
+  async function handlePublish() {
+    try {
+      setLoading('saving_survey')
+      const survey = { form, surveyInfo }
+      const { id } = await publishSurvey(dispatch, survey)
+      params.set('id', id)
+      setParams(params)
+
+      setLoading('')
+    } catch (error) {
+      console.log('SurveyCreatePage.handlePublish():', error)
+      setLoading('')
+    }
+  }
 
   function reorder({ destination, source }) {
     const startIndex = source.index
     const endIndex = destination.index
 
-    setForm((prev) => {
-      const [removed] = prev.splice(startIndex, 1)
-      prev.splice(endIndex, 0, removed)
-
-      return [...prev]
+    dispatch({
+      action: 'reorder',
+      startIndex,
+      endIndex,
     })
-  }
-
-  function addFormControl(formInputName) {
-    return () => {
-      setForm((prev) => [
-        ...prev,
-        {
-          id: Math.random().toString(),
-          question: 'Question Edit here',
-          image: null,
-          formInputName,
-          children: [{ type: formInputName, props: { label: formInputName } }],
-        },
-      ])
-    }
   }
 
   useEffect(() => {
@@ -154,6 +177,19 @@ function SurveryCreatePage() {
       setShowSidebar(false)
     })
   }, [])
+
+  useLayoutEffect(() => {
+    if (surveyId) {
+      // error handling + user msg box
+      const json = localStorage.getItem('SURVEY_ID_' + surveyId)
+      const { form, surveyInfo } = JSON.parse(json)
+      dispatch({
+        action: 'populate',
+        form: form,
+      })
+      setSurveyInfo(surveyInfo)
+    }
+  }, [surveyId])
 
   return (
     <main>
@@ -175,30 +211,7 @@ function SurveryCreatePage() {
                 }
           }
         >
-          <Paper elevation={1} sx={{ backgroundColor: 'white', height: '100%' }}>
-            <List>
-              <ListItem sx={{ borderBottom: '1px solid', borderColor: 'gray' }}>
-                {!isDesktop && (
-                  <IconButton onClick={() => setShowSidebar((p) => !p)}>
-                    <MenuIcon />
-                  </IconButton>
-                )}
-                <Typography variant="h6">Form Controls Toolbar</Typography>
-              </ListItem>
-
-              {formInputs.map((formInputName) => (
-                <ListItem style={S.sideBarItem} key={formInputName}>
-                  <ListItemButton
-                    style={S.sideBarItemBtn}
-                    type="button"
-                    onClick={addFormControl(formInputName)}
-                  >
-                    {formInputName}
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
+          <SurveySidebar setShowSidebar={setShowSidebar} dispatch={dispatch} />
         </Box>
 
         {/* Form Builder */}
@@ -220,8 +233,13 @@ function SurveryCreatePage() {
             </Button>
 
             <Button size="small">Save</Button>
-            <Button variant="contained" size="small">
-              Publish
+            <Button
+              variant="contained"
+              size="small"
+              onClick={handlePublish}
+              disabled={loading === 'saving_survey'}
+            >
+              {loading === 'saving_survey' ? 'Publish...' : 'Publish'}
             </Button>
           </Stack>
 
@@ -236,7 +254,7 @@ function SurveryCreatePage() {
                   <div {...provided.droppableProps} ref={provided.innerRef}>
                     {form.map(({ question, children, id, ...rest }, i) => (
                       <DraggableFormControl
-                        setForm={setForm}
+                        dispatch={dispatch}
                         key={id}
                         questionValue={question}
                         inputElements={children}
@@ -278,13 +296,6 @@ const S = {
     listStyle: 'none',
     width: '100%',
   },
-  sideBarItem: {
-    padding: '.5rem',
-  },
-  sideBarItemBtn: {
-    padding: '.5rem',
-  },
-
   formBuilder: {
     borderRadius: '10px',
     textAlign: 'left',
@@ -292,6 +303,91 @@ const S = {
     width: '100%',
     padding: '0 .5rem',
   },
+}
+
+export const formInputTypeMap = {
+  textField: function (props) {
+    return (
+      <div>
+        <TextField placeholder="Type here..." {...props} label={undefined} />
+      </div>
+    )
+  },
+  checkBox: (props) => (
+    <Box
+      style={{
+        display: 'flex',
+        width: 'fit-content',
+        alignItem: 'center',
+        gap: '.5rem',
+        backgroundColor: '#ddd',
+        padding: '0 0.5rem',
+      }}
+    >
+      <input {...props} onChange={undefined} readOnly type="checkbox" />
+
+      <InputBase defaultValue={props.label} onChange={props.onChange} />
+
+      <ButtonBase
+        onClick={() => props.onDelete(props.id)}
+        sx={(theme) => ({ color: theme.palette.warning })}
+      >
+        &times;
+      </ButtonBase>
+    </Box>
+  ),
+  radioButton: (props) => (
+    <Box
+      style={{
+        display: 'flex',
+        width: 'fit-content',
+        alignItem: 'center',
+        gap: '.5rem',
+        backgroundColor: '#ddd',
+        padding: '0 0.5rem',
+      }}
+    >
+      <input {...props} onChange={undefined} type="radio" readOnly />
+
+      <InputBase value={props.label} onChange={props.onChange} />
+
+      <ButtonBase
+        onClick={() => props.onDelete(props.id)}
+        sx={(theme) => ({ color: theme.palette.warning })}
+      >
+        &times;
+      </ButtonBase>
+    </Box>
+  ),
+  select: (props) => (
+    <div>
+      <Select {...props} onChange={undefined} label={undefined} readOnly native>
+        {props.label
+          .split(',')
+          .filter(Boolean)
+          .map((optionValue) => (
+            <option value={optionValue} key={optionValue}>
+              {optionValue}
+            </option>
+          ))}
+      </Select>
+
+      <Typography sx={{ marginTop: 2 }} color="gray" variant="body2">
+        Note: Enter the options comma separated
+      </Typography>
+
+      <Box>
+        <TextField
+          minRows={3}
+          maxRows={10}
+          style={{ width: 200 }}
+          value={props.label}
+          onChange={props.onChange}
+          multiline
+        />
+      </Box>
+    </div>
+  ),
 }
 
 export default SurveryCreatePage
