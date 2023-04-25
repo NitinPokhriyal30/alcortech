@@ -24,12 +24,18 @@ async function publishSurvey(dispatch, survey) {
     _surveyId = id
   }
 
+  survey.id = _surveyId;
   await wait(2000)
-  const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST') || '{}')
-  allSurvey[_surveyId] = survey
+  const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST') || '[]')
+  const isInLocalStorage = allSurvey.findIndex(survey => survey.id === _surveyId)
+  if (isInLocalStorage !== -1) {
+    allSurvey[isInLocalStorage] = survey;
+  } else {
+    allSurvey.push(survey)
+  }
+
   localStorage.setItem('SURVEY_LIST', JSON.stringify(allSurvey))
 
-  survey.id = _surveyId
   return survey
 }
 
@@ -49,7 +55,8 @@ export default function SurveyPublishModal({
     const params = new URLSearchParams(window.location.search)
     const surveyId = params.get('id')
     const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST'))
-    return allSurvey[surveyId]?.surveyInfo || { title: '', description: '', visibleTo: [] }
+    const survey = allSurvey.find(survey => survey.id === surveyId)
+    return survey || { title: '', description: '', visibleTo: [] }
   })
 
   async function handlePublish(ev) {
@@ -58,8 +65,8 @@ export default function SurveyPublishModal({
 
       setLoading('saving_survey')
       setIsSuccess(false)
-      const survey = { form, surveyInfo }
-      const { id } = await publishSurvey(dispatch, survey)
+      surveyInfo.form = form
+      const { id } = await publishSurvey(dispatch, surveyInfo)
       params.set('id', id)
       setParams(params)
 

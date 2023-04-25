@@ -149,9 +149,10 @@ function SurveryCreatePage() {
       const json = localStorage.getItem('SURVEY_LIST')
 
       const allSurvey = JSON.parse(json)
+      const survey = allSurvey.find((survey) => survey.id === surveyId)
       dispatch({
         action: 'populate',
-        form: allSurvey[surveyId].form,
+        form: survey.form,
       })
     }
   }, [surveyId])
