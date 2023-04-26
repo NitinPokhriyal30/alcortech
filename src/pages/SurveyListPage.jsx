@@ -45,7 +45,7 @@ export default function SurveyListPage({ ...props }) {
       </Stack>
 
       <Stack gap={3} mt={3}>
-        {surveyList.map(({ id, ...surveyInfo }) => (
+        {surveyList?.map(({ id, ...surveyInfo }) => (
           <Card sx={{ p: 2 }} key={id}>
             <Stack justifyContent="space-between" gap={4} alignItems="flex-start" direction="row">
               <Link style={{ flex: 1 }} to={`/survey/create?id=${id}`}>
