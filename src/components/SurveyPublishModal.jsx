@@ -54,7 +54,7 @@ export default function SurveyPublishModal({
   const [surveyInfo, setSurveyInfo] = React.useState(() => {
     const params = new URLSearchParams(window.location.search)
     const surveyId = params.get('id')
-    const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST'))
+    const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST') || '[]')
     const survey = allSurvey.find(survey => survey.id === surveyId)
     return survey || { title: '', description: '', visibleTo: [] }
   })
