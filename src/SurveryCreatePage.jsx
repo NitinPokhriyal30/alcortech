@@ -18,7 +18,8 @@ import { useLayoutEffect } from 'react'
 import { useEffect } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useSearchParams } from 'react-router-dom'
-import SurveyPublishModal from './components/SurveyPublishModal'
+import SurveyCreateModal from './components/SurveyCreateModal'
+import TopLoadingBar from './components/TopLoadingBar'
 import DraggableFormControl from './DraggableFormControl'
 import SurveyPreview from './SurveyPreview'
 import SurveySidebar from './SurveySidebar'
@@ -118,6 +119,8 @@ function SurveryCreatePage() {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
   const [params, setParams] = useSearchParams()
+  const [survey, setSurvey] = React.useState(null)
+  const [loading, setLoading] = React.useState('')
 
   const surveyId = params.get('id')
 
@@ -143,8 +146,9 @@ function SurveryCreatePage() {
     })
   }, [])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (surveyId) {
+      setLoading('FETCH_SURVEY')
       // error handling + user msg box
       const json = localStorage.getItem('SURVEY_LIST')
 
@@ -154,98 +158,117 @@ function SurveryCreatePage() {
         action: 'populate',
         form: survey.form,
       })
+      setTimeout(() => {
+        setLoading('')
+        setSurvey(survey)
+      }, 3000)
     }
   }, [surveyId])
 
+  if (surveyId == null || surveyId == '') {
+    return (
+      <Box sx={{ display: 'grid', placeItems: 'center' }}>
+        <Typography textAlign="center" variant="h5" mt={14} color="rgba(0 0 0 / 0.2)">
+          404 <br />
+          This survey does not exists.
+        </Typography>
+      </Box>
+    )
+  }
+
   return (
     <SurveyPageContext.Provider value={[form, dispatch]}>
-      <main>
-        <Box
-          sx={isDesktop ? { gridTemplateColumns: '300px 1fr' } : { gridTemplateColumns: '1fr' }}
-          style={S.wrapper}
-        >
+      <TopLoadingBar loading={loading === 'FETCH_SURVEY'} />
+      
+      {survey === null ? null : (
+        <main>
           <Box
-            id="sidebar"
-            sx={
-              isDesktop
-                ? { position: 'sticky', top: 0, height: '90vh', paddingTop: 2 }
-                : {
-                    position: 'fixed',
-                    left: showSidebar ? 0 : '-100%',
-                    top: 0,
-                    bottom: 0,
-                    zIndex: 100,
-                  }
-            }
+            sx={isDesktop ? { gridTemplateColumns: '300px 1fr' } : { gridTemplateColumns: '1fr' }}
+            style={S.wrapper}
           >
-            <SurveySidebar setShowSidebar={setShowSidebar} dispatch={dispatch} />
+            <Box
+              id="sidebar"
+              sx={
+                isDesktop
+                  ? { position: 'sticky', top: 0, height: '90vh', paddingTop: 2 }
+                  : {
+                      position: 'fixed',
+                      left: showSidebar ? 0 : '-100%',
+                      top: 0,
+                      bottom: 0,
+                      zIndex: 100,
+                    }
+              }
+            >
+              <SurveySidebar setShowSidebar={setShowSidebar} dispatch={dispatch} />
+            </Box>
+
+            {/* Form Builder */}
+            <div style={S.formBuilder}>
+              <Stack direction="row" alignItems="center" spacing={1} p={2}>
+                {!isDesktop && (
+                  <IconButton id="sidebar-btn" onClick={() => setShowSidebar((p) => !p)}>
+                    <MenuIcon />
+                  </IconButton>
+                )}
+                <Typography variant="h5">{survey.title}</Typography>
+
+                <Button
+                  size="small"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={() => setModal('SURVEY_PREVIEW')}
+                >
+                  Preview
+                </Button>
+
+                <Button size="small">Save</Button>
+                <Button variant="contained" size="small" onClick={() => setModal('SURVEY_PUBLISH')}>
+                  Publish
+                </Button>
+              </Stack>
+
+              {form.length === 0 ? (
+                <Box sx={{ paddingTop: 15, textAlign: 'center', color: 'gray' }}>
+                  <Typography>Drag or Click on any control from left sidebar</Typography>
+                </Box>
+              ) : (
+                <DragDropContext onDragEnd={reorder}>
+                  <Droppable droppableId="form-builder-1">
+                    {(provided) => (
+                      <div {...provided.droppableProps} ref={provided.innerRef}>
+                        {form.map(({ question, children, id, ...rest }, i) => (
+                          <DraggableFormControl
+                            dispatch={dispatch}
+                            key={id}
+                            questionValue={question}
+                            inputElements={children}
+                            id={id}
+                            index={i}
+                            {...rest}
+                          />
+                        ))}
+
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              )}
+            </div>
           </Box>
 
-          {/* Form Builder */}
-          <div style={S.formBuilder}>
-            <Stack direction="row" alignItems="center" spacing={1} p={2}>
-              {!isDesktop && (
-                <IconButton id="sidebar-btn" onClick={() => setShowSidebar((p) => !p)}>
-                  <MenuIcon />
-                </IconButton>
-              )}
-              <Typography variant="h5">Create new survey</Typography>
+          <Modal
+            open={modal === 'SURVEY_PREVIEW'}
+            onClose={() => setModal('')}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <SurveyPreview onClose={() => setModal('')} form={form} />
+          </Modal>
 
-              <Button
-                size="small"
-                style={{ marginLeft: 'auto' }}
-                onClick={() => setModal('SURVEY_PREVIEW')}
-              >
-                Preview
-              </Button>
-
-              <Button size="small">Save</Button>
-              <Button variant="contained" size="small" onClick={() => setModal('SURVEY_PUBLISH')}>
-                Publish
-              </Button>
-            </Stack>
-
-            {form.length === 0 ? (
-              <Box sx={{ paddingTop: 15, textAlign: 'center', color: 'gray' }}>
-                <Typography>Drag or Click on any control from left sidebar</Typography>
-              </Box>
-            ) : (
-              <DragDropContext onDragEnd={reorder}>
-                <Droppable droppableId="form-builder-1">
-                  {(provided) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                      {form.map(({ question, children, id, ...rest }, i) => (
-                        <DraggableFormControl
-                          dispatch={dispatch}
-                          key={id}
-                          questionValue={question}
-                          inputElements={children}
-                          id={id}
-                          index={i}
-                          {...rest}
-                        />
-                      ))}
-
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            )}
-          </div>
-        </Box>
-
-        <Modal
-          open={modal === 'SURVEY_PREVIEW'}
-          onClose={() => setModal('')}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <SurveyPreview onClose={() => setModal('')} form={form} />
-        </Modal>
-
-        <SurveyPublishModal open={modal === 'SURVEY_PUBLISH'} onClose={() => setModal('')} />
-      </main>
+          <SurveyCreateModal open={modal === 'SURVEY_PUBLISH'} onClose={() => setModal('')} />
+        </main>
+      )}
     </SurveyPageContext.Provider>
   )
 }

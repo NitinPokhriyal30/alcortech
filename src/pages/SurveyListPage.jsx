@@ -1,72 +1,80 @@
-import { Add, MoreVert, Schedule } from '@mui/icons-material'
-import { Box, Button, Card, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material'
+import { Add, Delete, Edit, Schedule } from '@mui/icons-material'
+import { Box, Button, Card, Stack, Typography } from '@mui/material'
 import * as React from 'react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import AdminNavbar from '../components/AdminNavbar'
-import { fetchSurvey, removeSurvey } from '../redux/surveyReducer'
+import SurveyCreateModal from '../components/SurveyCreateModal'
+import TopLoadingBar from '../components/TopLoadingBar'
+import { fetchSurvey, removeSurvey } from '../redux/surveyAction'
 
 export default function SurveyListPage({ ...props }) {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [modal, setModal] = React.useState('')
   const survey = useSelector((state) => state.survey)
-  const dispatch = useDispatch()
+
   const surveyList = survey.list
 
   useEffect(() => {
-    fetchSurvey(dispatch)
+    fetchSurvey()
   }, [])
 
-  console.log(surveyList)
-
   return (
-    <Box component="main" sx={{ p: 2 }}>
-      <Stack direction="row" alignItems="center" gap={2}>
-        <Typography variant="h6">All Survey</Typography>
+    <>
+      <TopLoadingBar loading={survey.isLoading} />
 
-        <Schedule
-          sx={{
-            ml: 'auto',
-            color: 'gray',
-            visibility: survey.isLoading ? 'visible' : 'hidden',
-          }}
-        />
-        
-        <Button
-          LinkComponent={Link}
-          to="/survey/create"
-          startIcon={<Add />}
-          variant="outlined"
-          size="small"
-        >
-          Create
-        </Button>
-      </Stack>
+      <Box component="main" sx={{ p: 2 }}>
+        <Stack direction="row" alignItems="center" gap={2}>
+          <Typography variant="h6">All Survey</Typography>
 
-      <Stack gap={3} mt={3}>
-        {surveyList?.map(({ id, ...surveyInfo }) => (
-          <Card sx={{ p: 2 }} key={id}>
-            <Stack justifyContent="space-between" gap={4} alignItems="flex-start" direction="row">
-              <Link style={{ flex: 1 }} to={`/survey/create?id=${id}`}>
+          <Button
+            sx={{ ml: 'auto' }}
+            onClick={() => setModal('CREATE_SURVEY')}
+            startIcon={<Add />}
+            variant="outlined"
+            size="small"
+          >
+            Create
+          </Button>
+        </Stack>
+
+        <Stack gap={3} mt={3}>
+          {surveyList?.map(({ id, ...surveyInfo }) => (
+            <Card sx={{ p: 2 }} key={id}>
+              <Stack justifyContent="space-between" alignItems="flex-start">
                 <Typography mb={2} variant="h5">
                   {surveyInfo.title}
                 </Typography>
 
                 <Typography>{surveyInfo.description}</Typography>
-              </Link>
 
-              <IconButton onClick={(ev) => setAnchorEl(ev.currentTarget)}>
-                <MoreVert />
-              </IconButton>
+                <Stack direction="row" mt={4} gap={1}>
+                  <Button
+                    startIcon={<Edit />}
+                    variant="outlined"
+                    LinkComponent={Link}
+                    to={`/survey/create?id=${id}`}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    startIcon={<Delete />}
+                    variant="contained"
+                    color="warning"
+                    onClick={() => {
+                      if (confirm(`Are you sure to delete the "${surveyInfo.title}" survey.`))
+                        removeSurvey(id)
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Stack>
+              </Stack>
+            </Card>
+          ))}
+        </Stack>
 
-              <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
-                <MenuItem onClick={() => removeSurvey(dispatch, id)}>Delete</MenuItem>
-              </Menu>
-            </Stack>
-          </Card>
-        ))}
-      </Stack>
-    </Box>
+        <SurveyCreateModal open={modal === 'CREATE_SURVEY'} onClose={() => setModal('')} />
+      </Box>
+    </>
   )
 }
