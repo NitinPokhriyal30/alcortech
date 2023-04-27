@@ -10,7 +10,7 @@ import { fetchSurvey, removeSurvey } from '../redux/surveyAction'
 
 export default function SurveyListPage({ ...props }) {
   const [modal, setModal] = React.useState('')
-  const survey = useSelector((state) => state.survey)
+  const survey = useSelector((store) => store.survey)
 
   const surveyList = survey.list
 

@@ -32,6 +32,15 @@ function surveyReducer(state = surveyInitialState, action) {
       return { ...state }
     }
 
+    case 'editSurveySuccessful': {
+      state.isLoading = false
+      const targetSurvey = state.list.find((x) => x.id === action.targetSurveyId)
+
+      Object.assign(targetSurvey, action.surveyChanges)
+
+      return { ...state }
+    }
+
     default:
       return state
   }

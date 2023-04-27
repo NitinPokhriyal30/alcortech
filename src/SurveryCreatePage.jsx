@@ -19,6 +19,7 @@ import { useEffect } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useSearchParams } from 'react-router-dom'
 import SurveyCreateModal from './components/SurveyCreateModal'
+import SurveySaveModal from './components/SurveySaveModal'
 import TopLoadingBar from './components/TopLoadingBar'
 import DraggableFormControl from './DraggableFormControl'
 import SurveyPreview from './SurveyPreview'
@@ -179,7 +180,7 @@ function SurveryCreatePage() {
   return (
     <SurveyPageContext.Provider value={[form, dispatch]}>
       <TopLoadingBar loading={loading === 'FETCH_SURVEY'} />
-      
+
       {survey === null ? null : (
         <main>
           <Box
@@ -221,8 +222,15 @@ function SurveryCreatePage() {
                   Preview
                 </Button>
 
-                <Button size="small">Save</Button>
-                <Button variant="contained" size="small" onClick={() => setModal('SURVEY_PUBLISH')}>
+                <Button size="small" onClick={() => setModal('SURVEY_SAVE')}>
+                  Save
+                </Button>
+                <Button
+                  variant="contained"
+                  size="small"
+
+                  /*onClick={() => setModal('SURVEY_PUBLISH')}*/
+                >
                   Publish
                 </Button>
               </Stack>
@@ -267,6 +275,8 @@ function SurveryCreatePage() {
           </Modal>
 
           <SurveyCreateModal open={modal === 'SURVEY_PUBLISH'} onClose={() => setModal('')} />
+
+          <SurveySaveModal open={modal === 'SURVEY_SAVE'} onClose={() => setModal('')} />
         </main>
       )}
     </SurveyPageContext.Provider>

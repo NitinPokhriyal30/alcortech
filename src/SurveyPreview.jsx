@@ -45,7 +45,6 @@ const formInputTypeMap = {
     return (
       <TextField
         select
-        required
         {...props}
         label={undefined}
         SelectProps={{

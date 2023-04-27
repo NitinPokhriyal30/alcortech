@@ -40,4 +40,23 @@ async function createSurvey(survey) {
   return survey
 }
 
-export { fetchSurvey, removeSurvey, createSurvey }
+async function editSurvey(targetSurveyId, surveyChanges) {
+  store.dispatch({ type: 'surveyLoading' })
+  await wait(2000)
+
+  const allSurvey = JSON.parse(localStorage.getItem('SURVEY_LIST') || '[]')
+  const targetSurvey = allSurvey.find((x) => x.id === targetSurveyId)
+
+  if (targetSurvey == null) {
+    const error = Error('Failed to find the survey')
+    error.isAxiosError = true
+    throw error
+  }
+
+  Object.assign(targetSurvey, surveyChanges)
+  const json = JSON.stringify(allSurvey)
+  localStorage.setItem('SURVEY_LIST', json)
+  store.dispatch({ type: 'editSurveySuccessful', surveyChanges, targetSurveyId })
+}
+
+export { fetchSurvey, removeSurvey, createSurvey, editSurvey }
