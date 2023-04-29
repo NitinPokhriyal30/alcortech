@@ -17,11 +17,14 @@ import * as React from 'react'
 import { useLayoutEffect } from 'react'
 import { useEffect } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import SurveyCreateModal from './components/SurveyCreateModal'
+import SurveyPublishModal from './components/SurveyPublishModal'
 import SurveySaveModal from './components/SurveySaveModal'
 import TopLoadingBar from './components/TopLoadingBar'
 import DraggableFormControl from './DraggableFormControl'
+import { fetchSurvey } from './redux/surveyAction'
 import SurveyPreview from './SurveyPreview'
 import SurveySidebar from './SurveySidebar'
 import { wait } from './utils'
@@ -114,16 +117,19 @@ function reducer(state, payload) {
 export const SurveyPageContext = React.createContext(null)
 
 function SurveryCreatePage() {
-  const [form, dispatch] = React.useReducer(reducer, [])
+  const [params, setParams] = useSearchParams()
+  const surveyId = params.get('id')
+
+  const surveyStore = useSelector((store) => store.survey)
+  const survey = surveyStore.list.find((x) => x.id === params.get('id'))
+
+  const [form, dispatch] = React.useReducer(reducer, survey ? survey.form : [])
   const [modal, setModal] = React.useState('')
+  const [error, setError] = React.useState(false)
   const [showSidebar, setShowSidebar] = React.useState(false)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
-  const [params, setParams] = useSearchParams()
-  const [survey, setSurvey] = React.useState(null)
   const [loading, setLoading] = React.useState('')
-
-  const surveyId = params.get('id')
 
   function reorder({ destination, source }) {
     const startIndex = source.index
@@ -142,31 +148,44 @@ function SurveryCreatePage() {
       const sidebarBtn = document.querySelector('#sidebar-btn')
       const target = e.target
 
-      if (sidebar.contains(target) || sidebarBtn.contains(target)) return
+      if (sidebar?.contains(target) || sidebarBtn?.contains(target)) return
       setShowSidebar(false)
     })
   }, [])
 
   useEffect(() => {
-    if (surveyId) {
-      setLoading('FETCH_SURVEY')
-      // error handling + user msg box
-      const json = localStorage.getItem('SURVEY_LIST')
+    const fn = async () => {
+      if (surveyStore.list.length === 0 || survey == null) {
+        setLoading('FETCH_SURVEY')
+        const allSurvey = await fetchSurvey()
+        const survey = allSurvey.find((x) => x.id === surveyId)
 
-      const allSurvey = JSON.parse(json)
-      const survey = allSurvey.find((survey) => survey.id === surveyId)
-      dispatch({
-        action: 'populate',
-        form: survey.form,
-      })
-      setTimeout(() => {
+        if (survey === null) setError(true)
+        dispatch({
+          action: 'populate',
+          form: survey.form,
+        })
+        setError(false)
         setLoading('')
-        setSurvey(survey)
-      }, 3000)
-    }
-  }, [surveyId])
+      }
 
-  if (surveyId == null || surveyId == '') {
+      // if (surveyId) {
+      //   setLoading('FETCH_SURVEY')
+      //   const allSurvey = await fetchSurvey()
+
+      //   const survey = allSurvey.find((survey) => survey.id === surveyId)
+
+      //   dispatch({
+      //     action: 'populate',
+      //     form: survey.form,
+      //   })
+      //   setLoading('')
+      // }
+    }
+    fn()
+  }, [surveyId, surveyStore.list.length, survey])
+
+  if (error || surveyId == null || surveyId == '') {
     return (
       <Box sx={{ display: 'grid', placeItems: 'center' }}>
         <Typography textAlign="center" variant="h5" mt={14} color="rgba(0 0 0 / 0.2)">
@@ -181,7 +200,7 @@ function SurveryCreatePage() {
     <SurveyPageContext.Provider value={[form, dispatch]}>
       <TopLoadingBar loading={loading === 'FETCH_SURVEY'} />
 
-      {survey === null ? null : (
+      {survey == null ? null : (
         <main>
           <Box
             sx={isDesktop ? { gridTemplateColumns: '300px 1fr' } : { gridTemplateColumns: '1fr' }}
@@ -225,12 +244,7 @@ function SurveryCreatePage() {
                 <Button size="small" onClick={() => setModal('SURVEY_SAVE')}>
                   Save
                 </Button>
-                <Button
-                  variant="contained"
-                  size="small"
-
-                  /*onClick={() => setModal('SURVEY_PUBLISH')}*/
-                >
+                <Button variant="contained" size="small" onClick={() => setModal('SURVEY_PUBLISH')}>
                   Publish
                 </Button>
               </Stack>
@@ -265,18 +279,24 @@ function SurveryCreatePage() {
             </div>
           </Box>
 
-          <Modal
+          <SurveyPreview
+            key={Math.random().toString()}
             open={modal === 'SURVEY_PREVIEW'}
             onClose={() => setModal('')}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <SurveyPreview onClose={() => setModal('')} form={form} />
-          </Modal>
+            surveyForm={form}
+          />
 
-          <SurveyCreateModal open={modal === 'SURVEY_PUBLISH'} onClose={() => setModal('')} />
+          <SurveyPublishModal
+            open={modal === 'SURVEY_PUBLISH'}
+            onClose={() => setModal('')}
+            surveyForm={form}
+          />
 
-          <SurveySaveModal open={modal === 'SURVEY_SAVE'} onClose={() => setModal('')} />
+          <SurveySaveModal
+            open={modal === 'SURVEY_SAVE'}
+            onClose={() => setModal('')}
+            surveyForm={form}
+          />
         </main>
       )}
     </SurveyPageContext.Provider>

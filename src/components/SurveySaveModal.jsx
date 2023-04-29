@@ -9,7 +9,7 @@ import { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 const initialFormState = { title: '', description: '' }
-export default function SurveySaveModal({ open, onClose, ...props }) {
+export default function SurveySaveModal({ open, onClose, surveyForm, ...props }) {
   const survey = useSelector((store) => store.survey)
   const [loading, setLoading] = React.useState('')
   const [form, setForm] = React.useState(initialFormState)
@@ -28,14 +28,18 @@ export default function SurveySaveModal({ open, onClose, ...props }) {
       Object.entries(form)
         .filter(([, value]) => !value)
         .forEach(([name, value]) => {
-          setError((error) => ({ [name]: value, ...error }))
+          console.log(name, value)
+          setError((error) => ({ ...error, [name]: 'This field is required' }))
           isValid = false
         })
 
       if (!isValid) return
 
+      let surveyChanges = form
+      surveyChanges.form = surveyForm
+      console.log('saving', surveyChanges)
       setLoading('SAVE_SURVEY')
-      await editSurvey(surveyId, form)
+      await editSurvey(surveyId, surveyChanges)
       setLoading('')
     } catch (error) {
       if (error.isAxiosError) {
@@ -92,10 +96,20 @@ export default function SurveySaveModal({ open, onClose, ...props }) {
         <TopLoadingBar loading={loading === 'SAVE_SURVEY'} />
 
         <Stack mt={2} gap={2} component="form" onSubmit={handleSubmit}>
-          <TextField {...inputProps('title')} label="Title" InputLabelProps={{ shrink: true }} />
+          <TextField
+            {...inputProps('title')}
+            label="Title"
+            InputLabelProps={{ shrink: true }}
+            error={error.title}
+            helperText={error.title}
+          />
+
+          {console.log(error)}
           <TextField
             {...inputProps('description')}
             label="Description"
+            error={error.description}
+            helperText={error.description}
             multiline
             minRows={3}
             maxRows={4}

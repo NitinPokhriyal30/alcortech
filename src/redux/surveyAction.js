@@ -7,6 +7,7 @@ async function fetchSurvey() {
   const json = localStorage.getItem('SURVEY_LIST')
   const surveyList = JSON.parse(json)
   store.dispatch({ type: 'fetchSurveySuccessful', survey: surveyList })
+  return surveyList
 }
 
 async function removeSurvey(targetSurveyId) {

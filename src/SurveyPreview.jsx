@@ -1,3 +1,4 @@
+import { Close } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -9,8 +10,10 @@ import {
   Stack,
   TextField,
   Typography,
+  IconButton,
 } from '@mui/material'
 import * as React from 'react'
+import XStack from './components/XStack'
 
 const formInputTypeMap = {
   textField: (props) => (
@@ -65,9 +68,9 @@ const formInputTypeMap = {
   },
 }
 
-export default function SurveyPreview({ style, form, onClose, ...props }) {
+export default function SurveyPreview({ style, surveyForm, open, onClose, ...props }) {
   const [formSubmission, setFormSubmission] = React.useState(() =>
-    Array.from(form).map((input) => ({
+    Array.from(surveyForm).map((input) => ({
       question: input.question,
       id: input.id,
       value: input.formInputName === 'checkBox' ? [] : '',
@@ -76,78 +79,81 @@ export default function SurveyPreview({ style, form, onClose, ...props }) {
   )
 
   return (
-    <Box
-      component="form"
-      sx={{
-        position: 'absolute',
-        inset: 0,
-        marginInline: 'auto',
-        marginBlock: 4,
-        padding: 2,
-        borderRadius: 1,
-        maxWidth: '700px',
-        backgroundColor: 'whitesmoke',
-        overflowY: 'auto',
-      }}
-      onSubmit={handleSubmit()}
-    >
-      <Box textAlign={'right'}>
-        <Button sx={{ fontSize: 30 }} onClick={onClose}>
-          &times;
-        </Button>
-      </Box>
-      {form.map((formInput, i) => (
-        <Box key={formInput.id} sx={{ marginBottom: 5 }}>
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            {i + 1}. {formInput.question}
-            {formInput.required && ' *'}
-          </Typography>
+    <Modal open={open} onClose={onClose}>
+      <Box
+        component="form"
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          marginInline: 'auto',
+          marginBlock: 4,
+          padding: 2,
+          borderRadius: 1,
+          maxWidth: '700px',
+          backgroundColor: 'whitesmoke',
+          overflowY: 'auto',
+        }}
+        onSubmit={handleSubmit()}
+      >
+        <XStack justifyContent="flex-end">
+          <IconButton onClick={onClose}>
+            <Close />
+          </IconButton>
+        </XStack>
 
-          {formInput.children.map((child, child_i) => {
-            const InputControl = formInputTypeMap[child.type]
-
-            return (
-              <InputControl
-                name={formInput.id}
-                key={child_i}
-                {...child.props}
-                value={formSubmission[i].value}
-                checked={
-                  child.type === 'checkBox'
-                    ? formSubmission[i].value.includes(child.props.label)
-                    : formSubmission[i].value === child.props.label
-                }
-                onChange={(ev) => {
-                  setFormSubmission((prev) => {
-                    const input = ev.target
-                    if (input.type === 'checkbox') {
-                      if (input.checked) prev[i].value.push(input.value)
-                      else prev[i].value = prev[i].value.filter((value) => value !== input.value)
-                    } else {
-                      prev[i].value = input.value
-                    }
-
-                    return [...prev]
-                  })
-                }}
-              />
-            )
-          })}
-
-          {formSubmission[i].error && (
-            <Typography variant="body2" color="red">
-              {formSubmission[i].error}
+        {surveyForm.map((formInput, i) => (
+          <Box key={formInput.id} sx={{ marginBottom: 5 }}>
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+              {i + 1}. {formInput.question}
+              {formInput.required && ' *'}
             </Typography>
-          )}
-        </Box>
-      ))}
 
-      <Stack direction="row" spacing={1}>
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
-      </Stack>
-    </Box>
+            {formInput.children.map((child, child_i) => {
+              const InputControl = formInputTypeMap[child.type]
+
+              return (
+                <InputControl
+                  name={formInput.id}
+                  key={child_i}
+                  {...child.props}
+                  value={formSubmission[i].value}
+                  checked={
+                    child.type === 'checkBox'
+                      ? formSubmission[i].value.includes(child.props.label)
+                      : formSubmission[i].value === child.props.label
+                  }
+                  onChange={(ev) => {
+                    setFormSubmission((prev) => {
+                      const input = ev.target
+                      if (input.type === 'checkbox') {
+                        if (input.checked) prev[i].value.push(input.value)
+                        else prev[i].value = prev[i].value.filter((value) => value !== input.value)
+                      } else {
+                        prev[i].value = input.value
+                      }
+
+                      return [...prev]
+                    })
+                  }}
+                />
+              )
+            })}
+
+            {formSubmission[i].error && (
+              <Typography variant="body2" color="red">
+                {formSubmission[i].error}
+              </Typography>
+            )}
+          </Box>
+        ))}
+
+        <Stack direction="row" spacing={1}>
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </Stack>
+      </Box>
+    </Modal>
   )
 
   function validateFormSubmission() {
