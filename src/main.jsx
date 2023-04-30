@@ -8,17 +8,19 @@ import {
   createRoutesFromElements,
   Outlet,
   Route,
-  RouterProvider
+  RouterProvider,
 } from 'react-router-dom'
 import AdminNavbar from './components/AdminNavbar'
 import HomePage from './pages/HomePage'
+import SurveryCreatePage from './pages/SurveryCreatePage'
 import SurveyListPage from './pages/SurveyListPage'
 import { store } from './redux/store'
-import SurveryCreatePage from './SurveryCreatePage'
+import SingleComponentTestPage from './pages/SingleComponentTestPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      <Route path="/test" element={<SingleComponentTestPage />} />
       <Route path="/" element={<HomePage />} />
       <Route
         path="/survey"

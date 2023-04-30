@@ -11,7 +11,7 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu'
 import * as React from 'react'
-import { formInputTypeMap } from './SurveryCreatePage'
+import { formInputTypeMap } from '../pages/SurveryCreatePage'
 
 export default function SurveySidebar({ setShowSidebar, dispatch }) {
   const theme = useTheme()

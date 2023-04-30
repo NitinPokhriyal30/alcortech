@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button'
 import * as React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { formInputTypeMap } from './SurveryCreatePage'
+import { formInputTypeMap } from '../pages/SurveryCreatePage'
 import TextField from '@mui/material/TextField'
 import { Box, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material'
 

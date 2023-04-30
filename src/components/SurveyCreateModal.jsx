@@ -3,17 +3,12 @@ import {
   Box,
   Button,
   Card,
-  IconButton,
-  MenuItem,
-  Modal,
+  IconButton, Modal,
   Stack,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material'
 import * as React from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { SurveyPageContext } from '../SurveryCreatePage'
-import { wait } from '../utils'
 import { createSurvey } from '../redux/surveyAction'
 
 const initialSurveyInfoState = { title: '', description: '' }

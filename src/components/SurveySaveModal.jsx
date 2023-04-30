@@ -104,7 +104,6 @@ export default function SurveySaveModal({ open, onClose, surveyForm, ...props })
             helperText={error.title}
           />
 
-          {console.log(error)}
           <TextField
             {...inputProps('description')}
             label="Description"

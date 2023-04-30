@@ -19,15 +19,14 @@ import { useEffect } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import SurveyCreateModal from './components/SurveyCreateModal'
-import SurveyPublishModal from './components/SurveyPublishModal'
-import SurveySaveModal from './components/SurveySaveModal'
-import TopLoadingBar from './components/TopLoadingBar'
-import DraggableFormControl from './DraggableFormControl'
-import { fetchSurvey } from './redux/surveyAction'
-import SurveyPreview from './SurveyPreview'
-import SurveySidebar from './SurveySidebar'
-import { wait } from './utils'
+import SurveyPublishModal from '../components/SurveyPublishModal'
+import SurveySaveModal from '../components/SurveySaveModal'
+import TopLoadingBar from '../components/TopLoadingBar'
+import DraggableFormControl from '../components/DraggableFormControl'
+import { fetchSurvey } from '../redux/surveyAction'
+import SurveyPreviewModal from '../components/SurveyPreviewModal'
+import SurveySidebar from '../components/SurveySidebar'
+import { wait } from '../utils'
 
 function reducer(state, payload) {
   switch (payload.action) {
@@ -279,7 +278,7 @@ function SurveryCreatePage() {
             </div>
           </Box>
 
-          <SurveyPreview
+          <SurveyPreviewModal
             key={Math.random().toString()}
             open={modal === 'SURVEY_PREVIEW'}
             onClose={() => setModal('')}
