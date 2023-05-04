@@ -27,7 +27,10 @@ import { fetchSurvey, removeSurvey } from '../redux/surveyAction'
 import maleAvatar from '../assets/male_avatar.jpg'
 
 const myTheme = {
-  backgroundColor: 'rgb(231, 235, 240)',
+  paper: {
+    backgroundColor: 'rgb(231, 235, 240)',
+  },
+  tableCell: { height: 72.6 },
 }
 const dummySurveyList = [
   {
@@ -175,7 +178,7 @@ const dummySurveyList = [
 export default function SurveyListPage({ ...props }) {
   const [modal, setModal] = React.useState('')
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const survey = useSelector((store) => store.survey)
 
   const surveyList = survey.list
@@ -185,12 +188,13 @@ export default function SurveyListPage({ ...props }) {
   }, [])
 
   const visibleRows = surveyList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const emptyRows = page === 0 ? 0 : rowsPerPage - visibleRows.length
 
   return (
     <>
       <TopLoadingBar loading={survey.isLoading} />
 
-      <Box component="main" sx={{ p: 2, backgroundColor: myTheme.backgroundColor }}>
+      <Box component="main" sx={{ p: 2, backgroundColor: myTheme.paper.backgroundColor }}>
         <Stack direction="row" alignItems="center" gap={2}>
           <Typography variant="h6">All Survey</Typography>
 
@@ -215,7 +219,7 @@ export default function SurveyListPage({ ...props }) {
             <Box
               sx={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              <Typography textAlign='center' color="gray">
+              <Typography textAlign="center" color="gray">
                 No Survey Yet
                 <br />
                 Create your first survey
@@ -264,16 +268,21 @@ export default function SurveyListPage({ ...props }) {
                         </TableCell>
                       </TableRow>
                     ))}
+                    {emptyRows > 0 && (
+                      <TableRow sx={{ height: emptyRows * myTheme.tableCell.height }}>
+                        <TableCell colSpan={4}></TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[10, 20, 30, 40]}
+                rowsPerPageOptions={[5, 10, 20, 30]}
                 component="div"
-                count={visibleRows.length}
+                count={surveyList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onPageChange={(e, pageNo) => setPage(pageNo)}
+                onPageChange={(_, pageNo) => setPage(pageNo)}
                 onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
               />
             </>
