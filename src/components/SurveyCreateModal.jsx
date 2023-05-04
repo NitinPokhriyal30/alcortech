@@ -1,38 +1,53 @@
 import { Close } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Card,
-  IconButton, Modal,
-  Stack,
-  TextField,
-  Typography
-} from '@mui/material'
+import { Box, Button, Card, IconButton, Modal, Stack, TextField, Typography } from '@mui/material'
 import * as React from 'react'
 import { createSurvey } from '../redux/surveyAction'
 
-const initialSurveyInfoState = { title: '', description: '' }
-
 export default function SurveyCreateModal({ open, onClose }) {
+  const initSurveyInfoState = { title: '', description: '' }
+  const initErrorState = { title: '', description: '', createBtn: '' }
+
   const [loading, setLoading] = React.useState('')
+  const [errors, setErrors] = React.useState(initErrorState)
   const [isSuccess, setIsSuccess] = React.useState(false)
-  const [surveyInfo, setSurveyInfo] = React.useState(initialSurveyInfoState)
+  const [surveyInfo, setSurveyInfo] = React.useState(initSurveyInfoState)
+
+  function validateSubmission() {
+    setErrors(initErrorState)
+    let isValid = true
+    Object.entries(surveyInfo).forEach(([key, value]) => {
+      if (value === '') {
+        isValid = false
+        setErrors((prev) => ({ ...prev, [key]: 'This field is required' }))
+      }
+    })
+
+    return isValid
+  }
 
   async function handleCreate(ev) {
     try {
       ev.preventDefault()
 
+      if (!validateSubmission()) return
+
       setLoading('saving_survey')
       setIsSuccess(false)
       surveyInfo.form = []
       await createSurvey(surveyInfo)
-      setIsSuccess(true)
-      setSurveyInfo(initialSurveyInfoState)
 
-      setTimeout(() => onClose(), 300)
+      //reset states
+      setIsSuccess(true)
+      setSurveyInfo(initSurveyInfoState)
+      setIsSuccess(false)
+      setErrors(initErrorState)
+
+      setTimeout(() => {
+        onClose()
+      }, 300)
     } catch (error) {
       if (error.isAxiosError) {
-        setError('Failed to create survey')
+        setErrors((prev) => ({ ...prev, createBtn: 'Failed to create survey' }))
       }
 
       console.log('SurveyCreatePage.handlePublish():', error)
@@ -41,6 +56,7 @@ export default function SurveyCreateModal({ open, onClose }) {
     }
   }
 
+  console.log(errors)
   function inputProps(name) {
     return {
       name,
@@ -51,6 +67,8 @@ export default function SurveyCreateModal({ open, onClose }) {
         })
       },
       value: surveyInfo[name],
+      error: errors[name] !== '',
+      helperText: errors[name],
     }
   }
 
@@ -95,6 +113,17 @@ export default function SurveyCreateModal({ open, onClose }) {
             <Button variant="contained" type="submit" disabled={loading === 'saving_survey'}>
               {loading === 'saving_survey' ? 'Create...' : isSuccess ? 'Created' : 'Create'}
             </Button>
+
+            {errors.createBtn && (
+              <Typography
+                mt={1}
+                sx={(theme) => ({
+                  color: theme.palette.error.main,
+                })}
+              >
+                {errors.createBtn}
+              </Typography>
+            )}
           </Box>
         </Stack>
       </Card>
