@@ -1,13 +1,5 @@
 import { Close } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Card,
-  IconButton, Modal,
-  Stack,
-  TextField,
-  Typography
-} from '@mui/material'
+import { Box, Button, Card, IconButton, Modal, Stack, TextField, Typography } from '@mui/material'
 import * as React from 'react'
 import { createSurvey } from '../redux/surveyAction'
 
@@ -15,12 +7,28 @@ const initialSurveyInfoState = { title: '', description: '' }
 
 export default function SurveyCreateModal({ open, onClose }) {
   const [loading, setLoading] = React.useState('')
+  const [errors, setErrors] = React.useState(initialSurveyInfoState)
   const [isSuccess, setIsSuccess] = React.useState(false)
   const [surveyInfo, setSurveyInfo] = React.useState(initialSurveyInfoState)
+
+  function validateSubmission() {
+    setErrors(initialSurveyInfoState)
+    let isValid = true
+    Object.entries(surveyInfo).forEach(([key, value]) => {
+      if (value === '') {
+        isValid = false
+        setErrors((prev) => ({ ...prev, [key]: 'This field is required' }))
+      }
+    })
+
+    return isValid
+  }
 
   async function handleCreate(ev) {
     try {
       ev.preventDefault()
+
+      if (!validateSubmission()) return
 
       setLoading('saving_survey')
       setIsSuccess(false)
@@ -51,6 +59,8 @@ export default function SurveyCreateModal({ open, onClose }) {
         })
       },
       value: surveyInfo[name],
+      error: errors[name] !== '',
+      helperText: errors[name],
     }
   }
 

@@ -204,17 +204,27 @@ export default function SurveyListPage({ ...props }) {
             Create
           </Button>
         </Stack>
-        <Paper>
-          <TableContainer sx={{ mt: 2 }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              {survey.isLoading ? (
-                <TableRow sx={{ height: 150 }}>
-                  <TableCell colSpan={4} align="center">
-                    Loading...
-                  </TableCell>
-                </TableRow>
-              ) : (
-                <>
+        <Paper sx={{ mt: 2 }}>
+          {survey.isLoading && survey.list.length === 0 ? (
+            <Box
+              sx={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <Typography>Loading...</Typography>
+            </Box>
+          ) : survey.list.length === 0 ? (
+            <Box
+              sx={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <Typography textAlign='center' color="gray">
+                No Survey Yet
+                <br />
+                Create your first survey
+              </Typography>
+            </Box>
+          ) : (
+            <>
+              <TableContainer>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       <TableCell>Author</TableCell>
@@ -225,7 +235,7 @@ export default function SurveyListPage({ ...props }) {
                   </TableHead>
 
                   <TableBody>
-                    {surveyList.map((survey, i) => (
+                    {visibleRows.map((survey, i) => (
                       <TableRow key={survey.id}>
                         <TableCell>
                           <XStack alignItems="center" gap={2}>
@@ -255,19 +265,19 @@ export default function SurveyListPage({ ...props }) {
                       </TableRow>
                     ))}
                   </TableBody>
-                </>
-              )}
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30, 40]}
-            component="div"
-            count={visibleRows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(e, pageNo) => setPage(pageNo)}
-            onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
-          />
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 20, 30, 40]}
+                component="div"
+                count={visibleRows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(e, pageNo) => setPage(pageNo)}
+                onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
+              />
+            </>
+          )}
         </Paper>
         <SurveyCreateModal open={modal === 'CREATE_SURVEY'} onClose={() => setModal('')} />
       </Box>
