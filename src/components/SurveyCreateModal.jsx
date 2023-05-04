@@ -1,5 +1,15 @@
 import { Close } from '@mui/icons-material'
-import { Box, Button, Card, IconButton, Modal, Stack, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  FormHelperText,
+  IconButton,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
 import * as React from 'react'
 import { createSurvey } from '../redux/surveyAction'
 
@@ -11,6 +21,19 @@ export default function SurveyCreateModal({ open, onClose }) {
   const [errors, setErrors] = React.useState(initErrorState)
   const [isSuccess, setIsSuccess] = React.useState(false)
   const [surveyInfo, setSurveyInfo] = React.useState(initSurveyInfoState)
+
+  function validateSubmission() {
+    setErrors(initErrorState)
+    let isValid = true
+    Object.entries(surveyInfo).forEach(([key, value]) => {
+      if (value === '') {
+        isValid = false
+        setErrors((prev) => ({ ...prev, [key]: 'This field is required' }))
+      }
+    })
+
+    return isValid
+  }
 
   function validateSubmission() {
     setErrors(initErrorState)
@@ -67,7 +90,8 @@ export default function SurveyCreateModal({ open, onClose }) {
         })
       },
       value: surveyInfo[name],
-      error: errors[name] !== '',
+      // using helper text always for errors
+      error: true,
       helperText: errors[name],
     }
   }
@@ -111,19 +135,10 @@ export default function SurveyCreateModal({ open, onClose }) {
 
           <Box mt={4}>
             <Button variant="contained" type="submit" disabled={loading === 'saving_survey'}>
-              {loading === 'saving_survey' ? 'Create...' : isSuccess ? 'Created' : 'Create'}
+              {loading === 'saving_survey' ? 'Create...' : 'Create'}
             </Button>
 
-            {errors.createBtn && (
-              <Typography
-                mt={1}
-                sx={(theme) => ({
-                  color: theme.palette.error.main,
-                })}
-              >
-                {errors.createBtn}
-              </Typography>
-            )}
+            <FormHelperText error={true}>{errors.createBtn}</FormHelperText>
           </Box>
         </Stack>
       </Card>
