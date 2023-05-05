@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom'
 import SurveyCreateModal from '../components/SurveyCreateModal'
 import TopLoadingBar from '../components/TopLoadingBar'
 import { fetchSurvey, removeSurvey } from '../redux/surveyAction'
-import maleAvatar from '../assets/male_avatar.jpg'
+import maleAvatar from '../assets/images/user-profile/male_avatar.jpg'
 
 const myTheme = {
   paper: {
