@@ -1,13 +1,37 @@
-import { wait } from '../utils'
+import { AxiosError, wait } from '../utils'
 import { store } from './store'
 
 async function fetchSurvey() {
   store.dispatch({ type: 'surveyLoading' })
-  await wait(3000)
+
+  let surveyList = store.getState().survey.list
+
+  if (surveyList.length === 0) {
+    await wait(3000)
+  }
+  
   const json = localStorage.getItem('SURVEY_LIST') || '[]'
-  const surveyList = JSON.parse(json)
+  surveyList = JSON.parse(json)
   store.dispatch({ type: 'fetchSurveySuccessful', survey: surveyList })
   return surveyList
+}
+
+export async function fetchSurveyWithId(id) {
+  let allSurvey = store.getState().survey.list
+
+  if (allSurvey.length === 0) {
+    allSurvey = await fetchSurvey()
+  } else {
+    fetchSurvey()
+  }
+
+  const survey = allSurvey.find((x) => x.id === id)
+
+  if (survey == null) {
+    throw AxiosError(`survey id ${id} not found`)
+  }
+
+  return survey
 }
 
 async function removeSurvey(targetSurveyId) {

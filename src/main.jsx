@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import "./tailwind.css"
+import './tailwind.css'
 import './index.css'
 
 import { Provider } from 'react-redux'
@@ -17,6 +17,7 @@ import SurveryCreatePage from './pages/SurveryCreatePage'
 import SurveyListPage from './pages/SurveyListPage'
 import { store } from './redux/store'
 import SingleComponentTestPage from './pages/SingleComponentTestPage'
+import { fetchSurveyWithId } from './redux/surveyAction'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +34,10 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<SurveyListPage />}></Route>
-        <Route path="/survey/create" element={<SurveryCreatePage />} />
+        <Route
+          path="/survey/create"
+          element={<SurveryCreatePage />}
+        />
       </Route>
     </>
   )

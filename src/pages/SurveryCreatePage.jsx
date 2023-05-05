@@ -23,10 +23,10 @@ import SurveyPublishModal from '../components/SurveyPublishModal'
 import SurveySaveModal from '../components/SurveySaveModal'
 import TopLoadingBar from '../components/TopLoadingBar'
 import DraggableFormControl from '../components/DraggableFormControl'
-import { fetchSurvey } from '../redux/surveyAction'
+import { fetchSurvey, fetchSurveyWithId } from '../redux/surveyAction'
 import SurveyPreviewModal from '../components/SurveyPreviewModal'
 import SurveySidebar from '../components/SurveySidebar'
-import { wait } from '../utils'
+import { AxiosError, wait } from '../utils'
 
 function reducer(state, payload) {
   switch (payload.action) {
@@ -154,37 +154,28 @@ function SurveryCreatePage() {
 
   useEffect(() => {
     const fn = async () => {
-      if (surveyStore.list.length === 0 || survey == null) {
-        setLoading('FETCH_SURVEY')
-        const allSurvey = await fetchSurvey()
-        const survey = allSurvey.find((x) => x.id === surveyId)
+      try {
+        if (survey == null) {
+          const survey = await fetchSurveyWithId(surveyId)
 
-        if (survey === null) setError(true)
-        dispatch({
-          action: 'populate',
-          form: survey.form,
-        })
-        setError(false)
-        setLoading('')
+          dispatch({
+            action: 'populate',
+            form: survey.form,
+          })
+
+          setError(false)
+        }
+      } catch (error) {
+        if (error.isAxiosError) {
+          setError(true)
+        }
+        console.error('SurveyCreatePage.useEffect(() => fetchSurvey() )', error)
       }
-
-      // if (surveyId) {
-      //   setLoading('FETCH_SURVEY')
-      //   const allSurvey = await fetchSurvey()
-
-      //   const survey = allSurvey.find((survey) => survey.id === surveyId)
-
-      //   dispatch({
-      //     action: 'populate',
-      //     form: survey.form,
-      //   })
-      //   setLoading('')
-      // }
     }
     fn()
-  }, [surveyId, surveyStore.list.length, survey])
+  }, [surveyId, survey])
 
-  if (error || surveyId == null || surveyId == '') {
+  if (error || !surveyId) {
     return (
       <Box sx={{ display: 'grid', placeItems: 'center' }}>
         <Typography textAlign="center" variant="h5" mt={14} color="rgba(0 0 0 / 0.2)">
@@ -197,7 +188,7 @@ function SurveryCreatePage() {
 
   return (
     <SurveyPageContext.Provider value={[form, dispatch]}>
-      <TopLoadingBar loading={loading === 'FETCH_SURVEY'} />
+      <TopLoadingBar loading={surveyStore.isLoading} />
 
       {survey == null ? null : (
         <main>
