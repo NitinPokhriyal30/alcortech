@@ -4,7 +4,7 @@ import { store } from './store'
 async function fetchSurvey() {
   store.dispatch({ type: 'surveyLoading' })
   await wait(3000)
-  const json = localStorage.getItem('SURVEY_LIST')
+  const json = localStorage.getItem('SURVEY_LIST') || '[]'
   const surveyList = JSON.parse(json)
   store.dispatch({ type: 'fetchSurveySuccessful', survey: surveyList })
   return surveyList

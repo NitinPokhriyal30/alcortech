@@ -8,29 +8,24 @@ import {
   RecordVoiceOver,
 } from '@mui/icons-material'
 import { Box, List, ListItem, ListItemButton, Stack, Typography } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { Link } from 'react-router-dom'
 import * as React from 'react'
-
-const myTheme = {
-  sidebar: {
-    bgcolor: '#5486e3',
-    borderColor: '#3466c3',
-  },
-  header: {
-    height: 75,
-  },
-}
+import { breakpoints, myTheme } from '../myTheme'
 
 export default function HomeSidebar({ ...props }) {
+  const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
+
+  const headerHeight = isMd ? myTheme.header.md.height : myTheme.header.height
   return (
     <Box
       sx={{
         position: 'sticky',
-        top: myTheme.header.height,
+        top: headerHeight,
         px: 1,
-        py: 2,
-        height: `calc(100vh - ${myTheme.header.height}px)`,
+        height: `calc(100vh - ${headerHeight}px)`,
       }}
+      className={`py-4 ${isMd ? 'block' : 'hidden'}`}
     >
       <Box
         sx={{

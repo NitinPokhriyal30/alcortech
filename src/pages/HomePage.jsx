@@ -1,29 +1,35 @@
 import Box from '@mui/material/Box'
 import * as React from 'react'
-import Header from '../components/Header'
+import MainNavbar from '../components/MainNavbar'
 import HomeSidebar from '../components/HomeSidebar'
+import { breakpoints, myTheme } from '../myTheme'
+import RightSidebar from '../components/RightSidebar'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function HomePage({ ...props }) {
-  /* header */
+  const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
+  
   return (
-    <>
-      <Header />
+    <main
+      style={{
+        backgroundColor: myTheme.paper.backgroundColor,
+      }}
+    >
+      <MainNavbar />
 
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '270px 1fr 200px',
-          bgcolor: '#dedede',
+          gridTemplateColumns: isMd ?  '270px 1fr auto' : '1fr auto',
         }}
       >
         <HomeSidebar />
-        <main style={{ height: '200vh' }}></main>
-        {
-          // create post
-          // (right side) user point
-          // (right side) recommendation for you
-        }
+        <div style={{ height: '200vh' }}>Feed</div>
+
+
+        <RightSidebar />
       </Box>
-    </>
+
+    </main>
   )
 }
