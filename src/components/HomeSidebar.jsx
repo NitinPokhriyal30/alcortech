@@ -106,7 +106,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { breakpoints, myTheme } from '../myTheme'
 import { Link, NavLink } from 'react-router-dom'
 
-export default function HomeSidebar() {
+export default function HomeSidebar({ showSidebar, setShowSidebar }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
 
   const headerHeight = isMd ? myTheme.header.md.height : myTheme.header.height
@@ -115,12 +115,13 @@ export default function HomeSidebar() {
     <div
       style={{
         top: headerHeight + 'px',
+        left: isMd ? '0px' : showSidebar ? '0px' : '-100%',
         height: `calc(100vh - ${headerHeight}px)`,
-        display: isMd ? 'block' : 'none',
+        position: isMd ? 'sticky' : 'fixed',
       }}
-      className="p-3 overflow-y-auto sticky "
+      className="p-3"
     >
-      <div className="h-full bg-primary rounded-[9px]">
+      <div className="h-full overflow-y-auto z-10 bg-primary rounded-[9px]">
         <div className="">
           {/*------------- Profile  ----------------------*/}
 
@@ -170,7 +171,7 @@ export default function HomeSidebar() {
               </div>
               <Link
                 to="/survey"
-                className="flex px-5 rounded py-2.5 gap-2 items-center hover:bg-blue-400 _bg-opacity-5"
+                className={`flex px-5 rounded py-2.5 gap-2 items-center hover:bg-translucent-white`}
               >
                 <p className="text-white text-[18px]">
                   <RiSurveyFill />
