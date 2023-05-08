@@ -121,83 +121,79 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
       }}
       className="p-3"
     >
-      <div className="h-full overflow-y-auto z-10 bg-primary rounded-[9px]">
-        <div className="">
-          {/*------------- Profile  ----------------------*/}
+      <div className="h-full overflow-y-auto z-10 bg-primary rounded-[9px] flex flex-col">
+        {/*------------- Profile  ----------------------*/}
 
-          <div className="flex items-center gap-3 border-b-2 border-[#7096DB] pb-5 px-5">
-            <div>
-              <img src={User} alt="user avatar" />
-            </div>
-            <div>
-              <p className="text-white font-Lato text-[16px] font-black">Hi</p>
-              <span className="text-white font-Lato text-[16px] font-normal">Pankaj Kohli</span>
-            </div>
-          </div>
-
-          {/*-------------- Nav Items  -------------------*/}
-
+        <div className="flex items-center gap-3 border-b-2 border-[#7096DB] p-5">
           <div>
-            <div className="flex flex-col px-1 py-5">
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <AiFillHome />
-                </p>
-                <span className="text-white font-Lato font-normal leading-[22px]">Home</span>
-              </div>
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <AiFillGift />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">My Rewards</span>
-              </div>
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <RiTeamFill />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">My Team</span>
-              </div>
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <SiGoogleanalytics />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">Analytics</span>
-              </div>
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <HiSpeakerphone />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">Campaigns</span>
-              </div>
-              <Link
-                to="/survey"
-                className={`flex px-5 rounded py-2.5 gap-2 items-center hover:bg-translucent-white`}
-              >
-                <p className="text-white text-[18px]">
-                  <RiSurveyFill />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">Survey</span>
-              </Link>
-              <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
-                <p className="text-white text-[18px]">
-                  <RiUserVoiceFill />
-                </p>
-                <span className="text-white font-Lato font-light leading-[22px]">Voice Out</span>
-              </div>
-            </div>
+            <img src={User} alt="user avatar" />
           </div>
+          <div>
+            <p className="text-white font-Lato text-[16px] font-black">Hi</p>
+            <span className="text-white font-Lato text-[16px] font-normal">Pankaj Kohli</span>
+          </div>
+        </div>
 
-          {/*--------------- FAQ Section  ----------------*/}
+        {/*-------------- Nav Items  -------------------*/}
 
-          <div className="mt-8 px-5">
-            <div className="flex gap-3 items-center justify-between">
-              <p className="text-white font-Lato font-light text-[16px] flex items-center gap-1 leading-[19px]">
-                <BsQuestionCircle /> FAQs
-              </p>
-              <p className="text-white font-Lato font-light text-[16px] flex items-center gap-1 leading-[19px]">
-                <BsQuestionCircle /> Feedback
-              </p>
-            </div>
+        <div className="flex flex-col px-1 pt-5">
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <AiFillHome />
+            </p>
+            <span className="text-white font-Lato font-normal leading-[22px]">Home</span>
+          </div>
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <AiFillGift />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">My Rewards</span>
+          </div>
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <RiTeamFill />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">My Team</span>
+          </div>
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <SiGoogleanalytics />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">Analytics</span>
+          </div>
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <HiSpeakerphone />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">Campaigns</span>
+          </div>
+          <Link
+            to="/survey"
+            className={`flex px-5 rounded py-2.5 gap-2 items-center hover:bg-translucent-white`}
+          >
+            <p className="text-white text-[18px]">
+              <RiSurveyFill />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">Survey</span>
+          </Link>
+          <div className="flex px-5 rounded py-2.5 gap-2 items-center ">
+            <p className="text-white text-[18px]">
+              <RiUserVoiceFill />
+            </p>
+            <span className="text-white font-Lato font-light leading-[22px]">Voice Out</span>
+          </div>
+        </div>
+
+        {/*--------------- FAQ Section  ----------------*/}
+
+        <div className="mt-auto px-5 pt-16 pb-5">
+          <div className="flex gap-3 items-center justify-between">
+            <p className="text-white font-Lato font-light text-[16px] flex items-center gap-1 leading-[19px]">
+              <BsQuestionCircle /> FAQs
+            </p>
+            <p className="text-white font-Lato font-light text-[16px] flex items-center gap-1 leading-[19px]">
+              <BsQuestionCircle /> Feedback
+            </p>
           </div>
         </div>
       </div>
