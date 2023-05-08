@@ -7,3 +7,7 @@ export function AxiosError(...args) {
   error.isAxiosError = true
   return error
 }
+
+export function dateDiff(second, first) {
+  return Math.round((second - first) / (1000 * 60 * 60 * 24))
+}
