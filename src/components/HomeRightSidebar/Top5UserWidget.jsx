@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import FadeStar from '../assets/svg/fade.svg'
-import GreenStar from '../assets/svg/green.svg'
-import RedStar from '../assets/svg/red.svg'
-import User1 from '../assets/images/user-profile/user.png'
+import FadeStar from '../../assets/svg/fade.svg'
+import GreenStar from '../../assets/svg/green.svg'
+import RedStar from '../../assets/svg/red.svg'
+import User1 from '../../assets/images/user-profile/user.png'
 
 export default function Top5UserWidget({ ...props }) {
   const [topUsers, setTopUsers] = React.useState(() => [

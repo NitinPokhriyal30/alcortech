@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 import * as React from 'react'
-import { createSurvey } from '../redux/surveyAction'
+import { createSurvey } from '../../redux/surveyAction'
 
 export default function SurveyCreateModal({ open, onClose }) {
   const initSurveyInfoState = { title: '', description: '' }

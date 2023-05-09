@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { AiOutlineCaretDown } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
-import BloodDonation from '../assets/images/right-section/blood.png'
+import BloodDonation from '../../assets/images/right-section/blood.png'
 import { Link } from 'react-router-dom'
 
 export default function RecentCampaignWidget({ ...props }) {

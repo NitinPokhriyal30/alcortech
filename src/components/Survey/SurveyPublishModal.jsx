@@ -14,9 +14,9 @@ import {
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { fetchSurvey } from '../redux/surveyAction'
-import TopLoadingBar from './TopLoadingBar'
-import XStack from './XStack'
+import { fetchSurvey } from '../../redux/surveyAction'
+import TopLoadingBar from '../TopLoadingBar'
+import XStack from '../XStack'
 
 export default function SurveyPublishModal({ open, onClose, handleChange, ...props }) {
   const [params] = useSearchParams()

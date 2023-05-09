@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { AiOutlineCaretDown } from 'react-icons/ai'
-import AmazonLogo from '../assets/images/right-section/Amazon-Logo.png'
-import DunkinLogo from '../assets/images/right-section/dunkin-logo.png'
-import StarbucksLogo from '../assets/images/right-section/starbucks-logo.png'
+import AmazonLogo from '../../assets/images/right-section/Amazon-Logo.png'
+import DunkinLogo from '../../assets/images/right-section/dunkin-logo.png'
+import StarbucksLogo from '../../assets/images/right-section/starbucks-logo.png'
 import { Link } from 'react-router-dom'
 
 export default function RecommendationWidget() {

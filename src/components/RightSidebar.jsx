@@ -1,11 +1,5 @@
 import * as React from 'react'
 
-import Top5UserWidget from './Top5UserWidget'
-import RecentCampaignWidget from './RecentCampaignWidget'
-import SurveyOngoingWidget from './SurveyOngoingWidget'
-import RecommendationWidget from './RecommendationWidget'
-import CelebrationWidget from './CelebrationWidget'
-
 const RightSidebar = () => {
   const [user, setUser] = React.useState({
     points: 390,
@@ -24,10 +18,6 @@ const RightSidebar = () => {
             </span>
           </div>
         </div>
-
-        <RecommendationWidget />
-
-        <CelebrationWidget />
 
         {/* <div>
           <div className=" pt-1 pb-3 rounded-[9px] bg-white drop-shadow-[0px_2px_3px_#00000029]">
@@ -66,12 +56,6 @@ const RightSidebar = () => {
             </div>
           </div>
         </div> */}
-
-        <Top5UserWidget />
-
-        <SurveyOngoingWidget />
-
-        <RecentCampaignWidget />
       </div>
     </div>
   )

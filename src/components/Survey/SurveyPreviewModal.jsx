@@ -13,7 +13,7 @@ import {
   IconButton,
 } from '@mui/material'
 import * as React from 'react'
-import XStack from './XStack'
+import XStack from '../XStack'
 
 const formInputTypeMap = {
   textField: (props) => (
