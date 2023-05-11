@@ -11,6 +11,7 @@ import RecentCampaignWidget from '../components/HomeRightSidebar/RecentCampaignW
 import SurveyOngoingWidget from '../components/HomeRightSidebar/SurveyOngoingWidget'
 import RecommendationWidget from '../components/HomeRightSidebar/RecommendationWidget'
 import CelebrationWidget from '../components/HomeRightSidebar/CelebrationWidget'
+import NewPost from '../components/NewPost'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -31,9 +32,11 @@ export default function HomePage({ ...props }) {
         }}
       >
         <HomeSidebar {...{ showSidebar, setShowSidebar }} />
-        <div style={{ height: '200vh' }}>Feed</div>
+        <div style={{ height: '200vh' }} className="pt-3 pr-3">
+          <NewPost />
+        </div>
 
-        <div className="pt-4 pr-4">
+        <div className="pt-3 pr-4">
           <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
             <RecommendationWidget />
 
