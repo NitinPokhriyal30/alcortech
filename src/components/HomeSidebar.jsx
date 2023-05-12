@@ -130,7 +130,7 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
           </div>
           <div>
             <p className="text-white font-Lato text-[16px] font-black">Hi</p>
-            <span className="text-white font-Lato text-[16px] font-normal">Pankaj Kohli</span>
+            <span className="text-white font-Lato text-[16px] font-normal">Semad Javed</span>
           </div>
         </div>
 
