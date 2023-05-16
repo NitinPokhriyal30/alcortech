@@ -41,7 +41,7 @@ export default function Top5UserWidget({ ...props }) {
 
   return (
     <div>
-      <div className="pt-1 pb-3 rounded-[9px] bg-white drop-shadow-[0px_2px_3px_#00000029]">
+      <div className="right-sidebar-container">
         <div className="border-b border-[#EDEDED] py-1 px-3">
           <p className="text-[16px] font-Lato font-medium text-[#747474] text-center ">
             Top High5 Stars
