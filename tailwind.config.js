@@ -3,6 +3,15 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      animation: {
+        'slide-left': 'slide-left 500ms forwards',
+      },
+      keyframes: {
+        'slide-left': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
       colors: {
         primary: '#5486E3',
         'primary-400': '#93c5fd',

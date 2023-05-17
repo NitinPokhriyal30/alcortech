@@ -12,6 +12,11 @@ import RecommendationWidget from '../components/HomeRightSidebar/RecommendationW
 import CelebrationWidget from '../components/HomeRightSidebar/CelebrationWidget'
 import NewPost from '../components/NewPost'
 import { RedeemPointsWidget } from '../components/HomeRightSidebar/RedeemPointsWidget'
+import ImageCarosel from '../components/ImageCarosel'
+
+import CokeSrc from '../assets/slider/coke.jpg'
+import BurgerKingSrc from '../assets/slider/burger-king.webp'
+import McDonaldsSrc from '../assets/slider/mc-donalds.jpg'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -33,7 +38,13 @@ export default function HomePage({ ...props }) {
       >
         <HomeSidebar {...{ showSidebar, setShowSidebar }} />
         <div style={{ height: '200vh' }} className="pt-3 pr-3">
-          <NewPost />
+          <ImageCarosel
+            images={[{ src: CokeSrc }, { src: McDonaldsSrc }, { src: BurgerKingSrc }]}
+          />
+
+          <div className='mt-5'>
+            <NewPost />
+          </div>
         </div>
 
         <div className="pt-3 pr-4">
