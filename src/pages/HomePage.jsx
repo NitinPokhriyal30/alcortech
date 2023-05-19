@@ -16,6 +16,8 @@ import ImageCarosel from '../components/ImageCarosel'
 
 import slider1 from '../assets/slider/slider1.png'
 import slider2 from '../assets/slider/slider2.png'
+import PostCard from '../components/PostCard'
+import SortBy from '../components/SortBy'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -43,6 +45,12 @@ export default function HomePage({ ...props }) {
 
           <div className='mt-5'>
             <NewPost />
+          </div>
+          <div className='mt-1'>
+            <SortBy />
+          </div>
+          <div className='mt-1'>
+            <PostCard />
           </div>
         </div>
 

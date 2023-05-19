@@ -69,9 +69,8 @@ export default function NewPost({ ...props }) {
                 <button
                   key={point}
                   type="button"
-                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${
-                    form.points === point ? 'bg-primary text-white' : ''
-                  }`}
+                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${form.points === point ? 'bg-primary text-white' : ''
+                    }`}
                   onClick={() => {
                     setForm((prev) => ({ ...prev, points: point }))
                   }}
@@ -91,9 +90,8 @@ export default function NewPost({ ...props }) {
                 return (
                   <button
                     style={{ height: USER_BTN_HEIGHT }}
-                    className={`w-full block px-4 py-1 text-left ${
-                      checked ? 'bg-translucent' : ''
-                    }`}
+                    className={`w-full block px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
+                      }`}
                     key={user.id}
                     type="button"
                     onClick={() => {
@@ -178,7 +176,7 @@ export default function NewPost({ ...props }) {
       </div>
 
       {/* text field */}
-      <div className="bg-white px-8 py-10 text-gray-400">
+      <div className="bg-white rounded-b-lg px-8 py-10 text-gray-400">
         <div>
           +{form.points}{' '}
           {form.recipients.map((user) => (
