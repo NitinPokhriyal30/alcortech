@@ -38,7 +38,7 @@ export default function HomePage({ ...props }) {
         }}
       >
         <HomeSidebar {...{ showSidebar, setShowSidebar }} />
-        <div style={{ height: '200vh' }} className="pt-3 pr-3">
+        <div className="pt-3 pr-3">
           <ImageCarosel
             images={[{ src: slider1 }, { src: slider2 }]}
           />
