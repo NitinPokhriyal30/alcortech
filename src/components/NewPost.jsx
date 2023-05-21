@@ -62,7 +62,7 @@ export default function NewPost({ ...props }) {
         <ul className="flex items-center divide-x">
           {/* points button */}
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span>+ Points</span>
             <div className="p-2 rounded-full absolute shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
@@ -81,7 +81,7 @@ export default function NewPost({ ...props }) {
             </div>
           </li>
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span className="">@ Recipients</span>
 
             <div className="absolute shadow rounded divide-y bg-white text-black hidden group-hover:block">
@@ -131,7 +131,7 @@ export default function NewPost({ ...props }) {
             </div>
           </li>
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span># Hashtag</span>
             <div className="absolute bg-white shadow text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
