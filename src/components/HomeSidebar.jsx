@@ -24,7 +24,7 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
       }}
       className="p-3"
     >
-      <div className="h-full overflow-y-auto z-10 bg-primary rounded-[9px] flex flex-col">
+      <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
 
         {/*------------- Profile  ----------------------*/}
 

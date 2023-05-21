@@ -54,7 +54,7 @@ const PostCard = () => {
                             <button className="hover:bg-[#F7F7F7] rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                                 <span>
                                     <BsPlusCircleFill />
-                                </span>{" "}
+                                </span>
                                 Add Points
                             </button>
                             <div className="hidden drop-shadow-[0px_2px_3px_#00000029] px-4 py-2 bg-white absolute bottom-10 left-0 peer-hover:flex hover:flex gap-4 rounded-[19px]">
@@ -79,7 +79,7 @@ const PostCard = () => {
                             <button className="hover:bg-[#F7F7F7] rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                                 <span>
                                     <BiHeartCircle />
-                                </span>{" "}
+                                </span>
                                 React
                             </button>
                             <div className="hidden drop-shadow-[0px_2px_3px_#00000029] px-4 py-2 bg-white absolute bottom-10 left-0 peer-hover:flex hover:flex gap-4 rounded-[19px]">
@@ -100,7 +100,7 @@ const PostCard = () => {
                             <p className="font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                                 <span>
                                     <BsFillChatRightTextFill />
-                                </span>{" "}
+                                </span>
                                 Comment
                             </p>
                         </div>
@@ -149,10 +149,10 @@ const PostCard = () => {
                             <div className="bg-[#EDEDED] flex items-start justify-between rounded-b-xl rounded-tr-xl w-full px-6 py-3">
                                 <div>
                                     <p className="font-Lato font-bold text-[16px] leading-5 text-[#464646]">
-                                        Sunita Gulia{" "}
+                                        Sunita Gulia
                                     </p>
                                     <p className="font-Lato font-normal text-[16px] leading-5 text-[#464646]">
-                                        Thank You, Semad{" "}
+                                        Thank You, Semad
                                     </p>
                                 </div>
                                 <div>
@@ -308,10 +308,10 @@ const PostCard = () => {
                             <div className="bg-[#EDEDED] flex items-start justify-between rounded-b-xl rounded-tr-xl w-full px-6 py-3">
                                 <div>
                                     <p className="font-Lato font-bold text-[16px] leading-5 text-[#464646]">
-                                        Sheetal Arora{" "}
+                                        Sheetal Arora
                                     </p>
                                     <p className="font-Lato font-normal text-[16px] leading-5 text-[#464646]">
-                                        Thank You 😍{" "}
+                                        Thank You 😍
                                     </p>
                                 </div>
                                 <div>
