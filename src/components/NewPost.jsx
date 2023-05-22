@@ -1,8 +1,16 @@
+import { store } from '../redux/store'
 import { AttachFile, Close, EmojiEmotions, Image, Link } from '@mui/icons-material'
 import { TextField } from '@mui/material'
 import EmojiPicker from 'emoji-picker-react'
 import * as React from 'react'
+import PostUser from '../assets/images/post-img/post-user.png'
 
+const me = {
+  id: 101,
+  firstName: 'Semad',
+  lastName: 'Javed',
+  img: PostUser,
+}
 export default function NewPost({ ...props }) {
   const [searchUserQuery, setSearchUserQuery] = React.useState('')
   const [footerShow, setFooterShow] = React.useState('')
@@ -13,6 +21,7 @@ export default function NewPost({ ...props }) {
     message: '',
     image: null,
     link: '',
+    sender: [me],
   })
 
   const users = [
@@ -20,14 +29,17 @@ export default function NewPost({ ...props }) {
       id: 1,
       firstName: 'John',
       lastName: 'Doe',
+      img: PostUser,
     },
     {
       id: 2,
       firstName: 'Lisa',
+      img: PostUser,
       lastName: 'Clinton',
     },
     {
       id: 3,
+      img: PostUser,
       firstName: 'Neha',
       lastName: 'Bhati',
     },
@@ -62,15 +74,16 @@ export default function NewPost({ ...props }) {
         <ul className="flex items-center divide-x">
           {/* points button */}
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span>+ Points</span>
             <div className="p-2 rounded-full absolute shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
                 <button
                   key={point}
                   type="button"
-                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${form.points === point ? 'bg-primary text-white' : ''
-                    }`}
+                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${
+                    form.points === point ? 'bg-primary text-white' : ''
+                  }`}
                   onClick={() => {
                     setForm((prev) => ({ ...prev, points: point }))
                   }}
@@ -81,7 +94,7 @@ export default function NewPost({ ...props }) {
             </div>
           </li>
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span className="">@ Recipients</span>
 
             <div className="absolute shadow rounded divide-y bg-white text-black hidden group-hover:block">
@@ -90,8 +103,9 @@ export default function NewPost({ ...props }) {
                 return (
                   <button
                     style={{ height: USER_BTN_HEIGHT }}
-                    className={`w-full block px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
-                      }`}
+                    className={`w-full block px-4 py-1 text-left ${
+                      checked ? 'bg-translucent' : ''
+                    }`}
                     key={user.id}
                     type="button"
                     onClick={() => {
@@ -131,7 +145,7 @@ export default function NewPost({ ...props }) {
             </div>
           </li>
 
-          <li className="group px-4">
+          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <span># Hashtag</span>
             <div className="absolute bg-white shadow text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
@@ -265,6 +279,50 @@ export default function NewPost({ ...props }) {
           <button
             type="submit"
             className=" ml-auto bg-primary text-white px-4 w-full max-w-[6rem] rounded-sm"
+            onClick={() => {
+              if (form.hashtags.length === 0) {
+                alert('Add atleast one hashtag')
+                return
+              }
+              if (form.recipients.length === 0) {
+                alert('Add atleast one recipient')
+                return
+              }
+              if (form.message.length === 0) {
+                alert('Add a message')
+                return
+              }
+
+              store.dispatch({
+                type: 'redux',
+                fn: (prev) => {
+                  prev.push({
+                    ...form,
+                    sender: [{ ...me, points: form.points }],
+                    reactions: [],
+                    timestamp: new Date(),
+                    id: Math.random().toString(),
+                    comment: {
+                      id: Math.random().toString(),
+                      user: me,
+                      reactions: [],
+                      message: '',
+                      timestamp: new Date(),
+                      replies: [],
+                    },
+                  })
+                },
+              })
+              setForm({
+                points: 30,
+                recipients: [],
+                hashtags: [],
+                message: '',
+                image: null,
+                link: '',
+                sender: [me],
+              })
+            }}
           >
             Give
           </button>

@@ -18,10 +18,16 @@ import slider1 from '../assets/slider/slider1.png'
 import slider2 from '../assets/slider/slider2.png'
 import PostCard from '../components/PostCard'
 import SortBy from '../components/SortBy'
+import ImageSlider from '../components/ImageSlider'
+import { useStore } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
   const [showSidebar, setShowSidebar] = React.useState(false)
+  const postList = useSelector((store) => store.post)
+
+  console.log(postList)
 
   return (
     <main
@@ -39,22 +45,24 @@ export default function HomePage({ ...props }) {
       >
         <HomeSidebar {...{ showSidebar, setShowSidebar }} />
         <div className="pt-3 pr-3">
-          <ImageCarosel
+          {/* <ImageCarosel
             images={[{ src: slider1 }, { src: slider2 }]}
-          />
-
-          <div className='mt-5'>
+          /> */}
+          <ImageSlider />
+          <div className="mt-5">
             <NewPost />
           </div>
-          <div className='mt-1'>
+          <div className="mt-1">
             <SortBy />
           </div>
-          <div className='mt-1'>
-            <PostCard />
+          <div className="mt-1">
+            {postList.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
           </div>
         </div>
 
-        <div className="pt-3 pr-4">
+        <div className="pt-3 xxl:block xl:block lg:block md:block sm:hidden xs:hidden pr-4">
           <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
             <RedeemPointsWidget />
             <RecommendationWidget />

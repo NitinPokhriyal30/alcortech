@@ -34,9 +34,8 @@ export default function ImageCarosel({ ...props }) {
           {props.images.map((_, i) => (
             <span
               key={i}
-              className={`shadow inline-block w-2 h-2 rounded-full border ${
-                counter === i ? 'bg-white' : 'bg-translucent-white'
-              }`}
+              className={`shadow inline-block w-2 h-2 rounded-full border ${counter === i ? 'bg-white' : 'bg-translucent-white'
+                }`}
             ></span>
           ))}
         </div>
