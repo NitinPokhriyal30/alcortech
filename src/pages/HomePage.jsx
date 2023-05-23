@@ -12,7 +12,6 @@ import RecommendationWidget from '../components/HomeRightSidebar/RecommendationW
 import CelebrationWidget from '../components/HomeRightSidebar/CelebrationWidget'
 import NewPost from '../components/NewPost'
 import { RedeemPointsWidget } from '../components/HomeRightSidebar/RedeemPointsWidget'
-import ImageCarosel from '../components/ImageCarosel'
 
 import slider1 from '../assets/slider/slider1.png'
 import slider2 from '../assets/slider/slider2.png'

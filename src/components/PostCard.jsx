@@ -234,16 +234,16 @@ const PostCard = ({ post: _post }) => {
               </div>
             </div>
 
-            {post.comment.replies?.map((comment) => (
-              <PostComment
-                key={comment.message}
-                comment={comment}
-                addComment={addComment}
-                addReaction={addCommentReaction}
-              />
-            ))}
           </>
         )}
+        {post.comment.replies?.map((comment) => (
+          <PostComment
+            key={comment.message}
+            comment={comment}
+            addComment={addComment}
+            addReaction={addCommentReaction}
+          />
+        ))}
       </div>
     </div>
   )
