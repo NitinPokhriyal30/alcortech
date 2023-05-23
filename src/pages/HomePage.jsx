@@ -12,10 +12,6 @@ import RecommendationWidget from '../components/HomeRightSidebar/RecommendationW
 import CelebrationWidget from '../components/HomeRightSidebar/CelebrationWidget'
 import NewPost from '../components/NewPost'
 import { RedeemPointsWidget } from '../components/HomeRightSidebar/RedeemPointsWidget'
-import ImageCarosel from '../components/ImageCarosel'
-
-import slider1 from '../assets/slider/slider1.png'
-import slider2 from '../assets/slider/slider2.png'
 import PostCard from '../components/PostCard'
 import SortBy from '../components/SortBy'
 import ImageSlider from '../components/ImageSlider'
@@ -45,9 +41,7 @@ export default function HomePage({ ...props }) {
       >
         <HomeSidebar {...{ showSidebar, setShowSidebar }} />
         <div className="pt-3 pr-3">
-          {/* <ImageCarosel
-            images={[{ src: slider1 }, { src: slider2 }]}
-          /> */}
+
           <ImageSlider />
           <div className="mt-5">
             <NewPost />
