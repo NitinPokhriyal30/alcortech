@@ -21,6 +21,7 @@ import SortBy from '../components/SortBy'
 import ImageSlider from '../components/ImageSlider'
 import { useStore } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { AchievementBanner } from '../components/AchievementBanner'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -30,49 +31,51 @@ export default function HomePage({ ...props }) {
   console.log(postList)
 
   return (
-    <main
-      style={{
-        backgroundColor: myTheme.paper.backgroundColor,
-      }}
-    >
-      <MainNavbar setShowSidebar={setShowSidebar} />
-
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: isMd ? '270px 1fr auto' : '1fr auto',
+    <>
+      <main
+        style={{
+          backgroundColor: myTheme.paper.backgroundColor,
         }}
       >
-        <HomeSidebar {...{ showSidebar, setShowSidebar }} />
-        <div className="pt-3 pr-3">
-          {/* <ImageCarosel
-            images={[{ src: slider1 }, { src: slider2 }]}
-          /> */}
-          <ImageSlider />
-          <div className="mt-5">
-            <NewPost />
-          </div>
-          <div className="mt-1">
-            <SortBy />
-          </div>
-          <div className="mt-1">
-            {postList.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
+        <MainNavbar setShowSidebar={setShowSidebar} />
 
-        <div className="pt-3 xxl:block xl:block lg:block md:block sm:hidden xs:hidden pr-4">
-          <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
-            <RedeemPointsWidget />
-            <RecommendationWidget />
-            <CelebrationWidget />
-            <Top5UserWidget />
-            <SurveyOngoingWidget />
-            <RecentCampaignWidget />
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: isMd ? '270px 1fr auto' : '1fr auto',
+          }}
+        >
+          <HomeSidebar {...{ showSidebar, setShowSidebar }} />
+          <div className="pt-3 pr-3">
+            <ImageSlider />
+            <div className="mt-5">
+              <NewPost />
+            </div>
+            <div className="mt-1">
+              <SortBy />
+            </div>
+            <div className="mt-1">
+              {postList.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+            <div className="mt-1">
+              <AchievementBanner />
+            </div>
           </div>
-        </div>
-      </Box>
-    </main>
+
+          <div className="pt-3 xxl:block xl:block lg:block md:block sm:hidden xs:hidden pr-4">
+            <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
+              <RedeemPointsWidget />
+              <RecommendationWidget />
+              <CelebrationWidget />
+              <Top5UserWidget />
+              <SurveyOngoingWidget />
+              <RecentCampaignWidget />
+            </div>
+          </div>
+        </Box>
+      </main>
+    </>
   )
 }

@@ -21,6 +21,7 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
         left: isMd ? '0px' : showSidebar ? '0px' : '-100%',
         height: `calc(100vh - ${headerHeight}px)`,
         position: isMd ? 'sticky' : 'fixed',
+        zIndex: "999"
       }}
       className="p-3"
     >
