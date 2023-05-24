@@ -55,12 +55,17 @@ export default function HomePage({ ...props }) {
               <SortBy />
             </div>
             <div className="mt-1">
-              {postList.map((post) => (
+              {postList.slice(0, 2).map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </div>
             <div className="mt-1">
               <AchievementBanner />
+            </div>
+            <div class="mt-1">
+              {postList.slice(2).map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
             </div>
           </div>
 

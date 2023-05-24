@@ -2,12 +2,19 @@ import * as React from 'react'
 import { BsFillImageFill } from 'react-icons/bs'
 import { HiEmojiHappy } from 'react-icons/hi'
 import { AiOutlineFileGif } from 'react-icons/ai'
+import EmojiPicker from 'emoji-picker-react'
+import GifPicker from './GifPicker'
+import { BiXCircle } from 'react-icons/bi'
 
-export default function PostComment({ comment, ...props }) {
+let _id = 0
+export default function PostComment({ modal, setModal, comment, ...props }) {
+  const [id, setId] = React.useState(() => ++_id)
   const [showReplyInput, setShowReplyInput] = React.useState(false)
+  const [form, setForm] = React.useState({ message: '', image: '', gif: '' })
 
   const PostUser = comment.user.img
   const user = comment.user
+  console.log(comment.image, comment.gif)
 
   return (
     <div className="relative">
@@ -17,20 +24,32 @@ export default function PostComment({ comment, ...props }) {
         </div>
         <div className="w-full ">
           <div>
-            <div className="bg-[#EDEDED] flex items-start justify-between rounded-b-xl rounded-tr-xl w-full px-6 py-3">
-              <div>
-                <p className="font-Lato font-bold text-[16px] leading-5 text-[#464646]">
-                  {user.firstName} {user.lastName}{' '}
-                </p>
-                <p className="font-Lato font-normal text-[16px] leading-5 text-[#464646]">
-                  {comment.message}{' '}
-                </p>
-              </div>
-              <div>
-                <p className="font-Lato font-normal text-sm text-[#919191]">
+            <div className="border border-red-400 bg-[#EDEDED] rounded-b-xl rounded-tr-xl w-full px-6 py-3">
+              <div className="flex">
+                <div className="font-Lato text-[16px] leading-5 text-[#464646]">
+                  <p className="font-bold">
+                    {user.firstName} {user.lastName}
+                  </p>
+                  <p>{comment.message} </p>
+                </div>
+
+                <p className="ml-auto font-Lato font-normal text-sm text-[#919191]">
                   {new Date(comment.timestamp).toLocaleString()} ago
                 </p>
               </div>
+
+              {comment.image && (
+                <img
+                  className="mt-12 block w-full"
+                  src={
+                    typeof comment.image === 'string'
+                      ? comment.image
+                      : URL.createObjectURL(comment.image)
+                  }
+                />
+              )}
+
+              {comment.gif && <img className="mt-2 block w-full" src={comment.gif} />}
             </div>
           </div>
 
@@ -68,33 +87,127 @@ export default function PostComment({ comment, ...props }) {
 
           {showReplyInput && (
             <div className="mt-1 mr-0 mb-0 ml-auto">
-              <div className="flex items-center mt-3 ">
+              <div className="flex mt-3 ">
                 <div>
                   <img className="w-[80%]" src={PostUser} alt="comment" />
                 </div>
-                <div className="w-full">
-                  <form
-                    onSubmit={(ev) => {
-                      ev.preventDefault()
-                      const data = Object.fromEntries(new FormData(ev.target))
 
-                      props.addComment(comment.id, data.message)
-                      ev.target.reset()
-                      ev.target.elements.message.blur()
-                    }}
-                    className="flex justify-end items-center relative"
-                  >
-                    <input
-                      placeholder="Add A comment"
-                      name="message"
-                      className=" bg-[#EDEDED] rounded-b-xl rounded-tr-xl w-full px-6 py-3 placeholder:text-[16px] placeholder:text-[#ABACAC] placeholder:font-Lato border-none outline-none"
-                    />
-                    <div className="absolute mr-5 w-[20%] flex justify-between ">
-                      <HiEmojiHappy className="text-[#D1D1D1] text-2xl" />
-                      <BsFillImageFill className="text-[#D1D1D1] text-2xl" />
-                      <AiOutlineFileGif className="text-[#D1D1D1] text-2xl" />
+                <div>
+                  <div className="w-full flex items-center border border-red-900 bg-[#EDEDED] rounded-b-xl rounded-tr-xl">
+                    <form
+                      onSubmit={(ev) => {
+                        ev.preventDefault()
+                        props.addComment(comment.id, form)
+                        setShowReplyInput(false)
+                        setForm({ message: '', image: '', gif: '' })
+                      }}
+                      className="flex-1"
+                    >
+                      <input
+                        placeholder="Add a comment"
+                        name="message"
+                        value={form.message}
+                        onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))}
+                        className=" bg-transparent w-full px-6 py-3 placeholder:text-[16px] placeholder:text-[#ABACAC] placeholder:font-Lato border-none outline-none"
+                      />
+                    </form>
+
+                    <div className="mr-3 flex gap-2">
+                      <button type="button" onClick={() => setModal(`emoji#${id}`)}>
+                        <HiEmojiHappy className="text-[#D1D1D1] text-2xl" />
+
+                        {modal === `emoji#${id}` && (
+                          <div id="footerShow" className="absolute z-10">
+                            <EmojiPicker
+                              onEmojiClick={(emoji) => {
+                                setForm((prev) => ({
+                                  ...prev,
+                                  message: prev.message + emoji.emoji,
+                                }))
+                                setModal('')
+                              }}
+                            />
+                          </div>
+                        )}
+                      </button>
+
+                      <label className="cursor-pointer">
+                        <BsFillImageFill className="text-[#D1D1D1] text-2xl" />
+
+                        <input
+                          hidden
+                          type="file"
+                          onChange={(e) => {
+                            const file = e.target.files[0]
+                            setForm((prev) => {
+                              prev.image = file
+                              return { ...prev }
+                            })
+                          }}
+                        />
+                      </label>
+
+                      <div>
+                        <button type="button" onClick={() => setModal(`gif#${id}`)}>
+                          <AiOutlineFileGif className="text-[#D1D1D1] text-2xl" />
+                        </button>
+                        {modal === `gif#${id}` && (
+                          <GifPicker
+                            onClick={(url) => {
+                              setModal('')
+                              setForm((prev) => ({ ...prev, gif: url }))
+                            }}
+                            onClose={() => setModal('')}
+                          />
+                        )}
+                      </div>
                     </div>
-                  </form>
+                  </div>
+
+                  {form.image && (
+                    <div className="relative inline-flex items-start p-4 group">
+                      <img
+                        className="block rounded pr-4 flex-1"
+                        src={
+                          typeof form.image === 'string'
+                            ? form.image
+                            : URL.createObjectURL(form.image)
+                        }
+                      />
+
+                      <button
+                        type="button"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-primary-400"
+                        onClick={() =>
+                          setForm((prev) => {
+                            delete prev.image
+                            return { ...prev }
+                          })
+                        }
+                      >
+                        <BiXCircle fontSize={24} color="inherit" />
+                      </button>
+                    </div>
+                  )}
+
+                  {form.gif && (
+                    <div className="relative inline-flex items-start p-4 group">
+                      <img className="block rounded pr-4 flex-1" src={form.gif} />
+
+                      <button
+                        type="button"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-primary-400"
+                        onClick={() =>
+                          setForm((prev) => {
+                            delete prev.gif
+                            return { ...prev }
+                          })
+                        }
+                      >
+                        <BiXCircle fontSize={24} color="inherit" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -102,7 +215,13 @@ export default function PostComment({ comment, ...props }) {
 
           <div className="">
             {comment.replies.map((comment) => (
-              <PostComment key={comment.id} comment={comment} addComment={props.addComment} addReaction={props.addReaction} />
+              <PostComment
+                {...{ modal, setModal }}
+                key={comment.id}
+                comment={comment}
+                addComment={props.addComment}
+                addReaction={props.addReaction}
+              />
             ))}
           </div>
         </div>

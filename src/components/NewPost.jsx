@@ -1,5 +1,14 @@
 import { store } from '../redux/store'
-import { AttachFile, Close, EmojiEmotions, Image, Link } from '@mui/icons-material'
+import {
+  AttachFile,
+  Close,
+  EmojiEmotions,
+  GifBox,
+  GifBoxOutlined,
+  GifOutlined,
+  Image,
+  Link,
+} from '@mui/icons-material'
 import { TextField } from '@mui/material'
 import EmojiPicker from 'emoji-picker-react'
 import * as React from 'react'
@@ -231,11 +240,7 @@ export default function NewPost({ ...props }) {
           {form.gif && (
             <div>
               <div className="group flex items-center pb-2">
-                <img
-                  src={form.gif}
-                  key={form.image}
-                  className="mt-4 w-40 border"
-                />
+                <img src={form.gif} key={form.image} className="mt-4 w-40 border" />
 
                 <button
                   className="hidden group-hover:inline-block ml-4"
@@ -288,9 +293,7 @@ export default function NewPost({ ...props }) {
           </label>
 
           <label className="cursor-pointer" onClick={() => setFooterShow('gif')}>
-            <AttachFile />
-
-            {/* <input hidden type="file" multiple /> */}
+            <GifBox />
           </label>
 
           <button onClick={(ev) => setFooterShow('link')}>
@@ -317,7 +320,7 @@ export default function NewPost({ ...props }) {
               store.dispatch({
                 type: 'redux',
                 fn: (prev) => {
-                  prev.push({
+                  prev.unshift({
                     ...form,
                     sender: [{ ...me, points: form.points }],
                     reactions: [],
