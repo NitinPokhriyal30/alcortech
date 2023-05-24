@@ -13,6 +13,7 @@ import { HiEmojiHappy } from 'react-icons/hi'
 import { AiOutlineCaretDown, AiOutlineFileGif } from 'react-icons/ai'
 import { AchievementBanner } from './AchievementBanner'
 import PostComment from './PostComment'
+import ThumbNailX from '../assets/slider/slider-bg2.png'
 
 function Comment(message, user, reactions = [], ...replies) {
   return {
@@ -86,7 +87,9 @@ const PostCard = ({ post: _post }) => {
                 <p className="text-lg font-Lato font-bold text-primary">+{post.sender[0].points}</p>
               </div>
               <div>
-                <p className="font-Lato font-normal text-[#919191]">{new Date(post.timestamp).toLocaleDateString()}</p>
+                <p className="font-Lato font-normal text-[#919191]">
+                  {new Date(post.timestamp).toLocaleDateString()}
+                </p>
               </div>
             </div>
           </div>
@@ -111,6 +114,29 @@ const PostCard = ({ post: _post }) => {
           <p className="font-Lato font-normal mt-2 text-[#464646] text-[16px] leading-5">
             {post.message}
           </p>
+
+          {post.link && (
+            <div className="mt-2">
+              <a className="text-blue-400 underline underline-offset-[0.3em]" href={post.link}>
+                {post.link}
+              </a>
+            </div>
+          )}
+
+          {(post.gif || post.image) && (
+            <div className="mt-2 ">
+              {post.gif && <img className="block max-h-48 object-contain" src={post.gif} />}
+
+              {post.image && (
+                <img
+                  className="block max-h-48 object-contain"
+                  src={
+                    typeof post.image === 'string' ? post.image : URL.createObjectURL(post.image)
+                  }
+                />
+              )}
+            </div>
+          )}
         </div>
 
         <div>

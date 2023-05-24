@@ -4,6 +4,7 @@ import { TextField } from '@mui/material'
 import EmojiPicker from 'emoji-picker-react'
 import * as React from 'react'
 import PostUser from '../assets/images/post-img/post-user.png'
+import GifPicker from './GifPicker'
 
 const me = {
   id: 101,
@@ -22,6 +23,7 @@ export default function NewPost({ ...props }) {
     image: null,
     link: '',
     sender: [me],
+    gif: null,
   })
 
   const users = [
@@ -226,6 +228,25 @@ export default function NewPost({ ...props }) {
             </div>
           )}
 
+          {form.gif && (
+            <div>
+              <div className="group flex items-center pb-2">
+                <img
+                  src={form.gif}
+                  key={form.image}
+                  className="mt-4 w-40 border"
+                />
+
+                <button
+                  className="hidden group-hover:inline-block ml-4"
+                  onClick={() => setForm((prev) => ({ ...prev, gif: '' }))}
+                >
+                  <Close fontSize="10" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {form.link && (
             <div>
               <p>URL Link:</p>
@@ -266,10 +287,10 @@ export default function NewPost({ ...props }) {
             />
           </label>
 
-          <label className="cursor-pointer">
+          <label className="cursor-pointer" onClick={() => setFooterShow('gif')}>
             <AttachFile />
 
-            <input hidden type="file" multiple />
+            {/* <input hidden type="file" multiple /> */}
           </label>
 
           <button onClick={(ev) => setFooterShow('link')}>
@@ -357,6 +378,14 @@ export default function NewPost({ ...props }) {
                 <button className="w-full block bg-primary rounded text-white mt-2">OK</button>
               </form>
             </div>
+          ) : footerShow === 'gif' ? (
+            <GifPicker
+              id="footerShow"
+              onClick={(url) => {
+                setFooterShow('')
+                setForm((prev) => ({ ...prev, gif: url }))
+              }}
+            />
           ) : null}
         </div>
       </div>
