@@ -27,7 +27,7 @@ export default {
         "hero-slider3": "url('../src/assets/slider/slider-bg3.png')",
       },
       animation: {
-        "slide-left": "slide-left 500ms forwards",
+        "slide-left": "slide-left 1000ms forwards",
       },
       keyframes: {
         "slide-left": {
@@ -44,6 +44,10 @@ export default {
       fontFamily: {
         Lato: ["Lato"],
         Roboto: ["Roboto Slab"],
+      },
+      gridTemplateColumns: {
+        mediumDevice: "270px 1fr auto", // MD
+        smallDevice: "1fr", // SM
       },
     },
   },

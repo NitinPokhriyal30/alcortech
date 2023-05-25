@@ -1,9 +1,9 @@
 export const myTheme = {
   paper: {
-    backgroundColor: 'rgb(231, 235, 240)',
+    backgroundColor: "rgb(231, 235, 240)",
   },
   header: {
-    height: 131,
+    height: 75,
     md: {
       height: 75,
     },
@@ -11,11 +11,11 @@ export const myTheme = {
   tableCell: { height: 72.6 },
 
   sidebar: {
-    bgcolor: '#5486e3',
-    borderColor: '#3466c3',
+    bgcolor: "#5486e3",
+    borderColor: "#3466c3",
   },
-}
+};
 
 export const breakpoints = {
-  md: '768',
-}
+  md: "768",
+};

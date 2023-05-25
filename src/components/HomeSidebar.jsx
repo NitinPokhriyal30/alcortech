@@ -1,4 +1,5 @@
 import User from '../assets/images/user-profile/user.png'
+import HighLogo from '../assets/images/navbar/high5mobile.png'
 
 import { AiFillHome, AiFillGift } from 'react-icons/ai'
 import { RiTeamFill, RiSurveyFill, RiUserVoiceFill } from 'react-icons/ri'
@@ -8,6 +9,7 @@ import { BsQuestionCircle } from 'react-icons/bs'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { breakpoints, myTheme } from '../myTheme'
 import { Link } from 'react-router-dom'
+import Notification from './Notification'
 
 export default function HomeSidebar({ showSidebar, setShowSidebar }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -18,18 +20,28 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
     <div
       style={{
         top: headerHeight + 'px',
-        left: isMd ? '0px' : showSidebar ? '0px' : '-100%',
+        left: isMd ? '0px' : showSidebar ? '-12px' : '-100%',
         height: `calc(100vh - ${headerHeight}px)`,
         position: isMd ? 'sticky' : 'fixed',
         zIndex: "999"
       }}
-      className="p-3"
+      className="p-3 "
     >
       <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
+        <div className='border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3'>
+          <div className='flex items-center justify-between '>
+            <div className='mb-2 xxl:block xl:block lg:block md:block sm:block xs:block'>
+              <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
+            </div>
 
+            <div>
+              <Notification />
+            </div>
+          </div>
+        </div>
         {/*------------- Profile  ----------------------*/}
 
-        <div className="flex items-center gap-3 border-b-2 border-[#7096DB] p-5">
+        <div className="flex items-center gap-3 border-b-2 border-[#7096DB] xxl:p-5 xl:p-5 lg:p-5 md:p-5 sm:py-3 xs:py-3 ">
           <div>
             <img src={User} alt="user avatar" />
           </div>

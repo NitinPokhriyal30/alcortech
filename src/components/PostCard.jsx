@@ -78,7 +78,7 @@ const PostCard = ({ post: _post }) => {
 
   return (
     <div className="mt-3">
-      <div className="bg-white rounded-lg px-8 pt-8 pb-10">
+      <div className="bg-white rounded-lg xxl:px-8 xl:px-8 lg:px-8 md:px-8 sm:px-8 xs:px-4  pt-8 pb-10">
         <div className="flex justify-between gap-3 items-center">
           <div className="flex-1">
             <div className="flex items-center justify-between gap-8">

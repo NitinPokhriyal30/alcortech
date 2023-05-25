@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { CiSearch } from 'react-icons/ci'
 import alcoreLogo from '../assets/images/navbar/alcor-logo.png'
-import NotificationBell from '../assets/images/navbar/notinfication.png'
 import HighLogo from '../assets/images/navbar/high5.png'
 import { breakpoints, myTheme } from '../myTheme'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { FcMenu } from 'react-icons/fc'
+import Notification from './Notification'
 
 export default function MainNavbar({ setShowSidebar }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -19,13 +19,13 @@ export default function MainNavbar({ setShowSidebar }) {
       }}
     >
       <nav
-        style={{
-          height: headerHeight + 'px',
-        }}
-        className="block fixed top-0 z-10 w-full bg-white shadow"
+        // style={{
+        //   height: headerHeight + 'px',
+        // }}
+        className="block fixed top-0 z-10 w-full xxl:py-[10px] xl:py-[10px] lg:py-[10px] md:py-[10px] sm:py-[11px] xs:py-[11px] bg-white shadow"
       >
         <div className="mx-auto lg:max-w-7xl justify-evenly  md:items-center md:flex sm:flex xs:flex items-center h-full">
-          <div className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 sm:gap-4 xs:gap-10">
+          <div className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 sm:gap-4 xs:gap-0">
             <div >
               <button
                 type="button"
@@ -66,17 +66,11 @@ export default function MainNavbar({ setShowSidebar }) {
 
           <div className=" xxl:ml-auto xl:ml-auto lg:ml-auto md:ml-auto sm:ml-3 xs:ml-3 flex justify-between items-center gap-10">
             <div className='xxl:block xl:block lg:block md:block sm:hidden xs:hidden'>
-              <li className="font-sans block  xxl:mt-2 xl:mt-2 lg:mt-2 md:mt-0 sm:mt-0 xs:mt-0  lg:inline-block  lg:ml-6 align-middle text-black hover:text-gray-700">
-                <a href="#" role="button" className="relative flex">
-                  <img src={NotificationBell} alt="Notification Bell" />
-                  <span className="absolute right-2 top-2 rounded-full bg-[#E55E5E] w-3 h-3 top right p-0 m-0 text-white font-mono text-[10px]  leading-tight text-center">
-                    5
-                  </span>
-                </a>
-              </li>
+              <Notification />
             </div>
+
             <div className='mb-2 xxl:block xl:block lg:block md:block sm:block xs:block'>
-              <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
+              <img className="h-12 xxl:h-12 xl:h-12 lg:h-12 md:h-12 sm:h-auto xs:h-auto xxl:mr-8 xl:mr-8 lg:mr-8 md:mr-8 sm:mr-4 xs:mr-4 " src={HighLogo} alt=" High Logo" />
             </div>
           </div>
         </div>

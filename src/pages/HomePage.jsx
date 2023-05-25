@@ -39,15 +39,18 @@ export default function HomePage({ ...props }) {
       >
         <MainNavbar setShowSidebar={setShowSidebar} />
 
-        <Box
+        {/* <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: isMd ? '270px 1fr auto' : '1fr auto',
           }}
-        >
+        > */}
+        <div className='grid w-full xxl:grid-cols-mediumDevice xl:grid-cols-mediumDevice lg:grid-cols-mediumDevice md:grid-cols-mediumDevice sm:grid-cols-smallDevice xs:grid-cols-smallDevice'>
           <HomeSidebar {...{ showSidebar, setShowSidebar }} />
-          <div className="pt-3 pr-3">
-            <ImageSlider />
+          <div className="  xxl:pt-3 xl:pt-0 lg:pt-0 md:pt-3 sm:pt-0 xs:pt-0 xxl:pr-3 xl:pr-3 lg:pr-3 md:pr-3 sm:pr-0 xs:pr-0">
+            {/* <div className="mt-5">
+              <ImageSlider />
+            </div> */}
             <div className="mt-5">
               <NewPost />
             </div>
@@ -69,8 +72,8 @@ export default function HomePage({ ...props }) {
             </div>
           </div>
 
-          <div className="pt-3 xxl:block xl:block lg:block md:block sm:hidden xs:hidden pr-4">
-            <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
+          <div className="m-auto pt-3 xxl:block xl:block lg:block md:block sm:block xs:block pr-4">
+            <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
               <RedeemPointsWidget />
               <RecommendationWidget />
               <CelebrationWidget />
@@ -79,7 +82,8 @@ export default function HomePage({ ...props }) {
               <RecentCampaignWidget />
             </div>
           </div>
-        </Box>
+        </div>
+        {/* </Box> */}
       </main>
     </>
   )

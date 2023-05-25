@@ -20,7 +20,7 @@ const ImageSlider = () => {
       <div
         key={'-' + counter}
         style={{ flexBasis: '100%' }}
-        className={`flex-shrink-0 flex-grow w-full bg-center bg-no-repeat  rounded-lg px-8 pt-8 pb-10 ${prevBg} animate-slide-left`}
+        className={`flex-shrink-0 flex-grow w-full bg-center bg-no-repeat bg-cover rounded-lg px-8 pt-8 pb-10 ${prevBg} animate-slide-left`}
       >
         <p className="font-Lato font-black text-[25px] text-white leading-8	">
           Take our Survey <br /> & Earn High5 Points
