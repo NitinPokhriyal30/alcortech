@@ -1,7 +1,7 @@
 import PostUser from '../assets/images/post-img/post-user.png'
 import MyProfileImg from '../assets/images/user-profile/male_avatar.jpg'
 
-function Comment(message, user, reactions = [], ...replies) {
+function Comment(commentData, user, reactions = [], ...replies) {
   return {
     id: Math.random().toString(),
     user: Object.assign(user, { img: PostUser, id: Math.random().toString() }),
@@ -9,7 +9,10 @@ function Comment(message, user, reactions = [], ...replies) {
       user: { id: Math.random().toString() },
       emoji,
     })),
-    message,
+    message: '',
+    image: '',
+    gif: '',
+    ...commentData,
     timestamp: new Date(),
     replies: replies || [],
   }
@@ -126,14 +129,97 @@ const postInitialState = [
   },
 ]
 
-function postReducer(state = postInitialState, action) {
+function postReducer(posts = postInitialState, action) {
   switch (action.type) {
+    case 'add-points': {
+      const { postId, points, me } = action
+      const targetPost = posts.find((x) => x.id === postId)
+      const myPoints = targetPost.sender.find((x) => x.id === me.id)
+
+      if (myPoints != null) {
+        myPoints.points = points
+      } else
+        targetPost.sender.push({
+          points,
+          ...me,
+        })
+
+      return [...posts]
+    }
+
+    case 'add-reaction': {
+      const { postId, me, emoji } = action
+
+      const targetPost = posts.find((x) => x.id === postId)
+      const myReaction = targetPost.reactions.find((x) => x.user.id === me.id)
+
+      if (myReaction) {
+        myReaction.emoji = emoji
+      } else {
+        targetPost.reactions.push({
+          user: me,
+          emoji,
+        })
+      }
+
+      return [...posts]
+    }
+
+    case 'add-comment': {
+      const { commentId, commentData, me } = action
+
+      let targetComment
+      function findTargetComment(comment) {
+        if (targetComment != null) return
+        if (comment.id === commentId) {
+          targetComment = comment
+          return
+        }
+
+        comment.replies.forEach((x) => findTargetComment(x))
+      }
+
+      posts.forEach((post) => findTargetComment(post.comment))
+
+      targetComment.replies.push(Comment(commentData, me))
+
+      return [...posts]
+    }
+
+    case 'add-comment-reaction': {
+      const { commentId, emoji, me } = action
+
+      let targetComment
+      function findTargetComment(comment) {
+        if (targetComment != null) return
+        if (comment.id === commentId) {
+          targetComment = comment
+          return
+        }
+
+        comment.replies.forEach((x) => findTargetComment(x))
+      }
+
+      posts.forEach((post) => findTargetComment(post.comment))
+
+      const myReaction = targetComment.reactions.find((x) => x.user.id === me.id)
+      if (myReaction) {
+        myReaction.emoji = emoji
+      } else
+        targetComment.reactions.push({
+          user: me,
+          emoji,
+        })
+
+      return [...posts]
+    }
+
     case 'redux': {
-      action.fn(state)
-      return [...state]
+      action.fn(posts)
+      return [...posts]
     }
     default:
-      return state
+      return posts
   }
 }
 

@@ -16,6 +16,8 @@ import PostComment from './PostComment'
 import ThumbNailX from '../assets/slider/slider-bg2.png'
 import GifPicker from './GifPicker'
 import EmojiPicker from 'emoji-picker-react'
+import { addPoints, addReaction, addComment, addCommentReaction } from '../redux/postAction'
+import { useSelector } from 'react-redux'
 
 function Comment(commentData, user, reactions = [], ...replies) {
   return {
@@ -57,24 +59,14 @@ const POINTS = [
   },
 ]
 
-const me = {
-  id: 99,
-  firstName: 'Semad',
-  lastName: 'Javed',
-  img: PostUser,
-}
-let setPost
-
-const PostCard = ({ post: _post }) => {
-  const [post, _setPost] = React.useState(_post)
+const PostCard = ({ post }) => {
   const [showComments, setShowComments] = React.useState(false)
   const [modal, setModal] = React.useState('')
   const [form, setForm] = React.useState({ image: '', gif: '', message: '' })
-  setPost = _setPost
+  const me = useSelector((store) => store.user)
 
   const addedPoints = post.sender.find((x) => x.id === me.id)?.points
   const hasAddedPoints = !!addedPoints
-
 
   return (
     <div className="mt-3">
@@ -388,101 +380,5 @@ const PostCard = ({ post: _post }) => {
 
 export default PostCard
 
-function addPoints(postId, points) {
-  store.dispatch({
-    type: 'redux',
-    fn: (posts) => {
-      const prev = posts.find((x) => x.id === postId)
 
-      if (prev.sender.some((x) => x.id === me.id)) {
-        prev.sender.find((x) => x.id === me.id).points = points
-      } else
-        prev.sender.push({
-          points,
-          ...me,
-        })
 
-      return { ...prev }
-    },
-  })
-}
-
-function addReaction(postId, emoji) {
-  store.dispatch({
-    type: 'redux',
-    fn: (posts) => {
-      const prev = posts.find((x) => x.id === postId)
-      const myReaction = prev.reactions.find((x) => x.user.id === me.id)
-      if (myReaction) {
-        myReaction.emoji = emoji
-      } else {
-        prev.reactions.push({
-          user: me,
-          emoji,
-        })
-      }
-
-      return { ...prev }
-    },
-  })
-}
-
-function addComment(commentId, commentData) {
-  store.dispatch({
-    type: 'redux',
-    fn: (posts) => {
-      let targetComment
-      function findTargetComment(comment) {
-        if (targetComment != null) return
-        if (comment.id === commentId) {
-          targetComment = comment
-          return
-        }
-
-        comment.replies.forEach((x) => findTargetComment(x))
-      }
-
-      for (let post of posts) {
-        if (targetComment != null) break
-
-        findTargetComment(post.comment)
-      }
-
-      targetComment.replies.push(Comment(commentData, me))
-    },
-  })
-}
-
-function addCommentReaction(commentId, emoji) {
-  store.dispatch({
-    type: 'redux',
-    fn: (prev) => {
-      let targetComment
-      function findTargetComment(comment) {
-        if (targetComment != null) return
-        if (comment.id === commentId) {
-          targetComment = comment
-          return
-        }
-
-        comment.replies.forEach((x) => findTargetComment(x))
-      }
-
-      for (let post of prev) {
-        if (targetComment != null) break
-        findTargetComment(post.comment)
-      }
-
-      const myReaction = targetComment.reactions.find((x) => x.user.id === me.id)
-      if (myReaction) {
-        myReaction.emoji = emoji
-      } else
-        targetComment.reactions.push({
-          user: me,
-          emoji,
-        })
-
-      return { ...prev }
-    },
-  })
-}

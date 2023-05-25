@@ -1,8 +1,14 @@
+import PostUser from '../assets/images/post-img/post-user.png'
+
 const userInitialState = {
-  loggedIn: false,
+  loggedIn: true,
+  id: Math.random().toString(),
+  firstName: 'Semad',
+  lastName: 'Javed',
+  img: PostUser,
 }
 
-function userReducer(state = userInitialState, payload) {
+function userReducer(state = userInitialState, _action) {
   // not inplemented
   return state
 }
