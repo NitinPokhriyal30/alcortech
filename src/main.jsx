@@ -18,11 +18,13 @@ import { store } from './redux/store'
 import SingleComponentTestPage from './pages/SingleComponentTestPage'
 import { fetchSurveyWithId } from './redux/surveyAction'
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/test" element={<SingleComponentTestPage />} />
       <Route path="/" element={<HomePage />} />
+
       <Route
         path="/survey"
         element={

@@ -58,7 +58,7 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
             <AiFillHome />
             <span>Home</span>
           </Link>
-          <Link to="/" className='nav-item-container'>
+          <Link to="/my-rewards" className='nav-item-container'>
             <AiFillGift />
             <span>My Rewards</span>
           </Link>

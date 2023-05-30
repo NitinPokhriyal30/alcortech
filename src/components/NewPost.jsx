@@ -80,7 +80,7 @@ export default function NewPost({ ...props }) {
   }, [])
 
   return (
-    <div className="">
+    <div >
       <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-4">
         <ul className="flex items-center divide-x">
           {/* points button */}
@@ -201,7 +201,7 @@ export default function NewPost({ ...props }) {
       </div>
 
       {/* text field */}
-      <div className="bg-white rounded-b-lg px-8 py-10 text-gray-400">
+      <div className="bg-white rounded-b-lg drop-shadow-normal px-8 py-10 text-gray-400">
         <div>
           +{form.points}{' '}
           {form.recipients.map((user) => (

@@ -22,6 +22,8 @@ import ImageSlider from '../components/ImageSlider'
 import { useStore } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { AchievementBanner } from '../components/AchievementBanner'
+import MyRewards from '../components/MyRewards'
+import RewardPopup from '../components/RewardPopup'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -48,10 +50,10 @@ export default function HomePage({ ...props }) {
         <div className='grid w-full xxl:grid-cols-mediumDevice xl:grid-cols-mediumDevice lg:grid-cols-mediumDevice md:grid-cols-mediumDevice sm:grid-cols-smallDevice xs:grid-cols-smallDevice'>
           <HomeSidebar {...{ showSidebar, setShowSidebar }} />
           <div className="  xxl:pt-3 xl:pt-0 lg:pt-0 md:pt-3 sm:pt-0 xs:pt-0 xxl:pr-3 xl:pr-3 lg:pr-3 md:pr-3 sm:pr-0 xs:pr-0">
-            {/* <div className="mt-5">
+            {/* <div className="mt-3">
               <ImageSlider />
             </div> */}
-            <div className="mt-5">
+            <div className="mt-3">
               <NewPost />
             </div>
             <div className="mt-1">
@@ -65,15 +67,22 @@ export default function HomePage({ ...props }) {
             <div className="mt-1">
               <AchievementBanner />
             </div>
-            <div class="mt-1">
+            <div className="mt-1">
               {postList.slice(2).map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </div>
+            <div className="my-2">
+              <MyRewards />
+            </div>
+            <div className="my-2">
+              <RewardPopup />
+            </div>
+
           </div>
 
           <div className="m-auto pt-3 xxl:block xl:block lg:block md:block sm:block xs:block pr-4">
-            <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
+            <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
               <RedeemPointsWidget />
               <RecommendationWidget />
               <CelebrationWidget />

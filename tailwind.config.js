@@ -49,6 +49,9 @@ export default {
         mediumDevice: "270px 1fr auto", // MD
         smallDevice: "1fr", // SM
       },
+      dropShadow: {
+        normal: "0px 2px 3px #00000029",
+      },
     },
   },
   plugins: [],

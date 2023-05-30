@@ -70,7 +70,7 @@ const PostCard = ({ post }) => {
 
   return (
     <div className="mt-3">
-      <div className="bg-white rounded-lg xxl:px-8 xl:px-8 lg:px-8 md:px-8 sm:px-8 xs:px-4  pt-8 pb-10">
+      <div className="bg-white drop-shadow-normal rounded-lg xxl:px-8 xl:px-8 lg:px-8 md:px-8 sm:px-8 xs:px-4  pt-8 pb-10">
         <div className="flex justify-between gap-3 items-center">
           <div className="flex-1">
             <div className="flex items-center justify-between gap-8">
@@ -102,10 +102,10 @@ const PostCard = ({ post }) => {
           <p className="font-Lato font-bold text-[16px] leading-5">
             <span className="text-[#464646]">
               {post.sender[0].firstName} {post.sender[0].lastName}:
-            </span>{' '}
+            </span>
             <span className="text-primary">
               {post.recipients.map((user) => `@${user.firstName} ${user.lastName}`).join(' ')}
-            </span>{' '}
+            </span>
             <span className="text-[#ABACAC]">
               {post.hashtags.map((hash) => `#${hash}`).join(' ')}
             </span>
@@ -152,7 +152,7 @@ const PostCard = ({ post }) => {
                 <button className="hover:bg-translucent rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                   <span>
                     <BsPlusCircleFill />
-                  </span>{' '}
+                  </span>
                   Add Points
                 </button>
 
@@ -176,7 +176,7 @@ const PostCard = ({ post }) => {
               <button className="hover:bg-translucent rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                 <span>
                   <BiHeartCircle />
-                </span>{' '}
+                </span>
                 React
               </button>
 
@@ -199,7 +199,7 @@ const PostCard = ({ post }) => {
               >
                 <span>
                   <BsFillChatRightTextFill />
-                </span>{' '}
+                </span>
                 Comment
               </button>
             </div>
@@ -210,7 +210,7 @@ const PostCard = ({ post }) => {
           <div className="flex items-center gap-3 border-b-[1px] border-[#EDEDED] pb-1">
             {post.reactions.length > 0 && (
               <div className="rounded-[17px] border-[0.6px] border-[#D1D1D1] pr-2 pb-[2px] text-2xl flex items-center gap-1">
-                {post.reactions[0].emoji}{' '}
+                {post.reactions[0].emoji}
                 <span className="font-Lato text-xs text-[#747474]">{post.reactions.length}</span>
               </div>
             )}
