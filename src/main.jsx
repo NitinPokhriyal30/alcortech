@@ -16,14 +16,30 @@ import SurveryCreatePage from './pages/SurveryCreatePage'
 import SurveyListPage from './pages/SurveyListPage'
 import { store } from './redux/store'
 import SingleComponentTestPage from './pages/SingleComponentTestPage'
-import { fetchSurveyWithId } from './redux/surveyAction'
-
+import HomeSidebar from './components/HomeSidebar'
+import MainNavbar from './components/MainNavbar'
+import MyRewards from './components/MyRewards'
+import RewardPopup from './components/RewardPopup'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/test" element={<SingleComponentTestPage />} />
-      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/"
+        element={
+          <main className="bg-paper">
+            <MainNavbar />
+            <div className="pt-nav grid w-full lg:grid-cols-mediumDevice grid-cols-smallDevice">
+              <HomeSidebar />
+              <Outlet />
+            </div>
+          </main>
+        }
+      >
+        <Route index element={<HomePage />} />
+        <Route path="my-rewards" element={<MyRewards />} />
+      </Route>
 
       <Route
         path="/survey"
@@ -35,10 +51,7 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<SurveyListPage />}></Route>
-        <Route
-          path="/survey/create"
-          element={<SurveryCreatePage />}
-        />
+        <Route path="/survey/create" element={<SurveryCreatePage />} />
       </Route>
     </>
   )

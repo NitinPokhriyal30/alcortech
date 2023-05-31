@@ -69,31 +69,40 @@ export default function NewPost({ ...props }) {
   const USER_BTN_HEIGHT = 28
 
   React.useEffect(() => {
-    document.addEventListener('click', (ev) => {
+    function handleClick(ev){
       const footerShowElm = document.querySelector('#footerShow')
       const footerElm = document.querySelector('#new-post-footer')
+
+      if (footerShowElm == null || footerElm == null) return
 
       if (!footerShowElm.contains(ev.target) && !footerElm.contains(ev.target)) {
         setFooterShow('')
       }
-    })
+
+    }
+    document.addEventListener('click', handleClick)
+
+    return () => document.removeEventListener('click', handleClick)
   }, [])
 
   return (
-    <div >
+    <div>
       <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-4">
         <ul className="flex items-center divide-x">
           {/* points button */}
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-            <p className='flex gap-[2px]'>+ <span> Points</span></p>
+            <p className="flex gap-[2px]">
+              + <span> Points</span>
+            </p>
             <div className="p-2 rounded-full absolute shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
                 <button
                   key={point}
                   type="button"
-                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${form.points === point ? 'bg-primary text-white' : ''
-                    }`}
+                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${
+                    form.points === point ? 'bg-primary text-white' : ''
+                  }`}
                   onClick={() => {
                     setForm((prev) => ({ ...prev, points: point }))
                   }}
@@ -105,16 +114,18 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-
-            <p className='flex gap-[2px]'>@ <span>Recipients</span></p>
+            <p className="flex gap-[2px]">
+              @ <span>Recipients</span>
+            </p>
             <div className="absolute shadow rounded divide-y bg-white text-black hidden group-hover:block">
               {searchedUser.map((user) => {
                 const checked = form.recipients.findIndex((x) => x.id === user.id) !== -1
                 return (
                   <button
                     style={{ height: USER_BTN_HEIGHT }}
-                    className={`w-full block px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
-                      }`}
+                    className={`w-full block px-4 py-1 text-left ${
+                      checked ? 'bg-translucent' : ''
+                    }`}
                     key={user.id}
                     type="button"
                     onClick={() => {
@@ -155,8 +166,9 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-
-            <p className='flex gap-[2px]'># <span> Hashtag</span></p>
+            <p className="flex gap-[2px]">
+              # <span> Hashtag</span>
+            </p>
             <div className="absolute bg-white shadow text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
                 const checked = form.hashtags.includes(tag)
@@ -186,16 +198,17 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li style={{ borderWidth: 0 }} className="ml-auto">
-            <p className='flex items-center leading-4 ps-4'>You Have {user.points} points to give <span className="relative group ml-2 w-4 h-4 bg-white text-black inline-flex items-center justify-center rounded-full ">
-              <span>?</span>
+            <p className="flex items-center leading-4 ps-4">
+              You Have {user.points} points to give{' '}
+              <span className="relative group ml-2 w-4 h-4 bg-white text-black inline-flex items-center justify-center rounded-full ">
+                <span>?</span>
 
-              <p className="-translate-x-1/4 w-52 bg-white shadow p-2 rounded z-20 top-[25px] right-[-68px] absolute hidden group-hover:block">
-                You monthly allowance will refresh on 1st March. You have 6 days to spend 160
-                points.
-              </p>
-            </span></p>
-
-
+                <p className="-translate-x-1/4 w-52 bg-white shadow p-2 rounded z-20 top-[25px] right-[-68px] absolute hidden group-hover:block">
+                  You monthly allowance will refresh on 1st March. You have 6 days to spend 160
+                  points.
+                </p>
+              </span>
+            </p>
           </li>
         </ul>
       </div>
