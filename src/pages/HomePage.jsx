@@ -24,6 +24,7 @@ import { useSelector } from 'react-redux'
 import { AchievementBanner } from '../components/AchievementBanner'
 import MyRewards from '../components/MyRewards'
 import RewardPopup from '../components/RewardPopup'
+import PopularCategories from '../components/HomeRightSidebar/PopularCategories'
 
 export default function HomePage({ ...props }) {
   const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
@@ -89,6 +90,7 @@ export default function HomePage({ ...props }) {
               <Top5UserWidget />
               <SurveyOngoingWidget />
               <RecentCampaignWidget />
+              <PopularCategories />
             </div>
           </div>
         </div>
