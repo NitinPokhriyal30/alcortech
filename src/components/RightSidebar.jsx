@@ -7,7 +7,7 @@ const RightSidebar = () => {
 
   return (
     <div className="pt-4 pr-4">
-      <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[300px] ">
+      <div className="flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] md:w-[350px] xl:w-[320px] ">
         <div>
           <div className="bg-[#E0EBFF] text-center px-5 pt-3 pb-1 rounded-[9px] drop-shadow-[0px_2px_3px_#00000029]">
             <p className="text-[20px] font-light text-center font-Lato leading-5 text-primary">

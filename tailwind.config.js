@@ -1,65 +1,65 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      xs: '360px',
+      xs: "360px",
       // => @media (min-width: 360px) { ... }
-      sm: '640px',
+      sm: "640px",
       // => @media (min-width: 640px) { ... }
 
-      md: '768px',
+      md: "768px",
       // => @media (min-width: 768px) { ... }
 
-      lg: '1024px',
+      lg: "1024px",
       // => @media (min-width: 1024px) { ... }
 
-      xl: '1280px',
+      xl: "1280px",
       // => @media (min-width: 1280px) { ... }
 
-      xxl: '1536px',
+      xxl: "1536px",
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
       spacing: {
-        nav: '92px',
-        'nav-lg': '76px',
-        'avoid-nav': 'calc(100vh - 92px)',
-        'avoid-nav-lg': 'calc(100vh - 76px)',
+        nav: "92px",
+        "nav-lg": "76px",
+        "avoid-nav": "calc(100vh - 92px)",
+        "avoid-nav-lg": "calc(100vh - 76px)",
       },
       backgroundImage: {
-        'hero-slider1': "url('../src/assets/slider/slider-bg1.png')",
-        'hero-slider2': "url('../src/assets/slider/slider-bg2.png')",
-        'hero-slider3': "url('../src/assets/slider/slider-bg3.png')",
+        "hero-slider1": "url('../src/assets/slider/slider-bg1.png')",
+        "hero-slider2": "url('../src/assets/slider/slider-bg2.png')",
+        "hero-slider3": "url('../src/assets/slider/slider-bg3.png')",
       },
       animation: {
-        'slide-left': 'slide-left 1000ms forwards',
+        "slide-left": "slide-left 1000ms forwards",
       },
       keyframes: {
-        'slide-left': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-100%)' },
+        "slide-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
         },
       },
       colors: {
-        primary: '#5486E3',
-        'primary-400': '#93c5fd',
-        translucent: 'rgba(84 134 227 / 0.15)',
-        'translucent-white': 'rgba(256 256 256 / 0.15)',
-        paper: 'rgb(231, 235, 240)',
+        primary: "#5486E3",
+        "primary-400": "#93c5fd",
+        translucent: "#F7F7F7",
+        "translucent-white": "rgba(256 256 256 / 0.15)",
+        paper: "rgb(231, 235, 240)",
       },
       fontFamily: {
-        Lato: ['Lato'],
-        Roboto: ['Roboto Slab'],
+        Lato: ["Lato"],
+        Roboto: ["Roboto Slab"],
       },
       gridTemplateColumns: {
-        mediumDevice: '270px 1fr auto', // MD
-        smallDevice: '1fr auto', // SM
+        mediumDevice: "270px 1fr auto", // MD
+        smallDevice: "1fr auto", // SM
       },
       dropShadow: {
-        normal: '0px 2px 3px #00000029',
+        normal: "0px 2px 3px #00000029",
       },
     },
   },
   plugins: [],
-}
+};

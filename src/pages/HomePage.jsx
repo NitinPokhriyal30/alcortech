@@ -36,9 +36,9 @@ export default function HomePage({ ...props }) {
   return (
     <>
       <div className="xxl:pt-3 xl:pt-0 lg:pt-0 md:pt-3 sm:pt-0 xs:pt-0 xxl:pr-3 xl:pr-3 lg:pr-3 md:pr-3 sm:pr-0 xs:pr-0">
-        <div className="mt-3">
+        {/* <div className="mt-3">
           <ImageSlider />
-        </div>
+        </div> */}
         <div className="mt-3">
           <NewPost />
         </div>
@@ -58,15 +58,15 @@ export default function HomePage({ ...props }) {
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-        <div className="my-2">
+        {/* <div className="my-2">
           <MyRewards />
-        </div>
-        <div className="my-2">
+        </div> */}
+        {/* <div className="my-2">
           <RewardPopup />
-        </div>
+        </div> */}
       </div>
 
-      <div className="pt-3 pr-4 flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
+      <div className="pt-3 pr-6 flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
         <RedeemPointsWidget />
         <RecommendationWidget />
         <CelebrationWidget />

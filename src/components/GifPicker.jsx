@@ -59,7 +59,7 @@ export default function GifPicker({ onClose = noop, ...props }) {
       style={{
         transform: `translateX(${x}%)`,
       }}
-      className="rounded-md shadow-md border border-translucent px-4 bg-white absolute overflow-scroll h-[25rem] z-999"
+      className="rounded-md shadow-md border border-translucent px-4 bg-white absolute overflow-scroll h-[25rem] z-99"
     >
       <form
         className="mt-4 flex gap-4"

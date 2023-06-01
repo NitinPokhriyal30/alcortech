@@ -102,7 +102,7 @@ const MyRewards = () => {
         </div>
       </div>
 
-      {modal === 'redeem' && (
+      {modal === 'redeem' && coupon && (
         <div className="fixed inset-0 bg-black bg-opacity-20 z-40">
           <div className="max-w-4xl mx-auto mt-32">
             <RewardPopup coupon={coupon} onClose={() => setModal('')} />

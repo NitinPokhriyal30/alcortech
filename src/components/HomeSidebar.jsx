@@ -11,7 +11,7 @@ import Notification from './Notification'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
-export default function HomeSidebar({}) {
+export default function HomeSidebar({ }) {
   const showSidebar = useSelector((store) => store.sidebar)
   const dispatch = useDispatch()
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
@@ -19,7 +19,7 @@ export default function HomeSidebar({}) {
   return (
     <div
       style={{ left: showSidebar ? '0px' : '' }}
-      className={`transition-all p-3 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
+      className={`transition-all py-3 pl-6 pr-4 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
     >
       <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
         <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">

@@ -1,6 +1,6 @@
 import React from 'react'
 import { RxCross2 } from 'react-icons/rx'
-import PopupLogo from '../assets/images/right-section/amazon-popup-logo.png'
+// import PopupLogo from '../assets/images/right-section/amazon-popup-logo.png'
 
 const RewardPopup = ({ coupon, onClose }) => {
   const [loading, setLoading] = React.useState('')
