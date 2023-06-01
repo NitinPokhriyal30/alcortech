@@ -35,7 +35,7 @@ export default function SurveyOngoingWidget({ ...props }) {
         </span>
       </div>
 
-      <div className=" px-3 pt-2 ">
+      <div className=" px-4 pt-2 ">
         {survey.map((survey) => (
           <div key={survey.id} className="flex items-top pb-2 justify-between">
             <div>

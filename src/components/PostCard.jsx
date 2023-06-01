@@ -69,8 +69,8 @@ const PostCard = ({ post }) => {
   const hasAddedPoints = !!addedPoints
 
   return (
-    <div className="mt-3">
-      <div className="bg-white drop-shadow-normal rounded-lg xxl:px-8 xl:px-8 lg:px-8 md:px-8 sm:px-8 xs:px-4  pt-8 pb-10">
+    <div className="mb-3">
+      <div className="bg-white drop-shadow-normal rounded-lg xxl:px-6 xl:px-6 lg:px-6 md:px-6 sm:px-6 xs:px-4  py-6">
         <div className="flex justify-between gap-3 items-center">
           <div className="flex-1">
             <div className="flex items-center justify-between gap-8">
@@ -260,7 +260,7 @@ const PostCard = ({ post }) => {
                       />
                     </form>
 
-                    <div className="ml-auto mr-3 gap-2 flex items-center">
+                    <div className="ml-auto relative z-20 mr-3 gap-2 flex items-baseline  ">
                       <button
                         type="button"
                         onClick={() => setModal((prev) => (prev === 'emoji' ? '' : 'emoji'))}
@@ -268,7 +268,7 @@ const PostCard = ({ post }) => {
                         <HiEmojiHappy className="text-[#D1D1D1] text-2xl" />
 
                         {modal === 'emoji' && (
-                          <div id="footerShow" className="absolute z-10">
+                          <div id="footerShow" className="absolute z-20">
                             <EmojiPicker
                               onEmojiClick={(emoji) => {
                                 setForm((prev) => ({

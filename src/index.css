@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 .nav-item-container {
-  @apply flex px-5 rounded py-2.5 gap-2 items-center hover:bg-translucent-white text-white text-[18px] font-Lato font-light leading-[22px];
+  @apply flex  rounded py-2.5 gap-2 items-center text-white text-[18px] font-Lato font-light leading-[22px];
 }
 
 .right-sidebar-container {

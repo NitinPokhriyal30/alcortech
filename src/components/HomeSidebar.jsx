@@ -2,7 +2,7 @@ import User from '../assets/images/user-profile/user.png'
 import HighLogo from '../assets/images/navbar/high5mobile.png'
 
 import { AiFillHome, AiFillGift } from 'react-icons/ai'
-import { RiTeamFill, RiSurveyFill, RiUserVoiceFill } from 'react-icons/ri'
+import { RiContactsBookFill, RiSurveyFill, RiUserVoiceFill } from 'react-icons/ri'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { BsQuestionCircle } from 'react-icons/bs'
@@ -17,39 +17,23 @@ export default function HomeSidebar({ }) {
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
-<<<<<<< HEAD
-
-    <div
-      style={{ left: showSidebar ? '0px' : '' }}
-      className={`transition-all py-3 pl-6 pr-4 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
-    >
-      <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
-        <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
-          <div className="flex items-center justify-between ">
-            <div className="mb-2 xxl:block xl:block lg:block md:block sm:block xs:block">
-              <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
-            </div>
-          </div>
-        </div>
-      </div>
-=======
     <>
+
       {/* backdrop */}
       {showSidebar && (
         <div
           style={{
             opacity: showSidebar ? '100%' : '',
           }}
-          className="absolute inset-0 z-[999] bg-black bg-opacity-20 lg:hidden lg:opacity-100 opacity-0"
+          className=" absolute inset-0 z-[999] bg-black bg-opacity-20 lg:hidden md:hidden lg:opacity-100 opacity-0"
           onClick={() => setShowSidebar(false)}
         />
       )}
->>>>>>> 235f769b8a5fb7530fd35fd9e72fd945bd0020b5
 
       {/* sidebar */}
       <div
         style={{ left: showSidebar ? '0px' : '' }}
-        className="transition-all p-3 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-screen top-0 lg:z-0 z-[999] lg:w-auto w-[min(50vh,100%)]"
+        className="transition-all xxl:py-3 xxl:pr-4 xxl:pl-6 xl:py-3  xl:pr-4 xl:pl-6 lg:py-3 lg:pr-4 lg:pl-6 md:py-0 md:pr-0 md:pl-0  sm:p-0 xs:p-0   lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-[87px] h-screen top-0 lg:z-0 z-[999] lg:w-auto w-[min(50vh,100%)]"
       >
         <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
           <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
@@ -64,48 +48,50 @@ export default function HomeSidebar({ }) {
             </div>
           </div>
           {/*------------- Profile  ----------------------*/}
-
-          <div className="flex items-center gap-3 border-b-2 border-[#7096DB] xxl:p-5 xl:p-5 lg:p-5 md:p-5 sm:py-3 xs:py-3 ">
-            <div>
-              <img src={User} alt="user avatar" />
-            </div>
-            <div>
-              <p className="text-white font-Lato text-[16px] font-black">Hi</p>
-              <span className="text-white font-Lato text-[16px] font-normal">Semad Javed</span>
+          <div className='px-5'>
+            <div className="flex items-center gap-3 border-b-[1px] border-[#7096DB] xxl:py-5 xl:py-5 lg:py-5 md:py-5 sm:py-3 xs:py-3 ">
+              <div>
+                <img src={User} alt="user avatar" />
+              </div>
+              <div>
+                <p className="text-white font-Lato text-[16px] font-black">Hi</p>
+                <span className="text-white font-Lato text-[16px] font-normal">Semad Javed</span>
+              </div>
             </div>
           </div>
-
           {/*-------------- Nav Items  -------------------*/}
 
-          <div className="flex flex-col px-1 pt-5">
-            <Link to="/" className="nav-item-container">
-              <AiFillHome />
-              <span>Home</span>
-            </Link>
-            <Link to="/my-rewards" className="nav-item-container">
-              <AiFillGift />
-              <span>My Rewards</span>
-            </Link>
-            <Link to="/" className="nav-item-container">
-              <RiTeamFill />
-              <span>My Team</span>
-            </Link>
-            <Link to="/" className="nav-item-container">
-              <SiGoogleanalytics />
-              <span>Analytics</span>
-            </Link>
-            <Link to="/" className="nav-item-container">
-              <HiSpeakerphone />
-              <span>Campaigns</span>
-            </Link>
-            <Link to="/survey" className="nav-item-container">
-              <RiSurveyFill />
-              <span>Survey</span>
-            </Link>
-            <Link to="/" className="nav-item-container">
-              <RiUserVoiceFill />
-              <span>Voice Out</span>
-            </Link>
+          <div className="flex flex-col px-5 pt-5  ">
+            <div className='border-b-[1px] pb-5  border-[#7096DB]'>
+              <Link to="/" className="nav-item-container">
+                <AiFillHome />
+                <span>Home</span>
+              </Link>
+              <Link to="/my-rewards" className="nav-item-container">
+                <AiFillGift />
+                <span>My Rewards</span>
+              </Link>
+              <Link to="/" className="nav-item-container">
+                <RiContactsBookFill />
+                <span>Directory</span>
+              </Link>
+              <Link to="/" className="nav-item-container">
+                <SiGoogleanalytics />
+                <span>Analytics</span>
+              </Link>
+              <Link to="/" className="nav-item-container">
+                <HiSpeakerphone />
+                <span>Campaigns</span>
+              </Link>
+              <Link to="/survey" className="nav-item-container">
+                <RiSurveyFill />
+                <span>Survey</span>
+              </Link>
+              <Link to="/" className="nav-item-container">
+                <RiUserVoiceFill />
+                <span>Voice Out</span>
+              </Link>
+            </div>
           </div>
 
           {/*--------------- FAQ Section  ----------------*/}
@@ -122,7 +108,7 @@ export default function HomeSidebar({ }) {
           </div>
         </div>
       </div>
-    </div>
 
+    </>
   )
 }

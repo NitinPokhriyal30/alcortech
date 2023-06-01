@@ -13,7 +13,7 @@ const RightSidebar = () => {
             <p className="text-[20px] font-light text-center font-Lato leading-5 text-primary">
               You have <span className="font-black">{user.points} Points</span> to redeem
             </p>
-            <span className="text-[12px] text-[#747474] font-Lato font-light">
+            <span className="text-xs text-[#747474] font-Lato font-light">
               Don't worry, It never expires!
             </span>
           </div>

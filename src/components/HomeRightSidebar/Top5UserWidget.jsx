@@ -50,8 +50,8 @@ export default function Top5UserWidget({ ...props }) {
 
         {topUsers.map((user, index) => (
           <div key={user.id}>
-            <div className=" px-3 pt-2 ">
-              <div className="flex pb-2 gap-3 ml-3 justify-between items-center">
+            <div className=" px-4 pt-2 ">
+              <div className="flex pb-2 gap-3 ml-1 justify-between items-center">
                 <div className="flex relative items-center gap-3">
                   <img src={user.image} className="w-14 h-14" alt="user1" />
                   {index <= 2 && (
@@ -60,10 +60,10 @@ export default function Top5UserWidget({ ...props }) {
                         index === 0
                           ? GreenStar
                           : index === 1
-                          ? FadeStar
-                          : index === 2
-                          ? RedStar
-                          : null
+                            ? FadeStar
+                            : index === 2
+                              ? RedStar
+                              : null
                       }
                       alt="Green Star"
                       className="absolute top-0 left-[-5px]"

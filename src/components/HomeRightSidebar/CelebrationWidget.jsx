@@ -44,7 +44,7 @@ export default function CelebrationWidget() {
           </p>
         </div>
         <div>
-          <div className=" px-3 pt-2 ">
+          <div className=" px-4 pt-2 ">
             {celebrations.map((event) => {
               const EventIcon = Icons[event.icon]
               const [user, ...others] = event.users
@@ -54,7 +54,7 @@ export default function CelebrationWidget() {
                   <p className="text-primary">
                     <EventIcon />
                   </p>
-                  <span className="text-primary text-[12px] font-Lato font-light">
+                  <span className="text-primary text-sm font-Lato font-light">
                     <strong>
                       {user.firstName}{' '}
                       {others.length > 0

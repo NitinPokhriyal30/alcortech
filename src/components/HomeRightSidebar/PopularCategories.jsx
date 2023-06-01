@@ -9,7 +9,7 @@ const PopularCategories = () => {
                         Popular Categories
                     </p>
                 </div>
-                <div className=" px-3 pt-3 ">
+                <div className=" px-4 pt-3 ">
                     <div className="flex items-top pb-2 justify-between">
                         <div>
                             <p className="text-[#585858] font-Lato text-[16px]">Recomended For You</p>

@@ -87,12 +87,12 @@ export default function NewPost({ ...props }) {
 
   return (
     <div>
-      <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-4">
-        <ul className="flex items-center divide-x">
+      <div className="bg-primary  text-white text-sm rounded-t-lg py-2 px-6">
+        <ul className="flex items-center divide-x divide-[#7096DB]">
           {/* points button */}
 
-          <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-            <p className='flex gap-[2px]'>+ <span> Points</span></p>
+          <li className="group  xxl:pr-4 xl:pr-4 lg:pr-4 md:pr-4 sm:px-1 xs:px-1">
+            <p className='flex gap-[2px] hover:font-bold cursor-pointer'>+ <span className='font-Lato'> Points</span></p>
             <div className="p-2 rounded-full absolute z-10 shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
                 <button
@@ -112,14 +112,14 @@ export default function NewPost({ ...props }) {
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
 
-            <p className='flex gap-[2px]'>@ <span>Recipients</span></p>
+            <p className='flex gap-[2px] hover:font-bold cursor-pointer'>@ <span className='font-Lato'>Recipients</span></p>
             <div className="absolute shadow z-10 rounded divide-y bg-white text-black hidden group-hover:block">
               {searchedUser.map((user) => {
                 const checked = form.recipients.findIndex((x) => x.id === user.id) !== -1
                 return (
                   <button
                     style={{ height: USER_BTN_HEIGHT }}
-                    className={`w-full block px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
+                    className={`w-full block  px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
                       }`}
                     key={user.id}
                     type="button"
@@ -162,7 +162,7 @@ export default function NewPost({ ...props }) {
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
 
-            <p className='flex gap-[2px]'># <span> Hashtag</span></p>
+            <p className='flex gap-[2px] hover:font-bold cursor-pointer'># <span className='font-Lato'> Hashtag</span></p>
             <div className="absolute bg-white shadow z-10 text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
                 const checked = form.hashtags.includes(tag)
@@ -192,8 +192,8 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li style={{ borderWidth: 0 }} className="ml-auto">
-            <p className="flex items-center leading-4 ps-4">
-              You Have {user.points} points to give{' '}
+            <p className="flex font-Lato cursor-pointer items-center leading-4 ps-4">
+              You Have {user.points} points to give
               <span className="relative group ml-2 w-4 h-4 bg-white text-black inline-flex items-center justify-center rounded-full ">
                 <span>?</span>
 
@@ -208,7 +208,7 @@ export default function NewPost({ ...props }) {
       </div>
 
       {/* text field */}
-      <div className="bg-white rounded-b-lg drop-shadow-normal px-8 py-10 text-gray-400">
+      <div className="bg-white rounded-b-lg drop-shadow-normal px-6 py-6 text-gray-400">
         <div>
           +{form.points}{' '}
           {form.recipients.map((user) => (
@@ -279,12 +279,21 @@ export default function NewPost({ ...props }) {
         </div>
 
         {/* footer */}
-        <div id="new-post-footer" className="flex pt-3 gap-4">
-          <button type="button" onClick={() => setFooterShow('emoji')}>
-            <EmojiEmotions />
-          </button>
+        <div id="new-post-footer" className="flex items-baseline pt-3 gap-4">
 
-          <label className="cursor-pointer">
+          <div className="relative">
+            <button className='text-iconColor group cursor-pointer relative inline-block' type="button" onClick={() => setFooterShow('emoji')}>
+              <EmojiEmotions />
+              <div class="opacity-0 w-24 bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-37px]  px-3 pointer-events-none">
+                Add an emoji
+                <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
+              </div>
+            </button>
+
+          </div>
+
+
+          <label className="cursor-pointer text-iconColor">
             <Image />
             <input
               hidden
@@ -299,17 +308,17 @@ export default function NewPost({ ...props }) {
             />
           </label>
 
-          <label className="cursor-pointer" onClick={() => setFooterShow('gif')}>
+          <label className="cursor-pointer text-iconColor" onClick={() => setFooterShow('gif')}>
             <GifBox />
           </label>
 
-          <button onClick={(ev) => setFooterShow('link')}>
+          <button className='text-iconColor' onClick={(ev) => setFooterShow('link')}>
             <Link />
           </button>
 
           <button
             type="submit"
-            className=" ml-auto bg-primary text-white px-4 w-full max-w-[6rem] rounded-sm"
+            className=" ml-auto bg-primary text-white font-Lato px-4 py-1 w-full max-w-[6rem] rounded-sm"
             onClick={() => {
               if (form.hashtags.length === 0) {
                 alert('Add atleast one hashtag')

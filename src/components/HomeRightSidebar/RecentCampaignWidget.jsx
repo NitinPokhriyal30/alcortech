@@ -23,7 +23,7 @@ export default function RecentCampaignWidget({ ...props }) {
           </p>
         </div>
         <div>
-          <div className=" px-3 pt-2 ">
+          <div className=" px-4 pt-2 ">
             <div>
               <div className="flex items-top gap-3 pb-2 justify-between">
                 <div>
@@ -52,7 +52,7 @@ export default function RecentCampaignWidget({ ...props }) {
           </div>
 
           <div className="text-center pt-2 border-t border-[#EDEDED]">
-            <Link to="/take-campaign" className="text-[12px] flex gap-1 justify-center items-center font-Lato text-primary font-bold">
+            <Link to="/take-campaign" className="text-base flex gap-1 justify-center items-center font-Lato text-primary font-bold">
               View All
               <span>
                 <AiOutlineCaretDown />

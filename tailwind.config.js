@@ -20,12 +20,19 @@ export default {
       xxl: "1536px",
       // => @media (min-width: 1536px) { ... }
     },
+    fontSize: {
+      xs: ["12px", "16px"],
+      sm: ["14px", "20px"],
+      base: ["16px", "24px"],
+      lg: ["20px", "28px"],
+      xl: ["24px", "32px"],
+    },
     extend: {
       spacing: {
-        nav: "92px",
+        nav: "87px",
         "nav-lg": "76px",
-        "avoid-nav": "calc(100vh - 92px)",
-        "avoid-nav-lg": "calc(100vh - 76px)",
+        "avoid-nav": "calc(100vh - 87px)",
+        "avoid-nav-lg": "calc(100vh - 87px)",
       },
       backgroundImage: {
         "hero-slider1": "url('../src/assets/slider/slider-bg1.png')",
@@ -47,6 +54,7 @@ export default {
         translucent: "#F7F7F7",
         "translucent-white": "rgba(256 256 256 / 0.15)",
         paper: "rgb(231, 235, 240)",
+        iconColor: "#D1D1D1",
       },
       fontFamily: {
         Lato: ["Lato"],
@@ -58,6 +66,7 @@ export default {
       },
       dropShadow: {
         normal: "0px 2px 3px #00000029",
+        tooltipShadow: "0px 2px 6px #44444F1A",
       },
     },
   },
