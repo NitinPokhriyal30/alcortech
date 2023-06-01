@@ -17,6 +17,7 @@ export default function HomeSidebar({ }) {
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
+<<<<<<< HEAD
 
     <div
       style={{ left: showSidebar ? '0px' : '' }}
@@ -31,6 +32,19 @@ export default function HomeSidebar({ }) {
           </div>
         </div>
       </div>
+=======
+    <>
+      {/* backdrop */}
+      {showSidebar && (
+        <div
+          style={{
+            opacity: showSidebar ? '100%' : '',
+          }}
+          className="absolute inset-0 z-[999] bg-black bg-opacity-20 lg:hidden lg:opacity-100 opacity-0"
+          onClick={() => setShowSidebar(false)}
+        />
+      )}
+>>>>>>> 235f769b8a5fb7530fd35fd9e72fd945bd0020b5
 
       {/* sidebar */}
       <div
