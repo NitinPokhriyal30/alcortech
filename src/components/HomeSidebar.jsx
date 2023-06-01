@@ -17,18 +17,6 @@ export default function HomeSidebar({ }) {
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
-<<<<<<< HEAD
-    <div
-      style={{ left: showSidebar ? '0px' : '' }}
-      className={`transition-all py-3 pl-6 pr-4 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
-    >
-      <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
-        <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
-          <div className="flex items-center justify-between ">
-            <div className="mb-2 xxl:block xl:block lg:block md:block sm:block xs:block">
-              <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
-            </div>
-=======
     <>
       {/* backdrop */}
       {showSidebar && (
@@ -40,7 +28,6 @@ export default function HomeSidebar({ }) {
           onClick={() => setShowSidebar(false)}
         />
       )}
->>>>>>> bab84eb6ff3239b1ecd64bddb3b1be3986018a29
 
       {/* sidebar */}
       <div
