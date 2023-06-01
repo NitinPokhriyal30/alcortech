@@ -17,7 +17,7 @@ export default function HomeSidebar({ }) {
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
-<<<<<<< HEAD
+
     <div
       style={{ left: showSidebar ? '0px' : '' }}
       className={`transition-all py-3 pl-6 pr-4 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
@@ -28,19 +28,9 @@ export default function HomeSidebar({ }) {
             <div className="mb-2 xxl:block xl:block lg:block md:block sm:block xs:block">
               <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
             </div>
-=======
-    <>
-      {/* backdrop */}
-      {showSidebar && (
-        <div
-          style={{
-            opacity: showSidebar ? '100%' : '',
-          }}
-          className="absolute inset-0 z-[999] bg-black bg-opacity-20 lg:hidden lg:opacity-100 opacity-0"
-          onClick={() => setShowSidebar(false)}
-        />
-      )}
->>>>>>> bab84eb6ff3239b1ecd64bddb3b1be3986018a29
+          </div>
+        </div>
+      </div>
 
       {/* sidebar */}
       <div
@@ -118,6 +108,7 @@ export default function HomeSidebar({ }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
+
   )
 }
