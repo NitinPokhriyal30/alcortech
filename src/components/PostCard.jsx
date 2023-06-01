@@ -60,7 +60,7 @@ const POINTS = [
 ]
 
 const PostCard = ({ post }) => {
-  const [showComments, setShowComments] = React.useState(false)
+  const [showCommentsFor, setShowCommentsFor] = React.useState('')
   const [modal, setModal] = React.useState('')
   const [form, setForm] = React.useState({ image: '', gif: '', message: '' })
   const me = useSelector((store) => store.user)
@@ -195,7 +195,9 @@ const PostCard = ({ post }) => {
             <div>
               <button
                 className="hover:bg-translucent rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary"
-                onClick={() => setShowComments((p) => !p)}
+                onClick={() =>
+                  setShowCommentsFor((p) => (p === post.comment.id ? '' : post.comment.id))
+                }
               >
                 <span>
                   <BsFillChatRightTextFill />
@@ -225,7 +227,7 @@ const PostCard = ({ post }) => {
           </div>
         </div>
 
-        {showComments && (
+        {showCommentsFor === post.comment.id && (
           <>
             <div>
               <div className="flex mt-3">
@@ -367,6 +369,7 @@ const PostCard = ({ post }) => {
         {post.comment.replies?.map((comment) => (
           <PostComment
             {...{ modal, setModal }}
+            {...{ showCommentsFor, setShowCommentsFor }}
             key={comment.message}
             comment={comment}
             addComment={addComment}
@@ -379,6 +382,3 @@ const PostCard = ({ post }) => {
 }
 
 export default PostCard
-
-
-
