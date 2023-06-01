@@ -7,7 +7,14 @@ import GifPicker from './GifPicker'
 import { BiXCircle } from 'react-icons/bi'
 
 let _id = 0
-export default function PostComment({ modal, setModal, comment, ...props }) {
+export default function PostComment({
+  modal,
+  setModal,
+  comment,
+  showCommentsFor,
+  setShowCommentsFor,
+  ...props
+}) {
   const [id, setId] = React.useState(() => ++_id)
   const [showReplyInput, setShowReplyInput] = React.useState(false)
   const [form, setForm] = React.useState({ message: '', image: '', gif: '' })
@@ -24,7 +31,7 @@ export default function PostComment({ modal, setModal, comment, ...props }) {
         </div>
         <div className="w-full ">
           <div>
-            <div className="border border-red-400 bg-[#EDEDED] rounded-b-xl rounded-tr-xl w-full px-6 py-3">
+            <div className="border border-[#dfdfdf] bg-[#f7f7f7] rounded-b-xl rounded-tr-xl w-full px-6 py-3">
               <div className="flex">
                 <div className="font-Lato text-[16px] leading-5 text-[#464646]">
                   <p className="font-bold">
@@ -79,13 +86,13 @@ export default function PostComment({ modal, setModal, comment, ...props }) {
             <p className="font-Lato text-xs text-primary">|</p>
             <p
               className="hover:bg-[#F7F7F7] rounded-[4px] peer p-2 flex items-center gap-1 text-[16px] font-Lato text-xs text-primary"
-              onClick={() => setShowReplyInput((p) => !p)}
+              onClick={() => setShowCommentsFor((p) => (p === comment.id ? '' : comment.id))}
             >
               Reply
             </p>
           </div>
 
-          {showReplyInput && (
+          {showCommentsFor === comment.id && (
             <div className="mt-1 mr-0 mb-0 ml-auto">
               <div className="flex mt-3 ">
                 <div>
@@ -93,7 +100,7 @@ export default function PostComment({ modal, setModal, comment, ...props }) {
                 </div>
 
                 <div>
-                  <div className="w-full flex items-center border border-red-900 bg-[#EDEDED] rounded-b-xl rounded-tr-xl">
+                  <div className="w-full flex items-center border border-[#dfdfdf] bg-[#f7f7f7] rounded-b-xl rounded-tr-xl">
                     <form
                       onSubmit={(ev) => {
                         ev.preventDefault()
@@ -217,6 +224,7 @@ export default function PostComment({ modal, setModal, comment, ...props }) {
             {comment.replies.map((comment) => (
               <PostComment
                 {...{ modal, setModal }}
+                {...{ showCommentFor: showCommentsFor, setShowCommentFor: setShowCommentsFor }}
                 key={comment.id}
                 comment={comment}
                 addComment={props.addComment}

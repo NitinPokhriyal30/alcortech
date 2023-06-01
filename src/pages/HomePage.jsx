@@ -58,12 +58,15 @@ export default function HomePage({ ...props }) {
             <PostCard key={post.id} post={post} />
           ))}
         </div>
+<<<<<<< HEAD
         {/* <div className="my-2">
           <MyRewards />
         </div> */}
         {/* <div className="my-2">
           <RewardPopup />
         </div> */}
+=======
+>>>>>>> bab84eb6ff3239b1ecd64bddb3b1be3986018a29
       </div>
 
       <div className="pt-3 pr-6 flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
