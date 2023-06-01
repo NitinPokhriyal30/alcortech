@@ -281,20 +281,24 @@ export default function NewPost({ ...props }) {
         {/* footer */}
         <div id="new-post-footer" className="flex items-baseline pt-3 gap-4">
 
-          <div className="relative">
-            <button className='text-iconColor group cursor-pointer relative inline-block' type="button" onClick={() => setFooterShow('emoji')}>
-              <EmojiEmotions />
-              <div class="opacity-0 w-24 bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-37px]  px-3 pointer-events-none">
-                Add an emoji
-                <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
-              </div>
-            </button>
 
-          </div>
+          <button className='text-iconColor group cursor-pointer relative inline-block' type="button" onClick={() => setFooterShow('emoji')}>
+            <EmojiEmotions />
+            <div class="opacity-0 w-24 bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-20px]  px-3 pointer-events-none">
+              Add an emoji
+              <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full -left-4 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
+            </div>
+          </button>
 
 
-          <label className="cursor-pointer text-iconColor">
+
+
+          <label className="text-iconColor group cursor-pointer relative inline-block">
             <Image />
+            <div class="opacity-0 w-[100px] bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-37px]  px-3 pointer-events-none">
+              Add an image
+              <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
+            </div>
             <input
               hidden
               type="file"
@@ -308,12 +312,20 @@ export default function NewPost({ ...props }) {
             />
           </label>
 
-          <label className="cursor-pointer text-iconColor" onClick={() => setFooterShow('gif')}>
+          <label className="text-iconColor group cursor-pointer relative inline-block" onClick={() => setFooterShow('gif')}>
             <GifBox />
+            <div class="opacity-0 w-20 bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-30px]  px-3 pointer-events-none">
+              Add a gif
+              <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
+            </div>
           </label>
 
-          <button className='text-iconColor' onClick={(ev) => setFooterShow('link')}>
+          <button className='text-iconColor group cursor-pointer relative inline-block' onClick={(ev) => setFooterShow('link')}>
             <Link />
+            <div class="opacity-0 w-20 bg-white drop-shadow-tooltipShadow text-[#747474] text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full left-[-30px]  px-3 pointer-events-none">
+              Add a link
+              <svg class="absolute text-white drop-shadow-tooltipShadow h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0" /></svg>
+            </div>
           </button>
 
           <button

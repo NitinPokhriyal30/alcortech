@@ -63,7 +63,7 @@ export default function HomePage({ ...props }) {
         </div> */}
       </div>
 
-      <div className="pt-3 pr-6 md:pr-3 flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[260px] xl:w-[325px] sm:w-[359px] xs:w-[425px]">
+      <div className="pt-3 pr-6 xxl:pr-6 xl:pr-6 lg:pr-6 md:pr-3 flex flex-col gap-3 pb-5 px-1 overflow-y-auto w-[250px] lg:w-[235px] md:w-[260px] xl:w-[325px] sm:w-[359px] xs:w-[425px]">
         <RedeemPointsWidget />
         <RecommendationWidget />
         <CelebrationWidget />

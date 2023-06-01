@@ -6,7 +6,7 @@ const SortBy = () => {
         <div>
             <div className="flex items-center gap-2 justify-between">
                 <div className="bg-[#CECECE] h-[1px] w-full"></div>
-                <div className="xxl:w-[22%] xl:w-[22%] lg:w-[33%] md:w-[33%] sm:w-[40%] xs:w-[50%] ">
+                <div className="xxl:w-[22%] xl:w-[19%] lg:w-[33%] md:w-[33%] sm:w-[40%] xs:w-[50%] ">
                     <p className="font-Lato text-[#7B7B7B] text-sm relative flex items-center">
                         Sort By:
                         <button className="peer font-Lato flex items-center gap-1 text-sm font-semibold pl-1">

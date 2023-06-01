@@ -172,7 +172,7 @@ const PostCard = ({ post }) => {
             )}
 
             {/* post reaction button */}
-            <div className="relative">
+            <div className="relative ">
               <button className="hover:bg-translucent rounded-[4px] peer p-2 font-Lato flex items-center gap-1 font-light text-[16px] text-primary">
                 <span>
                   <BiHeartCircle />
@@ -235,7 +235,7 @@ const PostCard = ({ post }) => {
                   <img className="w-[80%]" src={PostUser} alt="comment" />
                 </div>
                 <div className="flex-1 w-full">
-                  <div className="flex items-center relative bg-[#EDEDED] rounded-b-xl rounded-tr-xl">
+                  <div className="flex items-center relative  bg-[#EDEDED] rounded-b-xl rounded-tr-xl">
                     <form
                       onSubmit={(ev) => {
                         ev.preventDefault()
@@ -260,7 +260,7 @@ const PostCard = ({ post }) => {
                       />
                     </form>
 
-                    <div className="ml-auto relative z-20 mr-3 gap-2 flex items-baseline  ">
+                    <div className="ml-auto relative z-auto  mr-3 gap-2 flex items-baseline  ">
                       <button
                         type="button"
                         onClick={() => setModal((prev) => (prev === 'emoji' ? '' : 'emoji'))}
@@ -268,7 +268,7 @@ const PostCard = ({ post }) => {
                         <HiEmojiHappy className="text-[#D1D1D1] text-2xl" />
 
                         {modal === 'emoji' && (
-                          <div id="footerShow" className="absolute z-20">
+                          <div id="footerShow" className="absolute z-auto">
                             <EmojiPicker
                               onEmojiClick={(emoji) => {
                                 setForm((prev) => ({
