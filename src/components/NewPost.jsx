@@ -69,7 +69,7 @@ export default function NewPost({ ...props }) {
   const USER_BTN_HEIGHT = 28
 
   React.useEffect(() => {
-    function handleClick(ev){
+    function handleClick(ev) {
       const footerShowElm = document.querySelector('#footerShow')
       const footerElm = document.querySelector('#new-post-footer')
 
@@ -92,17 +92,14 @@ export default function NewPost({ ...props }) {
           {/* points button */}
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-            <p className="flex gap-[2px]">
-              + <span> Points</span>
-            </p>
-            <div className="p-2 rounded-full absolute shadow bg-white text-black gap-2 hidden group-hover:flex">
+            <p className='flex gap-[2px]'>+ <span> Points</span></p>
+            <div className="p-2 rounded-full absolute z-10 shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
                 <button
                   key={point}
                   type="button"
-                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${
-                    form.points === point ? 'bg-primary text-white' : ''
-                  }`}
+                  className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-primary  hover:text-white ${form.points === point ? 'bg-primary text-white' : ''
+                    }`}
                   onClick={() => {
                     setForm((prev) => ({ ...prev, points: point }))
                   }}
@@ -114,18 +111,16 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-            <p className="flex gap-[2px]">
-              @ <span>Recipients</span>
-            </p>
-            <div className="absolute shadow rounded divide-y bg-white text-black hidden group-hover:block">
+
+            <p className='flex gap-[2px]'>@ <span>Recipients</span></p>
+            <div className="absolute shadow z-10 rounded divide-y bg-white text-black hidden group-hover:block">
               {searchedUser.map((user) => {
                 const checked = form.recipients.findIndex((x) => x.id === user.id) !== -1
                 return (
                   <button
                     style={{ height: USER_BTN_HEIGHT }}
-                    className={`w-full block px-4 py-1 text-left ${
-                      checked ? 'bg-translucent' : ''
-                    }`}
+                    className={`w-full block px-4 py-1 text-left ${checked ? 'bg-translucent' : ''
+                      }`}
                     key={user.id}
                     type="button"
                     onClick={() => {
@@ -166,10 +161,9 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
-            <p className="flex gap-[2px]">
-              # <span> Hashtag</span>
-            </p>
-            <div className="absolute bg-white shadow text-black flex-col rounded divide-y hidden group-hover:flex">
+
+            <p className='flex gap-[2px]'># <span> Hashtag</span></p>
+            <div className="absolute bg-white shadow z-10 text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
                 const checked = form.hashtags.includes(tag)
                 return (
