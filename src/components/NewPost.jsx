@@ -87,7 +87,7 @@ export default function NewPost({ ...props }) {
 
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
             <p className='flex gap-[2px]'>+ <span> Points</span></p>
-            <div className="p-2 rounded-full absolute shadow bg-white text-black gap-2 hidden group-hover:flex">
+            <div className="p-2 rounded-full absolute z-10 shadow bg-white text-black gap-2 hidden group-hover:flex">
               {[10, 20, 30, 40, 50].map((point) => (
                 <button
                   key={point}
@@ -107,7 +107,7 @@ export default function NewPost({ ...props }) {
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
 
             <p className='flex gap-[2px]'>@ <span>Recipients</span></p>
-            <div className="absolute shadow rounded divide-y bg-white text-black hidden group-hover:block">
+            <div className="absolute shadow z-10 rounded divide-y bg-white text-black hidden group-hover:block">
               {searchedUser.map((user) => {
                 const checked = form.recipients.findIndex((x) => x.id === user.id) !== -1
                 return (
@@ -157,7 +157,7 @@ export default function NewPost({ ...props }) {
           <li className="group  xxl:px-4 xl:px-4 lg:px-4 md:px-4 sm:px-1 xs:px-1">
 
             <p className='flex gap-[2px]'># <span> Hashtag</span></p>
-            <div className="absolute bg-white shadow text-black flex-col rounded divide-y hidden group-hover:flex">
+            <div className="absolute bg-white shadow z-10 text-black flex-col rounded divide-y hidden group-hover:flex">
               {hashtags.map((tag, i) => {
                 const checked = form.hashtags.includes(tag)
                 return (

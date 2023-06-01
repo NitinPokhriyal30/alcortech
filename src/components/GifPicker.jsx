@@ -2,7 +2,7 @@ import * as React from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 
 let _id = 0
-let noop = () => {}
+let noop = () => { }
 export default function GifPicker({ onClose = noop, ...props }) {
   const [id] = React.useState(props.id || ++_id)
   const [gifs, setGifs] = React.useState(null)
@@ -59,7 +59,7 @@ export default function GifPicker({ onClose = noop, ...props }) {
       style={{
         transform: `translateX(${x}%)`,
       }}
-      className="rounded-md shadow-md border border-translucent px-4 bg-white absolute overflow-scroll h-[25rem] z-20"
+      className="rounded-md shadow-md border border-translucent px-4 bg-white absolute overflow-scroll h-[25rem] z-999"
     >
       <form
         className="mt-4 flex gap-4"
@@ -87,32 +87,32 @@ export default function GifPicker({ onClose = noop, ...props }) {
       <div className="columns-2 gap-4">
         {gifs == null
           ? Array(10)
-              .fill(0)
-              .map(() => randomHeights[Math.round(Math.random() * randomHeights.length)])
-              .map((height, i) => (
-                <button type="button" key={i} className="w-[200px] pt-4 block">
-                  <div
-                    style={{ height: 0.25 * height + 'rem' }}
-                    className="bg-translucent hover:bg-primary-400 rounded"
-                  ></div>
-                </button>
-              ))
-          : gifs.map((gifO) => (
-              <button
-                key={gifO.id}
-                className="w-[200px] pt-4 block"
-                onClick={() => props.onClick(gifO.images.original.url)}
-                type="button"
-              >
-                <div className="bg-translucent">
-                  <img
-                    src={gifO.images.fixed_width.url}
-                    style={{ height: gifO.images.fixed_width.height + 'px' }}
-                    className="w-full rounded overflow-hidden"
-                  />
-                </div>
+            .fill(0)
+            .map(() => randomHeights[Math.round(Math.random() * randomHeights.length)])
+            .map((height, i) => (
+              <button type="button" key={i} className="w-[200px] pt-4 block">
+                <div
+                  style={{ height: 0.25 * height + 'rem' }}
+                  className="bg-translucent hover:bg-primary-400 rounded"
+                ></div>
               </button>
-            ))}
+            ))
+          : gifs.map((gifO) => (
+            <button
+              key={gifO.id}
+              className="w-[200px] pt-4 block"
+              onClick={() => props.onClick(gifO.images.original.url)}
+              type="button"
+            >
+              <div className="bg-translucent">
+                <img
+                  src={gifO.images.fixed_width.url}
+                  style={{ height: gifO.images.fixed_width.height + 'px' }}
+                  className="w-full rounded overflow-hidden"
+                />
+              </div>
+            </button>
+          ))}
       </div>
     </div>
   )
