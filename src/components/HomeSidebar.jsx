@@ -6,31 +6,25 @@ import { RiTeamFill, RiSurveyFill, RiUserVoiceFill } from 'react-icons/ri'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { BsQuestionCircle } from 'react-icons/bs'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { breakpoints, myTheme } from '../myTheme'
 import { Link } from 'react-router-dom'
 import Notification from './Notification'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-export default function HomeSidebar({ showSidebar, setShowSidebar }) {
-  const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
-
-  const headerHeight = isMd ? myTheme.header.md.height : myTheme.header.height
+export default function HomeSidebar({}) {
+  const showSidebar = useSelector((store) => store.sidebar)
+  const dispatch = useDispatch()
+  const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
     <div
-      style={{
-        top: headerHeight + 'px',
-        left: isMd ? '0px' : showSidebar ? '-12px' : '-100%',
-        height: `calc(100vh - ${headerHeight}px)`,
-        position: isMd ? 'sticky' : 'fixed',
-        zIndex: "999"
-      }}
-      className="p-3 "
+      style={{ left: showSidebar ? '0px' : '' }}
+      className={`transition-all p-3 lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-nav-lg h-avoid-nav top-nav lg:z-0 z-[999]`}
     >
       <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
-        <div className='border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3'>
-          <div className='flex items-center justify-between '>
-            <div className='mb-2 xxl:block xl:block lg:block md:block sm:block xs:block'>
+        <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
+          <div className="flex items-center justify-between ">
+            <div className="mb-2 xxl:block xl:block lg:block md:block sm:block xs:block">
               <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
             </div>
 
@@ -54,31 +48,31 @@ export default function HomeSidebar({ showSidebar, setShowSidebar }) {
         {/*-------------- Nav Items  -------------------*/}
 
         <div className="flex flex-col px-1 pt-5">
-          <Link to="/" className='nav-item-container'>
+          <Link to="/" className="nav-item-container">
             <AiFillHome />
             <span>Home</span>
           </Link>
-          <Link to="/my-rewards" className='nav-item-container'>
+          <Link to="/my-rewards" className="nav-item-container">
             <AiFillGift />
             <span>My Rewards</span>
           </Link>
-          <Link to="/" className='nav-item-container'>
+          <Link to="/" className="nav-item-container">
             <RiTeamFill />
             <span>My Team</span>
           </Link>
-          <Link to="/" className='nav-item-container'>
+          <Link to="/" className="nav-item-container">
             <SiGoogleanalytics />
             <span>Analytics</span>
           </Link>
-          <Link to="/" className='nav-item-container'>
+          <Link to="/" className="nav-item-container">
             <HiSpeakerphone />
             <span>Campaigns</span>
           </Link>
-          <Link to="/survey" className='nav-item-container'>
+          <Link to="/survey" className="nav-item-container">
             <RiSurveyFill />
             <span>Survey</span>
           </Link>
-          <Link to="/" className='nav-item-container'>
+          <Link to="/" className="nav-item-container">
             <RiUserVoiceFill />
             <span>Voice Out</span>
           </Link>

@@ -69,18 +69,24 @@ export default function NewPost({ ...props }) {
   const USER_BTN_HEIGHT = 28
 
   React.useEffect(() => {
-    document.addEventListener('click', (ev) => {
+    function handleClick(ev) {
       const footerShowElm = document.querySelector('#footerShow')
       const footerElm = document.querySelector('#new-post-footer')
+
+      if (footerShowElm == null || footerElm == null) return
 
       if (!footerShowElm.contains(ev.target) && !footerElm.contains(ev.target)) {
         setFooterShow('')
       }
-    })
+
+    }
+    document.addEventListener('click', handleClick)
+
+    return () => document.removeEventListener('click', handleClick)
   }, [])
 
   return (
-    <div >
+    <div>
       <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-4">
         <ul className="flex items-center divide-x">
           {/* points button */}
@@ -186,16 +192,17 @@ export default function NewPost({ ...props }) {
           </li>
 
           <li style={{ borderWidth: 0 }} className="ml-auto">
-            <p className='flex items-center leading-4 ps-4'>You Have {user.points} points to give <span className="relative group ml-2 w-4 h-4 bg-white text-black inline-flex items-center justify-center rounded-full ">
-              <span>?</span>
+            <p className="flex items-center leading-4 ps-4">
+              You Have {user.points} points to give{' '}
+              <span className="relative group ml-2 w-4 h-4 bg-white text-black inline-flex items-center justify-center rounded-full ">
+                <span>?</span>
 
-              <p className="-translate-x-1/4 w-52 bg-white shadow p-2 rounded z-20 top-[25px] right-[-68px] absolute hidden group-hover:block">
-                You monthly allowance will refresh on 1st March. You have 6 days to spend 160
-                points.
-              </p>
-            </span></p>
-
-
+                <p className="-translate-x-1/4 w-52 bg-white shadow p-2 rounded z-20 top-[25px] right-[-68px] absolute hidden group-hover:block">
+                  You monthly allowance will refresh on 1st March. You have 6 days to spend 160
+                  points.
+                </p>
+              </span>
+            </p>
           </li>
         </ul>
       </div>
