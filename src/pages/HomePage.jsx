@@ -70,7 +70,6 @@ export default function HomePage({ ...props }) {
         <Top5UserWidget />
         <SurveyOngoingWidget />
         <RecentCampaignWidget />
-        <PopularCategories />
       </div>
     </>
   )

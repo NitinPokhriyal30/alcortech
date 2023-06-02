@@ -3,6 +3,8 @@ import AmazonLogo from '../assets/images/right-section/Amazon-Logo.png'
 import Dunkin from '../assets/images/right-section/dunkin-logo.png'
 import Starbucks from '../assets/images/right-section/starbucks-logo.png'
 import RewardPopup from './RewardPopup'
+import PopularCategories from './HomeRightSidebar/PopularCategories'
+import { RedeemPointsWidget } from './HomeRightSidebar/RedeemPointsWidget'
 
 const MyRewards = () => {
   const [modal, setModal] = React.useState('')
@@ -95,11 +97,13 @@ const MyRewards = () => {
 
       {/* right sidebar */}
       <div className="pt-3 px-4 flex flex-col gap-3 pb-5 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
-        <div className="border border-primary bg-translucent rounded-md h-48 grid place-items-center">
+        <RedeemPointsWidget />
+        <PopularCategories />
+        {/* <div className="border border-primary bg-translucent rounded-md h-48 grid place-items-center">
           <p className="text-primary text-center">
             ExampleCard <br /> Edit this or remove
           </p>
-        </div>
+        </div> */}
       </div>
 
       {modal === 'redeem' && coupon && (
