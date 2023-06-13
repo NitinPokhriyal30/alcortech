@@ -10,15 +10,15 @@ import { Link } from 'react-router-dom'
 import Notification from './Notification'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import { BiX } from 'react-icons/bi'
 
-export default function HomeSidebar({ }) {
+export default function HomeSidebar({}) {
   const showSidebar = useSelector((store) => store.sidebar)
   const dispatch = useDispatch()
   const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
 
   return (
     <>
-
       {/* backdrop */}
       {showSidebar && (
         <div
@@ -42,13 +42,20 @@ export default function HomeSidebar({ }) {
                 <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
               </div>
 
-              <div>
+              <div className="flex items-center gap-4">
                 <Notification />
+                <button
+                  className="active:ring-4 active:duration-75 ring-0 ring-white  rounded-full transition-[box-shadow] duration-300"
+                  type="button"
+                  onClick={() => setShowSidebar(false)}
+                >
+                  <BiX fontSize={32} className="text-white" />
+                </button>
               </div>
             </div>
           </div>
           {/*------------- Profile  ----------------------*/}
-          <div className='px-5'>
+          <div className="px-5">
             <div className="flex items-center gap-3 border-b-[1px] border-[#7096DB] xxl:py-5 xl:py-5 lg:py-5 md:py-5 sm:py-3 xs:py-3 ">
               <div>
                 <img src={User} alt="user avatar" />
@@ -62,7 +69,7 @@ export default function HomeSidebar({ }) {
           {/*-------------- Nav Items  -------------------*/}
 
           <div className="flex flex-col px-5 pt-5  ">
-            <div className='border-b-[1px] pb-5  border-[#7096DB]'>
+            <div className="border-b-[1px] pb-5  border-[#7096DB]">
               <Link to="/" className="nav-item-container">
                 <AiFillHome />
                 <span>Home</span>
@@ -108,7 +115,6 @@ export default function HomeSidebar({ }) {
           </div>
         </div>
       </div>
-
     </>
   )
 }

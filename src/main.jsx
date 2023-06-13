@@ -30,7 +30,7 @@ const router = createBrowserRouter(
         element={
           <main className="bg-paper">
             <MainNavbar />
-            <div className="pt-nav grid xxl:max-w-7xl lg:max-w-8xl m-auto w-full lg:grid-cols-mediumDevice sm:grid-cols-smallDevice grid-cols-[1fr]">
+            <div className="pt-nav grid xxl:max-w-7xl lg:max-w-8xl m-auto w-full lg:grid-cols-mediumDevice md:grid-cols-smallDevice grid-cols-[1fr]">
               <HomeSidebar />
               <Outlet />
             </div>
