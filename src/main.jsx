@@ -20,6 +20,7 @@ import HomeSidebar from './components/HomeSidebar'
 import MainNavbar from './components/MainNavbar'
 import MyRewards from './components/MyRewards'
 import RewardPopup from './components/RewardPopup'
+import DirectoryPage from './pages/DirectoryPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
       >
         <Route index element={<HomePage />} />
         <Route path="my-rewards" element={<MyRewards />} />
+        <Route path="directory" element={<DirectoryPage />} />
       </Route>
 
       <Route

@@ -78,7 +78,7 @@ export default function HomeSidebar({}) {
                 <AiFillGift />
                 <span>My Rewards</span>
               </Link>
-              <Link to="/" className="nav-item-container">
+              <Link to="/directory" className="nav-item-container">
                 <RiContactsBookFill />
                 <span>Directory</span>
               </Link>
