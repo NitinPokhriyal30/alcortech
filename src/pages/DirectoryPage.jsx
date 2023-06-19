@@ -83,7 +83,7 @@ export default function DirectoryPage({ ...props }) {
     .filter((user) => user.location.includes(locationFilter))
 
   return (
-    <div className="col-span-2 mt-3 mr-5 py-6 px-5 bg-white rounded-lg">
+    <div className="col-span-2 mt-3 mr-6 py-6 px-5 bg-white rounded-lg">
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
         <div className="border border-400 rounded text-[#acacac] flex items-center px-3 focus-within:outline outline-1 outline-primary-400">
           <BsSearch />
