@@ -36,7 +36,7 @@ const MyRewards = () => {
 
   return (
     <>
-      <div>
+      <div className='pr-3'>
         <div className="mt-2">
           <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-6">
             <p className="font-Lato ">Recommended For You</p>
@@ -96,7 +96,7 @@ const MyRewards = () => {
       </div>
 
       {/* right sidebar */}
-      <div className="pt-3 px-4 flex flex-col gap-3 pb-5 overflow-y-auto w-[250px] lg:w-[235px] md:w-[230px] xl:w-[300px] sm:w-[359px] xs:w-[345px]">
+      <div className="pt-3 pb-5 lg:pr-6 md:pr-3 md:pl-1 pr-3 pl-3 flex flex-col gap-3 overflow-y-auto xl:w-[325px] lg:w-[235px] md:w-[260px] w-full">
         <RedeemPointsWidget />
         <PopularCategories />
         {/* <div className="border border-primary bg-translucent rounded-md h-48 grid place-items-center">
