@@ -36,7 +36,7 @@ const ImageSlider = () => {
         className={`flex-shrink-0 flex-grow w-full bg-center bg-no-repeat bg-cover  rounded-lg pl-8 pt-8 pb-10 ${bg} animate-slide-left`}
       >
         <span className="font-Lato font-black text-[25px] text-white leading-8">
-          Take our Survey <br /> & Earn High5 Points
+          Take our Survey <br /> &amp; Earn High5 Points
         </span>
         <div className="mt-5">
           <button className="bg-[#292929] text-white font-Lato text-sm py-1 px-3">Take Now</button>

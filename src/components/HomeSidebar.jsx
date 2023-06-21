@@ -1,21 +1,25 @@
-import User from '../assets/images/user-profile/user.png'
-import HighLogo from '../assets/images/navbar/high5mobile.png'
+import User from "../assets/images/user-profile/user.png";
+import HighLogo from "../assets/images/navbar/high5mobile.png";
 
-import { AiFillHome, AiFillGift } from 'react-icons/ai'
-import { RiContactsBookFill, RiSurveyFill, RiUserVoiceFill } from 'react-icons/ri'
-import { SiGoogleanalytics } from 'react-icons/si'
-import { HiSpeakerphone } from 'react-icons/hi'
-import { BsQuestionCircle } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
-import Notification from './Notification'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { BiX } from 'react-icons/bi'
+import { AiFillHome, AiFillGift } from "react-icons/ai";
+import {
+  RiContactsBookFill,
+  RiSurveyFill,
+  RiUserVoiceFill,
+} from "react-icons/ri";
+import { SiGoogleanalytics } from "react-icons/si";
+import { HiSpeakerphone } from "react-icons/hi";
+import { BsQuestionCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import Notification from "./Notification";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { BiX } from "react-icons/bi";
 
 export default function HomeSidebar({}) {
-  const showSidebar = useSelector((store) => store.sidebar)
-  const dispatch = useDispatch()
-  const setShowSidebar = (show) => dispatch({ type: 'sidebar', show })
+  const showSidebar = useSelector((store) => store.sidebar);
+  const dispatch = useDispatch();
+  const setShowSidebar = (show) => dispatch({ type: "sidebar", show });
 
   return (
     <>
@@ -23,7 +27,7 @@ export default function HomeSidebar({}) {
       {showSidebar && (
         <div
           style={{
-            opacity: showSidebar ? '100%' : '',
+            opacity: showSidebar ? "100%" : "",
           }}
           className=" absolute inset-0 z-[999] bg-black bg-opacity-20 lg:hidden md:hidden lg:opacity-100 opacity-0"
           onClick={() => setShowSidebar(false)}
@@ -32,11 +36,11 @@ export default function HomeSidebar({}) {
 
       {/* sidebar */}
       <div
-        style={{ left: showSidebar ? '0px' : '' }}
-        className="transition-all xxl:py-3 xxl:pr-4 xxl:pl-6 xl:py-3  xl:pr-4 xl:pl-6 lg:py-3 lg:pr-4 lg:pl-6 md:py-0 md:pr-0 md:pl-0  sm:p-0 xs:p-0   lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-[87px] h-screen top-0 lg:z-0 z-[999] lg:w-auto w-[min(50vh,100%)]"
+        style={{ left: showSidebar ? "0px" : "" }}
+        className="transition-all xxl:py-3 xxl:pr-4 xxl:pl-6 xl:py-3  xl:pr-4 xl:pl-6 lg:py-3 lg:pr-4 lg:pl-6 md:py-0 md:pr-0 md:pl-0  sm:p-0 xs:p-0   lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-[87px] h-screen top-0 lg:z-0 z-[999] lg:w-auto md:w-[min(70vw,100%)] w-full"
       >
-        <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
-          <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
+        <div className="h-full overflow-y-auto z-30 bg-primary md:rounded-[9px] flex flex-col">
+          <div className="border-b-2 border-[#7096DB] lg:hidden px-5 pt-3">
             <div className="flex items-center justify-between ">
               <div className="mb-2 xxl:block xl:block lg:block md:block sm:block xs:block">
                 <img className="h-12 mr-8" src={HighLogo} alt=" High Logo" />
@@ -56,49 +60,54 @@ export default function HomeSidebar({}) {
           </div>
           {/*------------- Profile  ----------------------*/}
           <div className="px-5">
-            <div className="flex items-center gap-3 border-b-[1px] border-[#7096DB] xxl:py-5 xl:py-5 lg:py-5 md:py-5 sm:py-3 xs:py-3 ">
+            <MenuLink
+              to="/myProfile"
+              className="flex items-center gap-3 border-b-[1px] border-[#7096DB] xxl:py-5 xl:py-5 lg:py-5 md:py-5 sm:py-3 xs:py-3 "
+            >
               <div>
                 <img src={User} alt="user avatar" />
               </div>
               <div>
-                <p className="text-white font-Lato text-[16px] font-black">Hi</p>
-                <span className="text-white font-Lato text-[16px] font-normal">Semad Javed</span>
+                <p className="text-white font-Lato text-[16px] font-black">
+                  Hi
+                </p>
+                <span className="text-white font-Lato text-[16px] font-normal">
+                  Semad Javed
+                </span>
               </div>
-            </div>
+            </MenuLink>
           </div>
           {/*-------------- Nav Items  -------------------*/}
 
-          <div className="flex flex-col px-5 pt-5  ">
-            <div className="border-b-[1px] pb-5  border-[#7096DB]">
-              <Link to="/" className="nav-item-container">
-                <AiFillHome />
-                <span>Home</span>
-              </Link>
-              <Link to="/my-rewards" className="nav-item-container">
-                <AiFillGift />
-                <span>My Rewards</span>
-              </Link>
-              <Link to="/directory" className="nav-item-container">
-                <RiContactsBookFill />
-                <span>Directory</span>
-              </Link>
-              <Link to="/" className="nav-item-container">
-                <SiGoogleanalytics />
-                <span>Analytics</span>
-              </Link>
-              <Link to="/" className="nav-item-container">
-                <HiSpeakerphone />
-                <span>Campaigns</span>
-              </Link>
-              <Link to="/survey" className="nav-item-container">
-                <RiSurveyFill />
-                <span>Survey</span>
-              </Link>
-              <Link to="/" className="nav-item-container">
-                <RiUserVoiceFill />
-                <span>Voice Out</span>
-              </Link>
-            </div>
+          <div className="flex flex-col px-5 pt-5 border-b-[1px] pb-5  border-[#7096DB]">
+            <MenuLink to="/" className="nav-item-container">
+              <AiFillHome />
+              <span>Home</span>
+            </MenuLink>
+            <MenuLink to="/my-rewards" className="nav-item-container">
+              <AiFillGift />
+              <span>My Rewards</span>
+            </MenuLink>
+            <MenuLink to="/directory" className="nav-item-container">
+              <RiContactsBookFill />
+              <span>Directory</span>
+            </MenuLink>
+            <MenuLink to="/" className="nav-item-container">
+              <SiGoogleanalytics />
+              <span>Analytics</span>
+            </MenuLink>
+            <MenuLink to="/" className="nav-item-container">
+              <HiSpeakerphone />
+              <span>Campaigns</span>
+            </MenuLink>
+            <MenuLink to="/survey" className="nav-item-container">
+              <RiSurveyFill />
+              <span>Survey</span>
+            </MenuLink>
+            <MenuLink to="/" className="nav-item-container">
+              <RiUserVoiceFill />
+              <span>Voice Out</span>
+            </MenuLink>
           </div>
 
           {/*--------------- FAQ Section  ----------------*/}
@@ -116,5 +125,18 @@ export default function HomeSidebar({}) {
         </div>
       </div>
     </>
-  )
+  );
+}
+
+/**
+ * @param {import("react-router-dom").LinkProps} props
+ */
+function MenuLink(props) {
+  const dispatch = useDispatch();
+  const setShowSidebar = (show) => dispatch({ type: "sidebar", show });
+
+  function handleClick() {
+    setShowSidebar(false);
+  }
+  return <Link {...props} onClick={handleClick} />;
 }

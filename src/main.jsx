@@ -19,13 +19,19 @@ import SingleComponentTestPage from './pages/SingleComponentTestPage'
 import HomeSidebar from './components/HomeSidebar'
 import MainNavbar from './components/MainNavbar'
 import MyRewards from './components/MyRewards'
-import RewardPopup from './components/RewardPopup'
 import DirectoryPage from './pages/DirectoryPage'
+import Login from './components/Auth/Login'
+import ForgotPassword from './components/Auth/ForgotPassword'
+import ResetPassword from './components/Auth/ResetPassword'
+import ManageUsers from './components/AdminPanel/ManageUsers'
+import Earnings from './components/AdminPanel/Earnings'
+import MyProfile from './components/MyProfile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/test" element={<SingleComponentTestPage />} />
+      <Route path="/login" element={<Login/>} />
       <Route
         path="/"
         element={
@@ -41,8 +47,12 @@ const router = createBrowserRouter(
         <Route index element={<HomePage />} />
         <Route path="my-rewards" element={<MyRewards />} />
         <Route path="directory" element={<DirectoryPage />} />
+        <Route path="myProfile" element={<MyProfile />} />
+        <Route path="company/users" element={<ManageUsers />} />
+        <Route path="company/account" element={<Earnings />} />
       </Route>
-
+      <Route path='/forgot/password' element= {<ForgotPassword/>}/>
+      <Route path='/reset/password/passwordreset/:uidb64/:token' element= {<ResetPassword/>}/>
       <Route
         path="/survey"
         element={

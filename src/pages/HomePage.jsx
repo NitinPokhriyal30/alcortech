@@ -1,9 +1,4 @@
-import Box from '@mui/material/Box'
 import * as React from 'react'
-import MainNavbar from '../components/MainNavbar'
-import HomeSidebar from '../components/HomeSidebar'
-import { breakpoints, myTheme } from '../myTheme'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 import Top5UserWidget from '../components/HomeRightSidebar/Top5UserWidget'
 import RecentCampaignWidget from '../components/HomeRightSidebar/RecentCampaignWidget'
@@ -16,16 +11,10 @@ import { RedeemPointsWidget } from '../components/HomeRightSidebar/RedeemPointsW
 import PostCard from '../components/PostCard'
 import SortBy from '../components/SortBy'
 import ImageSlider from '../components/ImageSlider'
-import { useStore } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { AchievementBanner } from '../components/AchievementBanner'
-import MyRewards from '../components/MyRewards'
-import RewardPopup from '../components/RewardPopup'
-import PopularCategories from '../components/HomeRightSidebar/PopularCategories'
 
-export default function HomePage({ ...props }) {
-  const isMd = useMediaQuery(`( min-width: ${breakpoints.md}px)`)
-  const [showSidebar, setShowSidebar] = React.useState(false)
+export default function HomePage() {
   const postList = useSelector((store) => store.post)
 
   console.log(postList)
