@@ -36,7 +36,7 @@ const MyRewards = () => {
 
   return (
     <>
-      <div className="pr-3">
+      <div className="lg:pl-0 xxl:pt-3 xs:pt-0 pl-3 pr-3">
         <div className="mt-3">
           <div className="bg-primary text-white text-sm rounded-t-lg py-2 px-6">
             <p className="font-Lato ">Recommended For You</p>
