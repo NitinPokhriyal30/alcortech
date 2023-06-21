@@ -33,7 +33,7 @@ export default function HomeSidebar({}) {
       {/* sidebar */}
       <div
         style={{ left: showSidebar ? '0px' : '' }}
-        className="transition-all xxl:py-3 xxl:pr-4 xxl:pl-6 xl:py-3  xl:pr-4 xl:pl-6 lg:py-3 lg:pr-4 lg:pl-6 md:py-0 md:pr-0 md:pl-0  sm:p-0 xs:p-0   lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-[87px] h-screen top-0 lg:z-0 z-[999] lg:w-auto w-[min(50vh,100%)]"
+        className="transition-all xxl:py-3 xxl:pr-4 xxl:pl-6 xl:py-3  xl:pr-4 xl:pl-6 lg:py-3 lg:pr-4 lg:pl-6 md:py-0 md:pr-0 md:pl-0  sm:p-0 xs:p-0   lg:sticky lg:left-0 fixed -left-full lg:h-avoid-nav-lg lg:top-[87px] h-screen top-0 lg:z-0 z-[999] lg:w-auto w-[min(80vh,100%)]"
       >
         <div className="h-full overflow-y-auto z-30 bg-primary rounded-[9px] flex flex-col">
           <div className="border-b-2 border-[#7096DB] xxl:hidden xl:hidden lg:hidden md:hidden sm:block xs:block px-5 pt-3">
